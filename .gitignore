@@ -1,0 +1,6 @@
+/pixelmorph/node_modules/
+/.idea
+/.vscode
+/.vagrant
+/css/styles.css
+/js/build.js
