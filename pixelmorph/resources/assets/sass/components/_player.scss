@@ -102,20 +102,22 @@ wave {
 }
 
 .playerTitle {
-    font-size: 2vw;
+    font-size: 2.1vw;
     font-family: Bold;
     color: $color1;
+    overflow: hidden;
+    max-width: 2.1vw;
 }
 
 .playerDate {
     font-family: Bold;
-    font-size: 1.1vw;
+    font-size: 1.2vw;
     color: $color1;
 }
 
 .playerDateSmall {
     font-family: Bold;
-    font-size: 1vw;
+    font-size: 0.9vw;
     color: $color1;
 }
 
@@ -173,18 +175,6 @@ wave {
     width: 100%;
 }
 
-.tagx {
-    background-color: $color5;
-    border: 2px solid $color6;
-    border-radius: 3px 50px 24px;
-    padding: 2px 14px 2px 7px;
-    margin: 5px;
-    text-align: center;
-    font-size: 0.7vw;
-    color: #cccccc; // box-shadow: 1px 1px 2px #1a1f21, 0 0 5px #214258;
-    white-space: nowrap;
-}
-
 .tag {
     height: 1.6vw;
     font-size: .7vw;
@@ -193,14 +183,14 @@ wave {
 
 .timelineWrap {
     min-height: 1.2vw;
+    margin-top: 0.6vw;
     font-size: 1vw;
     content: ' ';
 }
 
 .waveform {
     position: absolute;
-    z-index: 100;
-    margin-top: 0.2vw;
+    z-index: 100; //margin-top: 0.1vw;
     width: 90%;
     overflow: hidden;
 }

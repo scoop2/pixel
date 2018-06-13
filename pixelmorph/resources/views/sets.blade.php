@@ -18,6 +18,7 @@
 
 <div class="setsWrap">
 	<div>{!! html_entity_decode($desc->body) !!}</div>
+	<div id="setsWrapList">
 <ul>
 @foreach ($items as $key => $item)
 <li>
@@ -28,9 +29,9 @@
 			<div class="playerDate floatRight">
 				{{ $item->setlength }}<span class="playerDateSmall">min</span> {{ $item->bpm }}<span class="playerDateSmall">BPM (&Oslash;)</span> {{ $item->released }}
 				<div class="playerSocialIcons">
-					<a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sets/filter/{{ $item->id }}" target="_blank"><i class="fab fa-facebook-square fa-lg playerSocialIconsPadding"></i></a>
-					<a href="https://twitter.com/home?status=https://pixelmorph.de/sets/filter/{{ $item->id }}" target="_blank"><i class="fab fa-twitter-square fa-lg playerSocialIconsPadding"></i></a>
-					<a href="https://plus.google.com/share?url=https://pixelmorph.de/sets/filter/{{ $item->id }}" target="_blank"><i class="fab fa-google-plus-square fa-lg playerSocialIconsPadding"></i></a>
+					<a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sets/filter/{{ $item->id }}" target="_blank"><i class="fab fa-facebook-square fa-fw playerSocialIconsPadding"></i></a>
+					<a href="https://twitter.com/home?status=https://pixelmorph.de/sets/filter/{{ $item->id }}" target="_blank"><i class="fab fa-twitter-square fa-fw playerSocialIconsPadding"></i></a>
+					<a href="https://plus.google.com/share?url=https://pixelmorph.de/sets/filter/{{ $item->id }}" target="_blank"><i class="fab fa-google-plus-square fa-fw playerSocialIconsPadding"></i></a>
 				</div>
 			</div>
 		</div>
@@ -54,7 +55,7 @@
 </li>
 @endforeach
 </ul>
-<hr>
+</div>
 
 </div>
 
@@ -129,7 +130,7 @@ function doPlayers(el) {
 	var self = false;
 	var plyBtnSvg = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-play"></use></svg>';
 	var stpBtnSvg = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-pause"></use></svg>';
-	var ldgBtnSvg = '<svg class="playerSVG icon60 icon-textcolor floatRight xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-ripple" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;"><circle cx="50" cy="50" r="0" fill="none" ng-attr-stroke="@{{config.c1}}" ng-attr-stroke-width="@{{config.width}}" stroke="#e15b64" stroke-width="6"><animate attributeName="r" calcMode="spline" values="0;48" keyTimes="0;1" dur="1.5" keySplines="0 0.2 0.8 1" begin="-0.75s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="spline" values="1;0" keyTimes="0;1" dur="1.5" keySplines="0.2 0 0.8 1" begin="-0.75s" repeatCount="indefinite"></animate></circle><circle cx="50" cy="50" r="0" fill="none" ng-attr-stroke="@{{config.c2}}" ng-attr-stroke-width="@{{config.width}}" stroke="#f47e60" stroke-width="6"><animate attributeName="r" calcMode="spline" values="0;48" keyTimes="0;1" dur="1.5" keySplines="0 0.2 0.8 1" begin="0s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="spline" values="1;0" keyTimes="0;1" dur="1.5" keySplines="0.2 0 0.8 1" begin="0s" repeatCount="indefinite"></animate></circle></svg><div class="ldgMsg">Preparing the set <i>' + title + '</i> ...</div>';
+	var ldgBtnSvg = '<svg class="playerSVG icon60 icon-textcolor floatRight xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130" preserveAspectRatio="xMidYMid" class="lds-ripple" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;"><circle cx="50" cy="50" r="0" fill="none" ng-attr-stroke="@{{config.c1}}" ng-attr-stroke-width="@{{config.width}}" stroke="#e15b64" stroke-width="6"><animate attributeName="r" calcMode="spline" values="0;48" keyTimes="0;1" dur="1.5" keySplines="0 0.2 0.8 1" begin="-0.75s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="spline" values="1;0" keyTimes="0;1" dur="1.5" keySplines="0.2 0 0.8 1" begin="-0.75s" repeatCount="indefinite"></animate></circle><circle cx="50" cy="50" r="0" fill="none" ng-attr-stroke="@{{config.c2}}" ng-attr-stroke-width="@{{config.width}}" stroke="#f47e60" stroke-width="6"><animate attributeName="r" calcMode="spline" values="0;48" keyTimes="0;1" dur="1.5" keySplines="0 0.2 0.8 1" begin="0s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="spline" values="1;0" keyTimes="0;1" dur="1.5" keySplines="0.2 0 0.8 1" begin="0s" repeatCount="indefinite"></animate></circle></svg><div class="ldgMsg">Preparing the set <i>' + title + '</i> ...</div>';
 
 	$('#playerBtn' + id).html(ldgBtnSvg);
 
@@ -247,15 +248,50 @@ function doPlayers(el) {
 }
 
 function doFilter(values) {
+	var i, html;
 	console.log(values)
-	
-	var url;
-	url = 'http:{{ url('/') }}/sets/filter/';
-	for (var i=0; i<values.length; i++) {
-		url += values[i][0].id;
-		if (values.length - 1 > i) url += ':'; 
+	if (typeof values === 'undefined' || values.length === 0) {
+    	html = '<div><svg class="icon40 icon-red floatLeft marginDefault"><use xlink:href="#icon-alert"></use></svg><h3>Sorry, nix gefunden :(<br>Versuch es noch mal oder vordere mich heraus ein Set mit diesen Moods zu schaffen.</h3></div>'
+	} else {
+
+	html = '<ul>';
+	for (i=0; i < values.length; i++) {
+		html += '<li>' +
+		'<div class="playerWrapOuter">' +
+		'<div id="player' + values[i][0].id + '" data-id="' + values[i][0].id + '" class="playerWrap">' +
+			'<div class="titleWrap">' +
+				'<div id="setTitleInner' + values[i][0].id + '" class="playerTitle floatLeft">' + values[i][0].title + '</div>' +
+				'<div class="playerDate floatRight">' +
+				values[i][0].setlength + '<span class="playerDateSmall">min</span> ' + values[i][0].bpm + '<span class="playerDateSmall">BPM (&Oslash;)</span> ' + values[i][0].released +
+					'<div class="playerSocialIcons">' +
+						'<a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sets/filter/' + values[i][0].id + '" target="_blank"><i class="fab fa-facebook-square fa-fw playerSocialIconsPadding"></i></a>' +
+						'<a href="https://twitter.com/home?status=https://pixelmorph.de/sets/filter/' + values[i][0].id + '" target="_blank"><i class="fab fa-twitter-square fa-fw playerSocialIconsPadding"></i></a>' +
+						'<a href="https://plus.google.com/share?url=https://pixelmorph.de/sets/filter/' + values[i][0].id + '" target="_blank"><i class="fab fa-google-plus-square fa-fw playerSocialIconsPadding"></i></a>' +
+					'</div>' +
+				'</div>' +
+			'</div>' +
+			'<div class="clear"></div>' +
+			'<div class="playerBtnWrap">' +
+				'<div id="waveform' + values[i][0].id + '" class="waveform" data-wave="' + values[i][0].id + '"></div>' +
+				'<div id="playerBtn' + values[i][0].id + '" class="playerBtn" data-id="' + values[i][0].id + '" data-job="stop" data-track="' + values[i][0].filename + '" data-title="' + values[i][0].title + '">' +
+					'<svg class="playerSVG icon60 icon-textcolor floatRight">' +
+						'<use xlink:href="#player-play"></use>' +
+					'</svg>' +
+				'</div>' +
+			'</div>' +
+		'</div>' +
+			'<div class="timelineWrap">' +
+				'<div id="timelineNow' + values[i][0].id + '" class="playerTimeText floatLeft"></div>' +
+				'<div id="timelineAll' + values[i][0].id + '" class="playerTimeText floatRight"></div>' +
+			'</div>' +
+			'<div class="clear"></div>' +
+			'<div class="tagWrapper">tags</div>' +
+		'</div>' +
+	'</li>';
 	}
-	window.location = url;
+	html += '</ul>';
+	}
+	$('#setsWrapList').html(html);
 }
 
 function getJSON(values) {
@@ -263,9 +299,9 @@ function getJSON(values) {
 	url = 'http:{{ url('/') }}/api/sets/filter/';
 	for (var i=0; i<values.length; i++) {
 		url += values[i].tagid + ':' + values[i].tagvalue;
-		if (values.length - 1 > i) url += '.'; 
+		if (values.length - 1 > i) url += '-'; 
 	}
-	
+	console.log(url);
     $.ajax({
         type: 'GET',
         url: url,
@@ -275,11 +311,11 @@ function getJSON(values) {
         cache: true,
         async: true,
         success: function (data) {
-			console.log(url)
-			//doFilter(data);
+			//console.log(url)
+			doFilter(data);
         },
         error: function (errorThrown) {
-        	console.warn(errorThrown);
+        	console.warn('Ajax Request failed!', errorThrown);
         },
         complete: function () {
         }

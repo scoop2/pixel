@@ -52,7 +52,7 @@ gulp.task('js', function () {
         //  'node_modules/vuex/dist/vuex.js',
         //    'node_modules/vue-resource/dist/vue-resource.min.js',
         'node_modules/materialize-css/dist/js/materialize.min.js',
-        'resources/assets/js/fontawesome-all.min.js',
+        //    'resources/assets/js/fontawesome-all.min.js',
 
         'node_modules/materialize-css/extras/nouislider/nouislider.min.js',
         'node_modules/animejs/anime.min.js',
@@ -73,12 +73,13 @@ gulp.task('js', function () {
 
 gulp.task('sass', function () {
     console.log('Compiling now sass');
-    return gulp.src('resources/assets/sass/**/*.scss')
+    return gulp.src('resources/assets/sass/styles.scss')
         .pipe(vinylPaths(function (paths) {
             console.log('Compiling: ', paths);
             return Promise.resolve();
         }))
         .pipe(sass())
+        .pipe(cleancss())
         .pipe(gulp.dest(pathCSS));
 });
 
@@ -104,8 +105,8 @@ gulp.task('serve', function () {
         //   reloadDebounce: 2000,
         notify: false,
         cors: true,
-        reloadDelay: 2000,
-        reloadDebounce: 2000,
+        //    reloadDelay: 2000,
+        //    reloadDebounce: 2000,
         browser: "firefox",
         port: 3303
     });

@@ -25,33 +25,39 @@ class ApiController extends Controller
       $req = preg_match('^[0-9]{1,2}([,.][0-9]{1,2})?$^', $filter);
 
       if ($req == 1) {
-        $tags = explode(".", $filter);
+        $tags = explode("-", $filter);
 
         foreach ($tags as $tag) {
-          $tag = explode(":", $tag);     
+          $tag = explode(":", $tag);
           $tag[0] = intval($tag[0]);
           $tag[1] = intval($tag[1]);
-          $sets = DB::select('SELECT * FROM tags_sets WHERE tag = ? ORDER BY rate DESC', [$tag[0]]);
-          
-          $tmp = new tagBags();
-          $tmp->tag = $tag[0];
-          $tmp->userRate = $tag[1];
-          $tmp->sets = $sets;
-
-          array_push($results, $tmp);
+          if ($tag[1] > 0) {
+            $sets = DB::select('SELECT * FROM tags_sets WHERE tag = ? ORDER BY rate DESC', [$tag[0]]);
+            $tmp = new tagBags();
+            $tmp->tag = $tag[0];
+            $tmp->userRate = $tag[1];
+            $tmp->sets = $sets;
+            array_push($results, $tmp);
+          }
         }
-        usort($results, function($first,$second){
+        usort($results, function($first, $second) {
           return $first->userRate < $second->userRate;
         });
       }
+      /*
+echo "<pre>";
+echo var_dump($results);
+echo "</pre>";
+exit;
+*/
 
       foreach ($results as $result) {
         if (empty($result->sets)) {
           continue;
         } else {
           foreach ($result->sets as $resp) {
-            if (!in_array($resp->set, $found)) {
-              array_push($found, $resp->set);
+            if (!in_array($resp->setid, $found)) {
+              array_push($found, $resp->setid);
               array_push($respSets, $resp);
             }
           }
@@ -59,11 +65,11 @@ class ApiController extends Controller
       }
 
       foreach ($respSets as $respSet) {
-        array_push($response, DB::select('SELECT * FROM sets WHERE id = ?', [$respSet->set]));
+        array_push($response, DB::select('SELECT * FROM sets WHERE id = ?', [$respSet->setid]));
       }
 
       /*
-echo "result<pre>";
+echo "<pre>";
 echo var_dump($response);
 echo "</pre><hr>";
 exit;

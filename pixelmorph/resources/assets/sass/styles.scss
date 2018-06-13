@@ -51,6 +51,10 @@
  |--------------------------------------------------------------------------
  */
 
+@import "fontawesome/fontawesome.scss";
+@import "fontawesome/fa-solid";
+@import "fontawesome/fa-brands";
+@import "fontawesome/fa-regular";
 //@import "../../../node_modules/font-awesome/scss/font-awesome";
 /*
  |--------------------------------------------------------------------------
@@ -59,13 +63,13 @@
  */
 
 //@import "components/variables.scss";
-@import "components/normalize.scss";
-@import "components/global.scss";
-@import "components/helpers.scss";
-@import "components/icons.scss";
-@import "components/shapes.scss";
-@import "components/nav.scss";
+@import "components/normalize";
+@import "components/global";
+@import "components/helpers";
+@import "components/icons";
+@import "components/shapes";
+@import "components/nav";
 @import "components/player";
-@import "fonts/vicons-font";
-@import "fonts/voltaire.scss";
-@import "fonts/raleway.scss";
+//@import "fonts/vicons-font";
+//@import "fonts/voltaire.scss";
+@import "fonts/raleway";
