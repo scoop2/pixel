@@ -12,8 +12,16 @@
 		<div class="tagBoxWrap"></div>
 	</div>
 </div>
-<div class="fiterBtnWrap">
-	<svg class="icon30 icon-textcolor"><use xlink:href="#lense"></use></svg>
+<div class="filterNav">
+	<div class="fiterBtnWrap tooltipped" data-position="left" data-tooltip="Starte Suche nach Sets mit diesen Moods">
+		<svg class="icon30 icon-textcolor"><use xlink:href="#lense"></use></svg>
+	</div>
+	<div class="fiterBackBtnWrap tooltipped" data-position="left" data-tooltip="Versteck mich wieder">
+		<i class="fas fa-arrow-circle-up fa-3x icon-blue"></i>
+	</div>
+	<div class="fiterResetBtnWrap tooltipped" data-position="left" data-tooltip="Alle Moods auf Null zurück stellen">
+		<i class="fas fa-arrow-circle-down fa-3x icon-blue"></i>
+	</div>
 </div>
 
 <div class="setsWrap">
@@ -88,34 +96,58 @@ $(document).ready(function () {
 	$('.playerBtn').on('click', function () {
 		doPlayers(this);
 	});
-});
 
-$('.fiterBtnWrap').on('click', function () {
-	var sliderValues = [];
-	var div = $('.filterWrap');
-	if (div.visible() === true) {
-		$(this).html('<svg class="icon30 icon-textcolor"><use xlink:href="#lense"></use></svg>');
-		dir = div.data('pos');
-		tagBox.each(function (index, el) {
-			var tag = {tagid: $(el).data('id'), tagvalue: parseInt(el.noUiSlider.get())};
-			sliderValues.push(tag);
+	$('.fiterBackBtnWrap').on('click', function() {
+		var div = $('.filterWrap');
+		var dir = div.data('pos');
+		var animate = anime({
+			targets: '.filterWrap',
+			top: dir,
+			duration: 700,
+			elasticity: 600
 		});
-		getJSON(sliderValues);
-	} else {
-		$(this).html('<i class="far fa-arrow-alt-circle-right fa-3x icon-blue"></i>');
-		div.data('pos', div.position().top);
-		dir = 0;
-	}
-	var animate = anime({
-		targets: '.filterWrap',
-		top: dir,
-		duration: 700,
-		elasticity: 600
+		$('.fiterBtnWrap').html('<svg class="icon30 icon-textcolor"><use xlink:href="#lense"></use></svg>');
 	});
-});
 
-$('.setFilter').on('click', function () {
-	tagBox.each(function (index, el) {});
+	$('.fiterResetBtnWrap').on('click', function() {
+		tagBox.each(function (index, el) {
+			el.noUiSlider.set(0);
+		});
+	});
+	//$('.tooltipped').tooltip({enterDelay: 9000, exitDelay: 9000});
+
+	$('.fiterBtnWrap').on('click', function () {
+		var sliderValues = [];
+		var div = $('.filterWrap');
+		if (div.visible() === true) {
+			$(this).html('<svg class="icon30 icon-textcolor"><use xlink:href="#lense"></use></svg>');
+			dir = div.data('pos');
+			tagBox.each(function (index, el) {
+				var tag = {tagid: $(el).data('id'), tagvalue: parseInt(el.noUiSlider.get())};
+				sliderValues.push(tag);
+			});
+			$('.overlay').css('display','block');
+			$('.fiterBackBtnWrap').css('display', 'none');
+			$('.fiterResetBtnWrap').css('display', 'none');
+			getJSON(sliderValues);
+		} else {
+			$(this).html('<i class="fas fa-arrow-circle-right fa-3x icon-blue"></i>');
+			$('.fiterBackBtnWrap').css('display', 'block');
+			$('.fiterResetBtnWrap').css('display', 'block');
+			div.data('pos', div.position().top);
+			dir = 0;
+		}
+		var animate = anime({
+			targets: '.filterWrap',
+			top: dir,
+			duration: 700,
+			elasticity: 600
+		});
+	});
+
+	$('.setFilter').on('click', function () {
+		tagBox.each(function (index, el) {});
+	});
 });
 
 function doPlayers(el) {
@@ -132,7 +164,8 @@ function doPlayers(el) {
 	var stpBtnSvg = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-pause"></use></svg>';
 	var ldgBtnSvg = '<svg class="playerSVG icon60 icon-textcolor floatRight xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130" preserveAspectRatio="xMidYMid" class="lds-ripple" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;"><circle cx="50" cy="50" r="0" fill="none" ng-attr-stroke="@{{config.c1}}" ng-attr-stroke-width="@{{config.width}}" stroke="#e15b64" stroke-width="6"><animate attributeName="r" calcMode="spline" values="0;48" keyTimes="0;1" dur="1.5" keySplines="0 0.2 0.8 1" begin="-0.75s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="spline" values="1;0" keyTimes="0;1" dur="1.5" keySplines="0.2 0 0.8 1" begin="-0.75s" repeatCount="indefinite"></animate></circle><circle cx="50" cy="50" r="0" fill="none" ng-attr-stroke="@{{config.c2}}" ng-attr-stroke-width="@{{config.width}}" stroke="#f47e60" stroke-width="6"><animate attributeName="r" calcMode="spline" values="0;48" keyTimes="0;1" dur="1.5" keySplines="0 0.2 0.8 1" begin="0s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="spline" values="1;0" keyTimes="0;1" dur="1.5" keySplines="0.2 0 0.8 1" begin="0s" repeatCount="indefinite"></animate></circle></svg><div class="ldgMsg">Preparing the set <i>' + title + '</i> ...</div>';
 
-	$('#playerBtn' + id).html(ldgBtnSvg);
+	//$('#playerBtn' + id).html(ldgBtnSvg);
+	$('.overlay').css('display','block');
 
 	openplayers.forEach(function (el) {
 		tmp = parseInt(el.container.getAttribute("data-wave"));
@@ -141,19 +174,8 @@ function doPlayers(el) {
 		$('#waveform' + tmp).html('');
 		$('#timelineAll' + tmp).html('');
 		$('#timelineNow' + tmp).html('');
-/*
-		var animate = anime({
-			loop: false
-		});
-		animate.add([
-			{
-				targets: '#playerBtn' + tmp,
-				width: 8,
-				offset: 0
-			}
-		]);
-	*/
-	var easeInOutValues = ['easeInOutQuad', 'easeInOutCubic', 'easeInOutQuart', 'easeInOutQuint', 'easeInOutSine', 'easeInOutExpo', 'easeInOutCirc', 'easeInOutBack', 'easeInOutElastic'];
+	
+		var easeInOutValues = ['easeInOutQuad', 'easeInOutCubic', 'easeInOutQuart', 'easeInOutQuint', 'easeInOutSine', 'easeInOutExpo', 'easeInOutCirc', 'easeInOutBack', 'easeInOutElastic'];
 		var animate = anime({
 			targets: '#playerBtn' + tmp,
 			width: 8,
@@ -212,6 +234,7 @@ function doPlayers(el) {
 					})
 				}
 			});
+			$('.overlay').css('display','none');
 			$('#playerBtn' + id).html(stpBtnSvg);
 			$('.playerBtn').bind('click', function () {
 				doPlayers(this);
@@ -251,7 +274,7 @@ function doFilter(values) {
 	var i, html;
 	console.log(values)
 	if (typeof values === 'undefined' || values.length === 0) {
-    	html = '<div><svg class="icon40 icon-red floatLeft marginDefault"><use xlink:href="#icon-alert"></use></svg><h3>Sorry, nix gefunden :(<br>Versuch es noch mal oder vordere mich heraus ein Set mit diesen Moods zu schaffen.</h3></div>'
+    	html = '<div><div class="icon-red floatLeft marginDefault"><i class="fas fa-frown fa-5x"></i></div><h3>Sorry, nix gefunden :(<br>Versuch es noch mal oder fordere mich heraus ein Set mit diesen Moods zu schaffen.</h3></div>'
 	} else {
 
 	html = '<ul>';
@@ -311,8 +334,8 @@ function getJSON(values) {
         cache: true,
         async: true,
         success: function (data) {
-			//console.log(url)
 			doFilter(data);
+			$('.overlay').css('display','none');
         },
         error: function (errorThrown) {
         	console.warn('Ajax Request failed!', errorThrown);

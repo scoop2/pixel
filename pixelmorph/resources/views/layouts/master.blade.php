@@ -18,7 +18,11 @@
 <?php
 include (public_path() . '/images/icons.svg');
 ?>
-
+<div class="overlay">
+  <div class="progress">
+      <div class="indeterminate"></div>
+  </div>
+</div>
 <div class="wrap">
 <!--
 		@component('components.nav')

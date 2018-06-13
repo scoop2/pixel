@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Helper;
 
 class ApiController extends Controller
 {
@@ -66,6 +67,9 @@ exit;
 
       foreach ($respSets as $respSet) {
         array_push($response, DB::select('SELECT * FROM sets WHERE id = ?', [$respSet->setid]));
+      }
+      foreach ($response as $tmp) {
+        $tmp[0]->released = Helper::convertRelease($tmp[0]->released);
       }
 
       /*

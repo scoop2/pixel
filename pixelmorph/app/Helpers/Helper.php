@@ -17,11 +17,13 @@ class Helper
 
     public static function convertRelease($date)
     {
+        $month = ['', 'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
         if (! isset($date) || $date == '') {
             return "NA";
         } else {
             $phpdate = strtotime($date);
-            return date('j.n.Y', $phpdate);
+            return $month[date("n", strtotime($date))] . '|' . date("y", strtotime($date));
         }
     }
+
 }

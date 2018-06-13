@@ -25,15 +25,32 @@ wave {
     left: 0;
 }
 
-.fiterBtnWrap {
+.filterNav {
+    display: flex;
+    flex-direction: column;
     position: absolute;
-    top: 1vw;
+    top: 0.2vw;
     right: -0.8vw;
     z-index: 101;
     width: 4vw;
     height: 4vw;
     cursor: pointer;
-    color: $color1;
+    color: $color2;
+}
+
+.fiterBtnWrap {
+    display: block;
+    margin: 0.2vw;
+}
+
+.fiterResetBtnWrap {
+    display: none;
+    margin: 0.2vw;
+}
+
+.fiterBackBtnWrap {
+    display: none;
+    margin: 0.2vw;
 }
 
 .setsWrap {
@@ -106,7 +123,7 @@ wave {
     font-family: Bold;
     color: $color1;
     overflow: hidden;
-    max-width: 2.1vw;
+    max-height: 2.5vw;
 }
 
 .playerDate {

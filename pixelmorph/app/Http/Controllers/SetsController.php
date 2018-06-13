@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use App\Pages;
+use Helper;
 
 class SetsController extends Controller
 {
@@ -37,7 +38,7 @@ class SetsController extends Controller
         $month = ['', 'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 
         foreach ($items as $i => $item) {
-            $items[$i]->released = $month[date("n", strtotime($items[$i]->released))] . '|' . date("y", strtotime($items[$i]->released));
+            $items[$i]->released = Helper::convertRelease($items[$i]->released);
             $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$items[$i]->id]);
             foreach ($tags as $tag) {
                 $rateTotal += $tag->rate;
