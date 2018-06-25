@@ -17,7 +17,6 @@ Route::get('/impressum', 'HomeController@impressum')->name('impressum');
 //Route::get('login', array('uses' => 'HomeController@showLogin'));
 //Route::post('login', array('uses' => 'HomeController@doLogin'));
 
-
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
@@ -32,41 +31,43 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-
 Route::resource('sets', 'SetsController');
 Route::get('sets/filter/{filter?}', array(
     'as' => 'filter',
-    'uses' => 'SetsController@index'
+    'uses' => 'SetsController@index',
 ));
 Route::resource('skills', 'SkillsController');
 Route::resource('blog', 'BlogController');
 Route::resource('test', 'TestController');
 Route::get('test/{id?}', array(
     'as' => 'id',
-    'uses' => 'TestController@index'
+    'uses' => 'TestController@index',
 ));
 /*
 Route::get('wg/{id?}', array(
-    'as' => 'id',
-    'uses' => 'WgController@index'
+'as' => 'id',
+'uses' => 'WgController@index'
 ));
-*/
+ */
 
-Route::get('api/sets/list/{id?}',array(
+Route::get('api/sets/list/{id?}', array(
     'as' => 'id',
-    'uses' => 'ApiController@sets'
+    'uses' => 'ApiController@sets',
 ));
-Route::get('api/sets/filter/{id?}',array(
+Route::get('api/sets/filter/{id?}', array(
     'as' => 'id',
-    'uses' => 'ApiController@filter'
+    'uses' => 'ApiController@filter',
+));
+Route::get('api/sets/playlist/{id?}', array(
+    'as' => 'id',
+    'uses' => 'ApiController@playlist',
 ));
 Route::resource('/cruds', 'CrudsController', [
-  'except' => ['edit', 'show', 'store']
+    'except' => ['edit', 'show', 'store'],
 ]);
 
-
 Route::group([
-    'prefix' => 'admin'
+    'prefix' => 'admin',
 ], function () {
     Voyager::routes();
 });

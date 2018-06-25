@@ -1,9 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use App\Pages;
 use Helper;
+use Illuminate\Support\Facades\DB;
 
 class SetsController extends Controller
 {
@@ -11,14 +11,17 @@ class SetsController extends Controller
     public function index($filter = '')
     {
         $desc = Pages::where('status', 'ACTIVE')->where('title', 'Sets')->first();
-        
+
         $i = 1;
         if ($filter != '') {
             $and = ' AND id IN (';
             $sets = explode(':', $filter);
             foreach ($sets as $set) {
                 $and .= $set;
-                if (count($sets) > $i) $and .= ',';
+                if (count($sets) > $i) {
+                    $and .= ',';
+                }
+
                 $i++;
             }
             $and .= ')';
@@ -27,7 +30,7 @@ class SetsController extends Controller
         }
 
         $i = 0;
-        $items = DB::select('SELECT * FROM sets WHERE active = ? '.$and.' ORDER BY setorder LIMIT 10', [1]);
+        $items = DB::select('SELECT * FROM sets WHERE active = ? ' . $and . ' ORDER BY setorder LIMIT 10', [1]);
         $taglist = DB::select('SELECT * FROM tags ORDER BY title');
         $thetag = "";
         $count = 1;
@@ -35,10 +38,20 @@ class SetsController extends Controller
         $widthTotal = 0;
         $htmltags = [];
         $rate = [];
+        $playlists = [];
         $month = ['', 'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 
         foreach ($items as $i => $item) {
             $items[$i]->released = Helper::convertRelease($items[$i]->released);
+            $playlist = "<ul>";
+            $playlistquery = DB::select('SELECT * FROM playlists WHERE set_id = ? ORDER BY position', [$items[$i]->id]);
+            if (empty($playlistquery)) {
+                $playlist .= '<li><div class="playlistitem">Keine Playlist vorhanden</div></li></ul>';
+            } else {
+                foreach ($playlistquery as $playlistitem) {
+                    $playlist .= '<li><div class="playlistitem"><b>' . $playlistitem->artist . '</b> - ' . $playlistitem->title . ' (' . $playlistitem->mix . ')</div></li>';
+                }
+            }
             $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$items[$i]->id]);
             foreach ($tags as $tag) {
                 $rateTotal += $tag->rate;
@@ -74,9 +87,20 @@ class SetsController extends Controller
             $widthTotal = 0;
             $count = 1;
             $items[$i]->tags = $html;
+            $items[$i]->playlist = $playlist;
         }
         $i++;
-        return view('sets')->with('items', $items)->with('all', $i)->with('tags', $taglist)->with('desc', $desc);
+/*
+echo "<pre>";
+echo var_dump($items);
+echo "</pre>";
+exit;
+ */
+        return view('sets')
+            ->with('items', $items)
+            ->with('all', $i)
+            ->with('tags', $taglist)
+            ->with('desc', $desc);
     }
 }
 

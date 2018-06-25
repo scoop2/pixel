@@ -3633,6 +3633,7 @@ class ComposerStaticInit771e218f203ef8c685de73f530827b6e
         'PhpParser\\PrettyPrinterAbstract' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/PrettyPrinterAbstract.php',
         'PhpParser\\PrettyPrinter\\Standard' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/PrettyPrinter/Standard.php',
         'PixelmorphPagesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/PixelmorphPagesTableSeeder.php',
+        'PlaylistsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/PlaylistsTableSeeder.php',
         'PostsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/PostsTableSeeder.php',
         'Prophecy\\Argument' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Argument.php',
         'Prophecy\\Argument\\ArgumentsWildcard' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Argument/ArgumentsWildcard.php',

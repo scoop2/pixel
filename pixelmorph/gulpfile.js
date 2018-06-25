@@ -97,7 +97,7 @@ gulp.task('serve', function () {
     console.log('Browser Sync');
     browserSync.init({
         //proxy: "localhost",
-        proxy: "localhost:86",
+        proxy: "localhost",
         //   files: [
         //       pathCSS + '*.css',
         //       pathJSprod + '*.js'

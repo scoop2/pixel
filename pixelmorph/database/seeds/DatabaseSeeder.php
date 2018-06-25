@@ -32,5 +32,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TagsSetsTableSeeder::class);
         $this->call(WgUsersTableSeeder::class);
         $this->call(PixelmorphPagesTableSeeder::class);
+        $this->call(PlaylistsTableSeeder::class);
     }
 }

@@ -24,10 +24,10 @@ include (public_path() . '/images/icons.svg');
   </div>
 </div>
 <div class="wrap">
-<!--
+
 		@component('components.nav')
 		@endcomponent
--->
+
 		<div class="wrapInner">
 			<div class="left allHeight">
 				<div id="particles-left"></div>
@@ -41,7 +41,7 @@ include (public_path() . '/images/icons.svg');
 						<svg class="icon40 icon-red floatLeft marginDefault"><use xlink:href="#icon-alert"></use></svg>
 						<b>Sry, die Seite wird nur mit Javascript nutzbar sein.</b>
 						  <br>
-						  Es gibt viele gute Gründe ohne Javascript zu surfen. Ein gesundes Bedürfnis nach Sicherheit und Schutz der eigenen Privatspähre dürften wohl die wichtigsten sein. 
+						  Es gibt viele gute Gründe ohne Javascript zu surfen. Ein gesundes Bedürfnis nach Sicherheit und Schutz der eigenen Privatspähre dürften wohl die wichtigsten sein.
 						  Doch dies ist lediglich der Spielplatz eines Frontend-Webentwicklers ohne für Dich relavante Inhalte die keiner Barrierefreiheit bedürfen. Eine javascriptfreie Version ist nicht vorgesehen. Deshalb geht es für Dich nun nicht mehr weiter so lange Javascript deaktiviert bleibt.
 					</div>
 					</noscript>

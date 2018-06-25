@@ -1,4 +1,4 @@
-@extends('layouts.master') 
+@extends('layouts.master')
 @section('content')
 
 <div class="filterWrap z-depth-3">
@@ -31,12 +31,17 @@
 @foreach ($items as $key => $item)
 <li>
 	<div class="playerWrapOuter">
+    <div class="playlist z-depth-2" id="playlistid{{ $item->id }}">
+        <div class="close" data-id="{{ $item->id }}"><i class="fas fa-times fa-lg"></i></div>
+        {!! html_entity_decode($item->playlist) !!}
+    </div>
 	<div id="player{{ $item->id }}" data-id="{{ $item->id }}" class="playerWrap">
 		<div class="titleWrap">
 			<div id="setTitleInner{{ $item->id }}" class="playerTitle floatLeft">{{ $item->title }}</div>
 			<div class="playerDate floatRight">
 				{{ $item->setlength }}<span class="playerDateSmall">min</span> {{ $item->bpm }}<span class="playerDateSmall">BPM (&Oslash;)</span> {{ $item->released }}
 				<div class="playerSocialIcons">
+                    <div class="playlists" data-id="{{ $item->id }}"><i class="fas fa-list-ol"></i></div>
 					<a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sets/filter/{{ $item->id }}" target="_blank"><i class="fab fa-facebook-square fa-fw playerSocialIconsPadding"></i></a>
 					<a href="https://twitter.com/home?status=https://pixelmorph.de/sets/filter/{{ $item->id }}" target="_blank"><i class="fab fa-twitter-square fa-fw playerSocialIconsPadding"></i></a>
 					<a href="https://plus.google.com/share?url=https://pixelmorph.de/sets/filter/{{ $item->id }}" target="_blank"><i class="fab fa-google-plus-square fa-fw playerSocialIconsPadding"></i></a>
@@ -95,6 +100,34 @@ tagBox.each(function (index, el) {
 $(document).ready(function () {
 	$('.playerBtn').on('click', function () {
 		doPlayers(this);
+	});
+
+	$('.playlists').on('click', function() {
+		var div = $(this);
+        var id = div.data('id');
+        $('#playlistid' + id).css('display', 'block');
+        console.log(div.data('id'))
+               // console.log(div.css())
+        var animate = anime({
+			targets: '#playlistid' + id,
+			'max-width': '100%',
+			duration: 300,
+            easing: 'easeInOutQuad'
+		});
+	});
+
+	$('.close').on('click', function() {
+		var div = $(this);
+        var id = div.data('id');
+      //  $('#playlistid' + id).css('display', 'block');
+        console.log(div.data('id'))
+               // console.log(div.css())
+        var animate = anime({
+			targets: '#playlistid' + id,
+			'max-width': '0%',
+			duration: 300,
+            easing: 'easeInOutQuad'
+		});
 	});
 
 	$('.fiterBackBtnWrap').on('click', function() {
@@ -174,7 +207,7 @@ function doPlayers(el) {
 		$('#waveform' + tmp).html('');
 		$('#timelineAll' + tmp).html('');
 		$('#timelineNow' + tmp).html('');
-	
+
 		var easeInOutValues = ['easeInOutQuad', 'easeInOutCubic', 'easeInOutQuart', 'easeInOutQuint', 'easeInOutSine', 'easeInOutExpo', 'easeInOutCirc', 'easeInOutBack', 'easeInOutElastic'];
 		var animate = anime({
 			targets: '#playerBtn' + tmp,
@@ -186,7 +219,7 @@ function doPlayers(el) {
   			},
 			offset: 0
 		});
-		
+
 		$('#playerBtn' + tmp).html(plyBtnSvg);
 	});
 	openplayers = [];
@@ -322,7 +355,7 @@ function getJSON(values) {
 	url = 'http:{{ url('/') }}/api/sets/filter/';
 	for (var i=0; i<values.length; i++) {
 		url += values[i].tagid + ':' + values[i].tagvalue;
-		if (values.length - 1 > i) url += '-'; 
+		if (values.length - 1 > i) url += '-';
 	}
 	console.log(url);
     $.ajax({
@@ -344,7 +377,6 @@ function getJSON(values) {
         }
     });
 }
-
 
 </script>
 

@@ -3204,6 +3204,7 @@ return array(
     'PhpParser\\PrettyPrinterAbstract' => $vendorDir . '/nikic/php-parser/lib/PhpParser/PrettyPrinterAbstract.php',
     'PhpParser\\PrettyPrinter\\Standard' => $vendorDir . '/nikic/php-parser/lib/PhpParser/PrettyPrinter/Standard.php',
     'PixelmorphPagesTableSeeder' => $baseDir . '/database/seeds/PixelmorphPagesTableSeeder.php',
+    'PlaylistsTableSeeder' => $baseDir . '/database/seeds/PlaylistsTableSeeder.php',
     'PostsTableSeeder' => $baseDir . '/database/seeds/PostsTableSeeder.php',
     'Prophecy\\Argument' => $vendorDir . '/phpspec/prophecy/src/Prophecy/Argument.php',
     'Prophecy\\Argument\\ArgumentsWildcard' => $vendorDir . '/phpspec/prophecy/src/Prophecy/Argument/ArgumentsWildcard.php',
