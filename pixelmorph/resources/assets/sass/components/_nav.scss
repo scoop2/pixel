@@ -70,7 +70,7 @@
 
 .menu-wrap {
     display: flex; //flex-direction: row;
-    min-height: 50px;
+    //min-height: 50px;
     width: 100%; //padding-bottom: 0.9vw;
     background-color: $color5;
 }
@@ -80,7 +80,7 @@
 }
 
 .nav-left-stripe {
-    min-height: 3vw;
+    //min-height: 3vw;
     width: 20%;
     background-color: $color5;
     opacity: .88;
@@ -94,17 +94,16 @@ nav {
     position: relative;
     display: flex;
     flex-direction: row;
-    width: 60%;
-    height: 3vw;
+    width: 60%; //height: 3vw;
     background-color: $color5;
     font-size: 0;
     opacity: .88;
 }
 
 nav a {
-    line-height: 50px;
+    // line-height: 50px;
     height: 100%;
-    font-size: 24px;
+    font-size: 1vw;
     display: inline-block;
     position: relative;
     z-index: 1;

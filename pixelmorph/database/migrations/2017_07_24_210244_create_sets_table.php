@@ -1,7 +1,7 @@
 <?php
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateSetsTable extends Migration
 {
@@ -16,6 +16,7 @@ class CreateSetsTable extends Migration
         Schema::create('sets', function (Blueprint $table) {
             $table->increments('id');
             $table->tinyInteger('active');
+            $table->tinyInteger('promo');
             $table->smallInteger('setorder');
             $table->dateTime('released');
             $table->char('title');

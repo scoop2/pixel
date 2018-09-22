@@ -145,7 +145,7 @@
 	<nav>
 		<a id="mHome" href="/home">Home</a>
 		<a id="mSkills" href="/skills">Skills</a>
-		<a id="#mSets" href="/sets">Music</a>
+		<a id="#mSets" href="/sets">Musik</a>
 		<a id="mKontakt" href="/kontakt">Kontakt</a>
 	<div id="menu-hover" class="animation"></div>
 	</nav>

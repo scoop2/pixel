@@ -34,11 +34,12 @@ class SetsController extends Controller
         $taglist = DB::select('SELECT * FROM tags ORDER BY title');
         $thetag = "";
         $count = 1;
-        $rateTotal = 0;
+        $rateTotal = 1;
         $widthTotal = 0;
         $htmltags = [];
         $rate = [];
         $playlists = [];
+        $playlist = "";
         $month = ['', 'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 
         foreach ($items as $i => $item) {
@@ -46,13 +47,17 @@ class SetsController extends Controller
             $playlist = "<ul>";
             $playlistquery = DB::select('SELECT * FROM playlists WHERE set_id = ? ORDER BY position', [$items[$i]->id]);
             if (empty($playlistquery)) {
-                $playlist .= '<li><div class="playlistitem">Keine Playlist vorhanden</div></li></ul>';
+                $playlist .= '<li><div class="playlistitem"><p>Keine Playlist vorhanden</p></div></li></ul>';
             } else {
                 foreach ($playlistquery as $playlistitem) {
                     $playlist .= '<li><div class="playlistitem"><b>' . $playlistitem->artist . '</b> - ' . $playlistitem->title . ' (' . $playlistitem->mix . ')</div></li>';
                 }
             }
             $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$items[$i]->id]);
+            if (empty($tags)) {
+                $tags = [];
+            }
+
             foreach ($tags as $tag) {
                 $rateTotal += $tag->rate;
                 $thetag = DB::table('tags')->where('id', $tag->tag)->orderBy('title')->first();
@@ -83,7 +88,7 @@ class SetsController extends Controller
                 $count++;
             }
             $htmltags = [];
-            $rateTotal = 0;
+            $rateTotal = 1;
             $widthTotal = 0;
             $count = 1;
             $items[$i]->tags = $html;

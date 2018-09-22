@@ -36,13 +36,12 @@ Route::get('sets/filter/{filter?}', array(
     'as' => 'filter',
     'uses' => 'SetsController@index',
 ));
+Route::resource('setsadmin', 'SetsadminController');
+
 Route::resource('skills', 'SkillsController');
 Route::resource('blog', 'BlogController');
-Route::resource('test', 'TestController');
-Route::get('test/{id?}', array(
-    'as' => 'id',
-    'uses' => 'TestController@index',
-));
+Route::resource('kontakt', 'KontaktController');
+
 /*
 Route::get('wg/{id?}', array(
 'as' => 'id',

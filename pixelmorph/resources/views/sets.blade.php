@@ -125,7 +125,7 @@ $(document).ready(function () {
         var animate = anime({
 			targets: '#playlistid' + id,
 			'max-width': '0%',
-			duration: 300,
+			duration: 290,
             easing: 'easeInOutQuad'
 		});
 	});
@@ -253,7 +253,7 @@ function doPlayers(el) {
 			waveColor: '#6A5F60',
 			progressColor: '#40373F',
 		});
-		wavesurfer.load('./music/' + track);
+		wavesurfer.load('./enjoy/' + track);
 		wavesurfer.on('ready', function () {
 			wavesurfer.play();
 			openplayers.push(wavesurfer);

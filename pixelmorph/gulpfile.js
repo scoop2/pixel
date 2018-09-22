@@ -43,23 +43,24 @@ gulp.task('dev', ['sass']);
 
 
 
-gulp.task('js', function () {
+gulp.task('js', function() {
     gulp.src([
-        'node_modules/jquery/dist/jquery.min.js',
-        'node_modules/jquery-visible/jquery.visible.min.js',
-        //'node_modules/vue/dist/vue.js',
-        //  'node_modules/vue/dist/vue.min.js',
-        //  'node_modules/vuex/dist/vuex.js',
-        //    'node_modules/vue-resource/dist/vue-resource.min.js',
-        'node_modules/materialize-css/dist/js/materialize.min.js',
-        //    'resources/assets/js/fontawesome-all.min.js',
+            'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/jquery-visible/jquery.visible.min.js',
+            //'node_modules/vue/dist/vue.js',
+            //  'node_modules/vue/dist/vue.min.js',
+            //  'node_modules/vuex/dist/vuex.js',
+            //    'node_modules/vue-resource/dist/vue-resource.min.js',
+            // 'node_modules/materialize-css/dist/js/materialize.min.js',
 
-        'node_modules/materialize-css/extras/nouislider/nouislider.min.js',
-        'node_modules/animejs/anime.min.js',
-        'node_modules/wavesurfer.js/dist/wavesurfer.min.js',
-        //'resources/assets/js/' + 'browserchk.js',
-        'resources/assets/js/' + 'scripts.js'
-    ])
+            //    'resources/assets/js/fontawesome-all.min.js',
+            'resources/assets/js/materialize.min.js',
+            'node_modules/materialize-css/extras/nouislider/nouislider.min.js',
+            'node_modules/animejs/anime.min.js',
+            'node_modules/wavesurfer.js/dist/wavesurfer.min.js',
+            //'resources/assets/js/' + 'browserchk.js',
+            'resources/assets/js/' + 'scripts.js'
+        ])
         .pipe(concat('build.js'))
         //     .pipe(minify({
         //         ext:{
@@ -71,10 +72,10 @@ gulp.task('js', function () {
 });
 
 
-gulp.task('sass', function () {
+gulp.task('sass', function() {
     console.log('Compiling now sass');
     return gulp.src('resources/assets/sass/styles.scss')
-        .pipe(vinylPaths(function (paths) {
+        .pipe(vinylPaths(function(paths) {
             console.log('Compiling: ', paths);
             return Promise.resolve();
         }))
@@ -84,7 +85,7 @@ gulp.task('sass', function () {
 });
 
 
-gulp.task('minifycss', ['sass'], function () {
+gulp.task('minifycss', ['sass'], function() {
     console.log('Minifying css');
     return gulp.src(pathCSS + 'styles.css')
         .pipe(cleancss())
@@ -93,7 +94,7 @@ gulp.task('minifycss', ['sass'], function () {
 
 
 
-gulp.task('serve', function () {
+gulp.task('serve', function() {
     console.log('Browser Sync');
     browserSync.init({
         //proxy: "localhost",
