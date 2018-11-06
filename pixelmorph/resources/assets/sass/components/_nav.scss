@@ -1,3 +1,9 @@
+/*
+ |--------------------------------------------------------------------------
+ | Nav Main
+ |--------------------------------------------------------------------------
+ */
+
 .nav-wrap {
     position: fixed;
     bottom: 0;
@@ -5,7 +11,7 @@
     width: 100%;
 }
 
-.headline {
+.nav-headline {
     color: $color2;
     margin-left: auto;
     margin-right: auto;
@@ -19,12 +25,16 @@
     // opacity: 0.4;
 }
 
-.headlineTypo {
+.nav-headlineTypo {
     font-family: Headline;
     font-size: 2.4vw;
     text-transform: uppercase;
-    letter-spacing: 3vw;
+    letter-spacing: 3.2vw;
     margin-left: 3vw;
+}
+
+.nav-menuItem {
+    font-size: 1.9vw;
 }
 
 .nav-line-wrap {
@@ -166,4 +176,36 @@ a:nth-child(4):hover~.animation {
     width: 25%;
     left: 75%;
     background-color: $menu4;
+}
+
+
+/*
+ |--------------------------------------------------------------------------
+ | Nav Skills
+ |--------------------------------------------------------------------------
+ */
+
+.nav_skills_wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 3.5vw;
+    margin-top: -1vw;
+    //  border-bottom: 2px solid $color11;
+}
+
+.nav_skills_item:hover {
+    //background-color: $color10;
+    color: $color11;
+    border-bottom: 2px solid $color11;
+}
+
+.nav_skills_item {
+    font-family: Headline;
+    font-size: 2.4vw;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 0.5vw;
+    cursor: pointer;
 }

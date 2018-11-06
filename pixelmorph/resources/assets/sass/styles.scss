@@ -1,6 +1,7 @@
 @charset "UTF-8";
 @import "components/colors.scss";
 @import "components/functions.scss";
+
 /*
  |--------------------------------------------------------------------------
  | Materialize
@@ -45,17 +46,19 @@
 //@import "materialize/components/date_picker/default";
 //@import "materialize/components/date_picker/default.date";
 //@import "materialize/components/date_picker/default.time";
+
 /*
  |--------------------------------------------------------------------------
  | Font Awesome
  |--------------------------------------------------------------------------
  */
 
-@import "fontawesome/fontawesome.scss";
+@import "fontawesome/fontawesome";
 @import "fontawesome/fa-solid";
 @import "fontawesome/fa-brands";
 @import "fontawesome/fa-regular";
 //@import "../../../node_modules/font-awesome/scss/font-awesome";
+
 /*
  |--------------------------------------------------------------------------
  | Pixelmorph
@@ -71,5 +74,5 @@
 @import "components/nav";
 @import "components/player";
 //@import "fonts/vicons-font";
-//@import "fonts/voltaire.scss";
+@import "fonts/voltaire";
 @import "fonts/raleway";

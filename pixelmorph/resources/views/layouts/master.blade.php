@@ -42,8 +42,8 @@ include (public_path() . '/images/icons.svg');
 						<svg class="icon40 icon-red floatLeft marginDefault"><use xlink:href="#icon-alert"></use></svg>
 						<b>Sry, die Seite wird nur mit Javascript nutzbar sein.</b>
 						  <br>
-						  Es gibt viele gute Gründe ohne Javascript zu surfen. Ein gesundes Bedürfnis nach Sicherheit und Schutz der eigenen Privatspähre dürften wohl die wichtigsten sein.
-						  Doch dies ist lediglich der Spielplatz eines Frontend-Webentwicklers ohne für Dich relavante Inhalte die keiner Barrierefreiheit bedürfen. Eine javascriptfreie Version ist nicht vorgesehen. Deshalb geht es für Dich nun nicht mehr weiter so lange Javascript deaktiviert bleibt.
+						  Es gibt viele gute Gründe ohne Javascript zu surfen. Ein gesundes Bedürfnis nach Sicherheit und Schutz der eigenen Privatspähre dürften wohl die wichtigsten sein und deaktiviertes Javascript ist defakto die beste Lösung.
+						  Doch dies ist lediglich der Spielplatz eines Frontend-Webentwicklers ohne für Dich relevante Inhalte die keiner Barrierefreiheit bedürfen. Eine javascriptfreie Version ist nicht vorgesehen. Auch wenn ich eher zum befriedigen meines Spieltriebs einiges was normal mit Javascript gelöst wird mit CSS gemacht habe, wird nicht alles nutzbar sein so lange Javascript deaktiviert bleibt.
 					</div>
 					</noscript>
 					@yield('content')

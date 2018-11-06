@@ -116,7 +116,7 @@ gulp.task('serve', function() {
     gulp.watch('app/**/*.php', browserSync.reload);
     gulp.watch('app/config/**/*.php', browserSync.reload);
     gulp.watch('app/routes/**/*.php', browserSync.reload);
-    // gulp.watch('resources/**/*.scss', ['sass', browserSync.reload]);
+    gulp.watch('resources/**/*.scss', ['sass', browserSync.reload]);
     gulp.watch('resources/**/*.js', ['js', browserSync.reload]);
     gulp.watch('resources/**/*.php', browserSync.reload);
 });
