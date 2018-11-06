@@ -185,6 +185,11 @@ a:nth-child(4):hover~.animation {
  |--------------------------------------------------------------------------
  */
 
+.hoverPDFIcon {
+    position: relative;
+    float: right;
+}
+
 .nav_skills_wrap {
     display: flex;
     flex-direction: row;
@@ -192,10 +197,16 @@ a:nth-child(4):hover~.animation {
     width: 100%;
     height: 3.5vw;
     margin-top: -1vw;
-    //  border-bottom: 2px solid $color11;
+    background-color: $color12;
 }
 
 .nav_skills_item:hover {
+    //background-color: $color10;
+    color: $color11;
+    border-bottom: 2px solid $color11;
+}
+
+.nav_skills_item_active {
     //background-color: $color10;
     color: $color11;
     border-bottom: 2px solid $color11;

@@ -33,5 +33,6 @@ class DatabaseSeeder extends Seeder
         $this->call(WgUsersTableSeeder::class);
         $this->call(PixelmorphPagesTableSeeder::class);
         $this->call(PlaylistsTableSeeder::class);
+        $this->call(VitaTableSeeder::class);
     }
 }

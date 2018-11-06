@@ -47,8 +47,12 @@
     margin-right: auto;
     margin-left: auto;
     background-color: $color3; //  background: linear-gradient(to top,  rgba(64,110,142,1) 0%, rgb(79, 121, 171) 100%);
-    background: linear-gradient( to top, rgba(205, 180, 93, 0) 0%, rgba(205, 180, 93, 0) 2%, rgba(205, 180, 93, 1) 100%);
+    background: linear-gradient(to top, rgba(205, 180, 93, 0) 0%, rgba(205, 180, 93, 0) 2%, rgba(205, 180, 93, 1) 100%);
     box-shadow: 0 5px 8px $color5;
+}
+
+.containerContent {
+    padding: 1vw 4vw 0 4vw;
 }
 
 .content {
@@ -57,7 +61,7 @@
     font-size: 0.85vw;
     margin-top: 1vw;
     margin-bottom: 5vw;
-    padding: 1vw 4vw 0 4vw;
+    padding-top: 1vw;
     text-align: justify; // background: linear-gradient(to bottom,  rgba(205,180,93,0) 0%, rgba(205,180,93,1) 100%);
 }
 

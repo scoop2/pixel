@@ -38,7 +38,9 @@ Route::get('sets/filter/{filter?}', array(
 ));
 Route::resource('setsadmin', 'SetsadminController');
 
-Route::resource('skills', 'SkillsController');
+Route::get('skills', 'SkillsController@index');
+Route::get('skills/vita', 'SkillsController@vita');
+
 Route::resource('blog', 'BlogController');
 Route::resource('kontakt', 'KontaktController');
 
