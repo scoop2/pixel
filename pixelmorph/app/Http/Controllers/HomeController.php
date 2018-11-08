@@ -16,7 +16,7 @@ class HomeController extends Controller
       $items = DB::table('pages')->where('meta_description', 'home')->first();
       if (Auth::check()) {
         $items->username = $user['name'];
-         $items->check = '(Logged in!)';
+        $items->check = '(Logged in!)';
       } else {
         $items->username = 'Gast';
       }

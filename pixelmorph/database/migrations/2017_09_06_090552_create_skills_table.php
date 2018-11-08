@@ -19,6 +19,8 @@ class CreateSkillsTable extends Migration
             $table->tinyInteger('active');
             $table->char('title');
             $table->text('description');
+            $table->integer('perc');
+            $table->char('icon');
             $table->timestamps();
         });
     }
