@@ -59,7 +59,6 @@ gulp.task('js', function() {
             'node_modules/animejs/anime.min.js',
             'node_modules/wavesurfer.js/dist/wavesurfer.min.js',
             //'resources/assets/js/' + 'browserchk.js',
-            'resources/assets/js/clbcopy.js',
             'resources/assets/js/' + 'scripts.js'
         ])
         .pipe(concat('build.js'))

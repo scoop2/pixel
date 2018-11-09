@@ -2,14 +2,17 @@
     display: flex;
     justify-content: flex-start;
 }
+
 .skillItemCircle {
     width: 10%;
     justify-content: space-around;
 }
+
 .skillItemText {
     width: 80%;
     padding: 0.5vw;
 }
+
 .skillItemIcon {
     width: 10%;
     padding: 0.5vw;
@@ -18,6 +21,7 @@
 table.person {
     width: 90%;
 }
+
 td.icon {
     width: 5%;
     padding-top: 0;
@@ -26,6 +30,7 @@ td.icon {
     padding-right: 2vw;
     vertical-align: top;
 }
+
 td.person {
     width: 20%;
     vertical-align: top;
@@ -35,10 +40,16 @@ td.person {
     padding-bottom: 1vw;
     padding-right: 0;
 }
+
 td.divide {
     border-top: 1px solid black;
 }
+
 .pgp {
     font-size: 0.4vw;
     background-color: $color2;
+}
+
+#pgpkey {
+    opacity: 0;
 }

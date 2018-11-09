@@ -34,7 +34,7 @@
     </tr>
     <tr>
         <td class="icon"><i class="fas fa-key fa-2x"></i></td>
-        <td class="person" colspan="2"><a class="waves-effect waves-light btn modal-trigger" href="#modalpgp">PGP public key</a></td>
+        <td class="person" colspan="2"><a class="waves-effect btn modal-trigger" href="#modalpgp">PGP public key</a></td>
     </tr>
 
 
@@ -42,11 +42,11 @@
   <div id="modalpgp" class="modal">
     <div class="modal-content pgp">
       <pre>{!! $items[0]->pgp !!}</pre>
-      <textarea class="pgpkey">{!! $items[0]->pgp !!}</textarea>
+      <textarea id="pgpkey">{!! $items[0]->pgp !!}</textarea>
     </div>
     <div class="modal-footer">
-        <a href="#!" onclick="copyText()" data-clipboard-target=".pgpkey" class="modal-close waves-effect waves-green btn-flat">Kopieren</a>
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Schliessen</a>
+        <a href="#!" onclick="copyText()" data-clipboard-target=".pgpkey" class="modal-close btn waves-effect">Kopieren</a>
+        <a href="#!" class="modal-close waves-effect btn">Schliessen</a>
     </div>
   </div>
 
@@ -58,15 +58,9 @@
   });
 
   function copyText() {
-      /*
-      var copyText = $('#pgpkey').text();
-console.log(copyText)
-$(this).CopyToClipboard();
-
-      copyText.execCommand("copy");
-*/
-console.log('copy')
- $(this).CopyToClipboard();
+      $('#pgpkey').focus();
+      $('#pgpkey').select();
+      document.execCommand('copy');
   }
 </script>
 
