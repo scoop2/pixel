@@ -1,5 +1,7 @@
 @extends('layouts.master') @section('content')
-@component('components.navskills', ['active' => 'skills'])
+
+@component('components.navskills', ['active' => 'skills', 'user' => $user])
+
 @endcomponent
 
 <div class="containerContent">
@@ -9,7 +11,7 @@
 		<li>
 			<div class="skill-cat-head">{{ $cat['title'] }}</div>
 
-				@foreach ($cat['items'] as $item)   
+				@foreach ($cat['items'] as $item)
 <div class="skillItemWrap">
 <div class="skillItemIcon"><i class="{!! $item['icon'] !!} fa-3x"></i></div>
 <div class="skillItemCircle">
@@ -23,9 +25,9 @@
     <b>{!! $item['title'] !!}</b><br>
     {!! $item['description'] !!}
 </div>
-</diV>  
+</diV>
                 @endforeach
-		
+
 		</li> @endforeach
 	</ul>
 

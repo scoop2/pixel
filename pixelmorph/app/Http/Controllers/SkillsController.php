@@ -2,12 +2,12 @@
 namespace App\Http\Controllers;
 
 use App\Pages;
+use App\Persos;
 use App\Skills;
 use App\Skillscats;
 use App\Vita;
-use App\Persos;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 // use App\models\Cats;
 class SkillsController extends Controller
@@ -15,6 +15,12 @@ class SkillsController extends Controller
 
     public function index(Request $request)
     {
+        if (!Auth::check()){
+            $user = false;
+        }else{
+            $user = true;
+        }
+
         $desc = Pages::where('status', 'ACTIVE')->where('title', 'Skills')->first();
         $skillcats = Skillscats::all()->where('active', 1);
         $i = 0;
@@ -37,11 +43,17 @@ class SkillsController extends Controller
         return view('skills', [
             'skillcats' => $cats,
             'desc' => $desc,
+            'user' => $user,
         ]);
     }
 
     public function vita(Request $request)
     {
+        if (Auth::check()) {
+            $logged = true;
+        } else {
+            $logged = false;
+        }
         $vitas = Vita::all();
         $i = 0;
         foreach ($vitas as $vita) {
@@ -52,7 +64,7 @@ class SkillsController extends Controller
             $i++;
         }
 
-        return view('vita', ['items' => $item]);
+        return view('vita', ['items' => $item, 'user' => Auth::user()]);
     }
 
     public function person(Request $request)
@@ -61,14 +73,14 @@ class SkillsController extends Controller
         /*
         $i = 0;
         foreach ($vitas as $vita) {
-            $item[$i]['title'] = $vita->title;
-            $item[$i]['start'] = substr($vita->datumstart, 0, 4);
-            $item[$i]['end'] = substr($vita->datumend, 0, 4);
-            $item[$i]['desc'] = $vita->desc;
-            $i++;
+        $item[$i]['title'] = $vita->title;
+        $item[$i]['start'] = substr($vita->datumstart, 0, 4);
+        $item[$i]['end'] = substr($vita->datumend, 0, 4);
+        $item[$i]['desc'] = $vita->desc;
+        $i++;
         }
-        */
+         */
 
-        return view('person', ['items' => $items]);
+        return view('person', ['items' => $items, 'user' => Auth::user()]);
     }
 }
