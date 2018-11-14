@@ -15,7 +15,7 @@
         $person = 'nav_skills_item';
      }
 
-    if ($user === true) {
+
 ?>
 <div class="nav_skills_wrap">
     <div class="nav_skills_item <?php echo $skills ?>"><a href="/skills">Skills</a></div>
@@ -23,5 +23,5 @@
     <div class="nav_skills_item <?php echo $person ?>"><a href="/skills/person">Personalien</a></div>
 </div>
 <?php
-    }
+
 ?>

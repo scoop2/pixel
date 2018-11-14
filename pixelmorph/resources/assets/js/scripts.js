@@ -1,7 +1,7 @@
 //var sound;
 //Vue.config.devtools = true;
 
-$(document).ready(function () {
+$(document).ready(function() {
 
 
 
@@ -36,7 +36,7 @@ $(document).ready(function () {
 
 
 
-    $('#play').on('click', function () {
+    $('#play').on('click', function() {
         sound.play();
         $(this).css('display', 'none');
         $('#pause').css('display', 'block');
@@ -44,7 +44,7 @@ $(document).ready(function () {
 
     });
 
-    $('#pause').on('click', function () {
+    $('#pause').on('click', function() {
         sound.pause();
         $(this).css('display', 'none');
         $('#play').css('display', 'block');
@@ -53,14 +53,14 @@ $(document).ready(function () {
 
 });
 
-$(document).resize(function () {
+$(document).resize(function() {
     //  $('.allHeight').height($(document).height());
     //  $('canvas').height($(document).height());
     //   $('canvas').css('height', $(document).height());
 });
 
 
-$('#menu-hover').on('click', function () {
+$('#menu-hover').on('click', function() {
     var tmp = $(this).attr('id');
     var div = $('#');
     switch (tmp) {
@@ -86,7 +86,7 @@ function getUrlParameter(sParam) {
 }
 
 
-var transitionColor = function (from, to, count) {
+var transitionColor = function(from, to, count) {
     var div = count + 1;
     var int = parseInt(from, 16); // 100
     var intTo = parseInt(to, 16); // 50
@@ -103,30 +103,34 @@ var transitionColor = function (from, to, count) {
     return list;
 };
 
-var transition = function (from, to, div) {
+var transition = function(from, to, div) {
     if (div == null) div = 3;
-    var r = from.slice(0, 2), g = from.slice(2, 4), b = from.slice(4, 6);
-    var rt = to.slice(0, 2), gt = to.slice(2, 4), bt = to.slice(4, 6);
+    var r = from.slice(0, 2),
+        g = from.slice(2, 4),
+        b = from.slice(4, 6);
+    var rt = to.slice(0, 2),
+        gt = to.slice(2, 4),
+        bt = to.slice(4, 6);
     var allR = transitionColor(r, rt, div);
     var allG = transitionColor(g, gt, div);
     var allB = transitionColor(b, bt, div);
     var list = [];
 
-    allR.forEach(function (_, i) {
+    allR.forEach(function(_, i) {
         list.push('' + allR[i] + allG[i] + allB[i]);
     });
 
     return list;
 };
 
-var generateGradientStepsCss = function (from, to, div) {
+var generateGradientStepsCss = function(from, to, div) {
     var values = transition(from, to, div);
     var total = 100 / (div + 1);
     var obj = [];
     for (var i = 0; i <= div + 1; i++) {
-        obj.push({percentage: Math.floor(total * i), value: values[i]});
+        obj.push({ percentage: Math.floor(total * i), value: values[i] });
     }
-    var cssValues = obj.map(function (value) {
+    var cssValues = obj.map(function(value) {
         return '#' + value.value + ' ' + value.percentage + '%';
     }).join(', ');
     return 'linear-gradient(' + cssValues + ')'
@@ -168,27 +172,27 @@ scene.load(function() {
 
 function loadApi() {
     $.ajax({
-        url: 'http://localhost:86/pixelmorph/api/1',
+        url: 'http://localhost:3303/api/1',
         type: 'GET',
-     //   data: {
-     //       format: 'json'
-       // },
-     //   dataType: 'jsonp',
-  //      data: {
-       //     MatchId: "@(string.Join(",", Model.matchInformation.Select(m => m.MatchId).ToArray()))",
-       //     filter: collectFilter(),
-       //     live: liveNonelive(),
-      //      page: pageIn,
-      //      eOnPage: eOnPageIn,
-      //      openEvents: openEvents.toString()
- //      },
-        beforeSend: function () {},
-        success: function (data, textStatus, jqXHR) {
+        //   data: {
+        //       format: 'json'
+        // },
+        //   dataType: 'jsonp',
+        //      data: {
+        //     MatchId: "@(string.Join(",", Model.matchInformation.Select(m => m.MatchId).ToArray()))",
+        //     filter: collectFilter(),
+        //     live: liveNonelive(),
+        //      page: pageIn,
+        //      eOnPage: eOnPageIn,
+        //      openEvents: openEvents.toString()
+        //      },
+        beforeSend: function() {},
+        success: function(data, textStatus, jqXHR) {
             console.log('sucsess')
             console.log(data)
             return data;
         },
-        error: function (jqXHR, textStatus, errorThrown) {
+        error: function(jqXHR, textStatus, errorThrown) {
             console.log('error!!')
             console.log(errorThrown)
         }

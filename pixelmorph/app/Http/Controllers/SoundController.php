@@ -5,7 +5,7 @@ use App\Pages;
 use Helper;
 use Illuminate\Support\Facades\DB;
 
-class SetsController extends Controller
+class SoundController extends Controller
 {
 
     public function index($filter = '')
@@ -107,7 +107,7 @@ echo var_dump($items);
 echo "</pre>";
 exit;
  */
-        return view('sets')
+        return view('sound')
             ->with('items', $items)
             ->with('all', $i)
             ->with('tags', $taglist)

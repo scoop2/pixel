@@ -38,6 +38,8 @@ Route::get('sets/filter/{filter?}', array(
 ));
 Route::resource('setsadmin', 'SetsadminController');
 
+Route::resource('sound', 'SoundController');
+
 Route::get('skills', 'SkillsController@index');
 Route::get('skills/vita', 'SkillsController@vita')->middleware('auth');
 Route::get('skills/person', 'SkillsController@person')->middleware('auth');

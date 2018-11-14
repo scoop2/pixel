@@ -5,7 +5,7 @@ use App\Pages;
 use Helper;
 use Illuminate\Support\Facades\DB;
 
-class SetsController extends Controller
+class MuiscController extends Controller
 {
 
     public function index($filter = '')

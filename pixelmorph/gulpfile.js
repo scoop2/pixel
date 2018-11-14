@@ -6,6 +6,7 @@ var uglify = require('gulp-uglify');
 var cleancss = require('gulp-clean-css');
 var pump = require('pump');
 var vinylPaths = require('vinyl-paths');
+var WaveformPlaylist = require('waveform-playlist');
 var browserSync = require('browser-sync').create();
 
 //var addsrc = require('gulp-add-src');
@@ -37,10 +38,10 @@ var pathCSS = pathRoot + 'css/';
 
 var pathSASS = pathDev + 'sass/';
 
+
 gulp.task('default', ['sass']);
 gulp.task('prod', ['js', 'sass', 'minifycss']);
 gulp.task('dev', ['sass']);
-
 
 
 gulp.task('js', function() {
@@ -58,17 +59,23 @@ gulp.task('js', function() {
             'node_modules/materialize-css/extras/nouislider/nouislider.min.js',
             'node_modules/animejs/anime.min.js',
             'node_modules/wavesurfer.js/dist/wavesurfer.min.js',
+            //   'resources/assets/js/jquery.jplayer.min.js',
+            'resources/assets/js/jquery.simpleaudioplayer.js',
+            //         'node_modules/waveform-data/dist/waveform-data.js',
+
             //'resources/assets/js/' + 'browserchk.js',
             'resources/assets/js/' + 'scripts.js'
         ])
         .pipe(concat('build.js'))
-        //     .pipe(minify({
-        //         ext:{
-        //             min:'.js'
-        //         },
-        //         noSource: true
-        //     }))
-        .pipe(gulp.dest(pathJSprod));
+
+    //().pipe(minify({
+    //    ext: {
+    //           min: '.js'
+    //   },
+    //   noSource: true
+    // }))
+
+    .pipe(gulp.dest(pathJSprod));
 });
 
 

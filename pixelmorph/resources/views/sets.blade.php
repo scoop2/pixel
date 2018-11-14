@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
+<div class="setsWrap">
 <div class="filterWrap z-depth-3">
 	<div class="filterSwitchWrap">
 		@foreach ($tags as $key => $tag)
@@ -69,7 +70,7 @@
 @endforeach
 </ul>
 </div>
-
+</div>
 </div>
 
 <script>
@@ -245,13 +246,15 @@ function doPlayers(el) {
 		});
 		var wavesurfer = WaveSurfer.create({
 			container: '#waveform' + id,
-			backend: 'MediaElement',
-			height: 70,
-			responsive: true,
-			hideScrollbar: true,
+		//	backend: 'MediaElement',
+            backend: 'WebAudio',
+			height: 120,
+            partialRender: true,
+		//	responsive: true,
+		//	hideScrollbar: false,
 			cursorWidth: 0,
-			waveColor: '#6A5F60',
-			progressColor: '#40373F',
+			waveColor: '#c9923d',
+			progressColor: '#bd4f23',
 		});
 		wavesurfer.load('./enjoy/' + track);
 		wavesurfer.on('ready', function () {
@@ -278,7 +281,14 @@ function doPlayers(el) {
 			$('#timelineAll' + id).html(minutes + ':' + seconds);
 		});
 
+wavesurfer.on('ready', function () {
+var peak;
+console.log(wavesurfer.backend.getPeaks(960));
+});
+
+
 		wavesurfer.on('audioprocess', function () {
+
 			time = parseInt(wavesurfer.getCurrentTime());
 			hours = Math.floor(time / 3600);
 			minutes = Math.floor((time - (hours * 3600)) / 60);
