@@ -1,126 +1,167 @@
 @extends('layouts.master')
 @section('content')
 
+<!--
+<div class="playerWrap">
+  <div id="title">
+    <span id="track"></span>
+    <div id="timer">0:00</div>
+    <div id="duration">0:00</div>
+  </div>
+
+
+  <div class="controlsOuter">
+    <div class="controlsInner">
+      <div id="loading"></div>
+      <div class="btn" id="playBtn"></div>
+      <div class="btn" id="pauseBtn"></div>
+      <div class="btn" id="prevBtn"></div>
+      <div class="btn" id="nextBtn"></div>
+    </div>
+    <div class="btn" id="playlistBtn"></div>
+    <div class="btn" id="volumeBtn"></div>
+  </div>
+
+
+  <div id="waveform"></div>
+  <div id="bar"></div>
+  <div id="progress"></div>
+
+
+  <div id="playlist">
+    <div id="list"></div>
+  </div>
+
+
+  <div id="volume" class="fadeout">
+    <div id="barFull" class="bar"></div>
+    <div id="barEmpty" class="bar"></div>
+    <div id="sliderBtn"></div>
+</div>
+</div>
+
+<hr>
+-->
+
+
+
 <div class="setsWrap">
-
-<div class="audio-player">
-  <div id="play-btn"></div>
-  <div class="audio-wrapper" id="player-container" href="javascript:;">
-    <audio id="player" ontimeupdate="initProgressBar()">
-      <source src="enjoy/abc.ogg" type="audio/ogg">
-    </audio>
-  </div>
-  <div class="player-controls scrubber">
-    <p>Oslo <small>by</small> Holy Esque</p>
-    <span id="seek-obj-container">
-      <progress id="seek-obj" value="0" max="1"></progress>
-    </span>
-    <small style="float: left; position: relative; left: 15px;" id="start-time"></small>
-    <small style="float: right; position: relative; right: 20px;" id="end-time"></small>
-  </div>
-  <div class="album-image" style="background-image: url(https://artistxite.ie/imgcache/album/005/161/005161476_500.jpg)"></div>
+<div class="filterWrap z-depth-3">
+	<div class="filterSwitchWrap">
+		@foreach ($tags as $key => $tag)
+			<div class="tagBoxWrap">
+				<div class="tagTitle">{{ $tag->title }}</div>
+				<div id="tagBox{{ $tag->id }}" class="tagBox" data-id="{{ $tag->id }}"></div>
+			</div>
+		@endforeach
+		<div class="tagBoxWrap"></div>
+	</div>
+</div>
+<div class="filterNav">
+	<div class="fiterBtnWrap tooltipped" data-position="left" data-tooltip="Starte Suche nach Sets mit diesen Moods">
+		<svg class="icon30 icon-textcolor"><use xlink:href="#lense"></use></svg>
+	</div>
+	<div class="fiterBackBtnWrap tooltipped" data-position="left" data-tooltip="Versteck mich wieder">
+		<i class="fas fa-arrow-circle-up fa-3x icon-blue"></i>
+	</div>
+	<div class="fiterResetBtnWrap tooltipped" data-position="left" data-tooltip="Alle Moods auf Null zurück stellen">
+		<i class="fas fa-arrow-circle-down fa-3x icon-blue"></i>
+	</div>
 </div>
 
+<div class="setsWrap">
+	<div>{!! html_entity_decode($desc->body) !!}</div>
+	<div id="setsWrapList">
+
+	<div class="playerWrapOuter">
+    <div class="playlist z-depth-2" id="playlistid">
+        <div class="close" data-id=""><i class="fas fa-times fa-lg"></i></div>
+    </div>
+	<div id="player" data-id="" class="playerWrap">
+		<div class="titleWrap">
+			<div id="track" class="playerTitle floatLeft"></div>
+			<div class="playerDate floatRight">
+				{{ $items[0]->setlength }}<span class="playerDateSmall">min</span> {{ $items[0]->bpm }}<span class="playerDateSmall">BPM (&Oslash;)</span> {{ $items[0]->released }}
+				<div class="playerSocialIcons">
+                    <div class="playlists" data-id="{{ $items[0]->id }}"><i class="fas fa-list-ol"></i></div>
+					<a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sets/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-facebook-square fa-fw playerSocialIconsPadding"></i></a>
+					<a href="https://twitter.com/home?status=https://pixelmorph.de/sets/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-twitter-square fa-fw playerSocialIconsPadding"></i></a>
+					<a href="https://plus.google.com/share?url=https://pixelmorph.de/sets/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-google-plus-square fa-fw playerSocialIconsPadding"></i></a>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="playerBtnWrap">
+			<div id="waveform{{ $items[0]->id }}" class="waveform" data-wave="{{ $items[0]->id }}"></div>
+			<div id="playerBtn{{ $items[0]->id }}" class="playerBtn" data-id="{{ $items[0]->id }}" data-job="stop" data-track="{{ $items[0]->filename }}" data-title="{{ $items[0]->title }}">
+				<svg class="playerSVG icon60 icon-textcolor floatRight">
+					<use xlink:href="#player-play"></use>
+				</svg>
+			</div>
+		</div>
+	</div>
+		<div class="timelineWrap">
+			<div id="timelineNow{{ $items[0]->id }}" class="playerTimeText floatLeft"></div>
+			<div id="timelineAll{{ $items[0]->id }}" class="playerTimeText floatRight"></div>
+		</div>
+		<div class="clear"></div>
+		<div class="tagWrapper">{!! $items[0]->tags !!}</div>
+	</div>
+
 </div>
+</div>
+</div>
+
+
 
 <script>
 
-//$(document).ready(function() {
+var playBtn = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-play"></use></svg>';
+var pauseBtn = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-pause"></use></svg>';
+var sound = new Howl({
+  src: ['enjoy/autopahn.mp3'],
+  html5: true,
+});
 
-function initProgressBar() {
-  var player = document.getElementById('player');
-  var length = player.duration
-  var current_time = player.currentTime;
 
-  // calculate total length of value
-  var totalLength = calculateTotalValue(length)
-  document.getElementById("end-time").innerHTML = totalLength;
 
-  // calculate current value time
-  var currentTime = calculateCurrentValue(current_time);
-  document.getElementById("start-time").innerHTML = currentTime;
+sound.on('play', function(){
+    setInterval(function(){
+        var perc = (sound.seek() / sound._duration) * 100;
+        $('.playerBtn').css('width', perc + '%' );
+    }, 500);
+});
 
-  var progressbar = document.getElementById('seek-obj');
-  progressbar.value = (player.currentTime / player.duration);
-  progressbar.addEventListener("click", seek);
+sound.on('load', function(){
+    $('.overlay').css('display', 'none');
+});
 
-  if (player.currentTime == player.duration) {
-    document.getElementById('play-btn').className = "";
-  }
 
-  function seek(event) {
-      console.log(player.currentTime)
-    var percent = event.offsetX / this.offsetWidth;
-    player.currentTime = percent * player.duration;
-    progressbar.value = percent / 100;
-  }
-};
 
-function initPlayers(num) {
-  // pass num in if there are multiple audio players e.g 'player' + i
 
-  for (var i = 0; i < num; i++) {
-    (function() {
-
-      // Variables
-      // ----------------------------------------------------------
-      // audio embed object
-      var playerContainer = document.getElementById('player-container'),
-        player = document.getElementById('player'),
-        isPlaying = false,
-        playBtn = document.getElementById('play-btn');
-
-      // Controls Listeners
-      // ----------------------------------------------------------
-      if (playBtn != null) {
-        playBtn.addEventListener('click', function() {
-          togglePlay()
-        });
-      }
-
-      // Controls & Sounds Methods
-      // ----------------------------------------------------------
-      function togglePlay() {
-        if (player.paused === false) {
-          player.pause();
-          isPlaying = false;
-          document.getElementById('play-btn').className = "";
-
-        } else {
-          player.play();
-          document.getElementById('play-btn').className = "pause";
-          isPlaying = true;
+$('.playerBtn').click(function(){
+    if (sound.playing() === false) {
+        if (sound._state != 'loaded') {
+            $('.overlay').css('display', 'block');
         }
-      }
-    }());
-  }
-}
+        sound.play();
+        $('.playerBtn').html(playBtn);
+    } else {
+        sound.pause();
+        $('.playerBtn').html(pauseBtn);
+    }
+});
 
-function calculateTotalValue(length) {
-  var minutes = Math.floor(length / 60),
-    seconds_int = length - minutes * 60,
-    seconds_str = seconds_int.toString(),
-    seconds = seconds_str.substr(0, 2),
-    time = minutes + ':' + seconds
+$('.playerBtnWrap').click(function(e) {
+    var tmp, posX, perc, step;
+    tmp = $(this).offset().left;
+    posX = (e.pageX - tmp);
+    perc = 100 - (posX / $(this).width()) * 100;
+    step = (sound._duration / 100) * perc;
+    sound.seek(step)
+    $('.playerBtn').css('width', perc + '%');
+});
 
-  return time;
-}
-
-function calculateCurrentValue(currentTime) {
-  var current_hour = parseInt(currentTime / 3600) % 24,
-    current_minute = parseInt(currentTime / 60) % 60,
-    current_seconds_long = currentTime % 60,
-    current_seconds = current_seconds_long.toFixed(),
-    current_time = (current_minute < 10 ? "0" + current_minute : current_minute) + ":" + (current_seconds < 10 ? "0" + current_seconds : current_seconds);
-
-  return current_time;
-}
-
-initPlayers($('#player-container').length);
-
-
-
-//		});
 </script>
 
 @endsection

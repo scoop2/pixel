@@ -164,15 +164,17 @@ wave {
 
 .playerBtnWrap {
     position: absolute;
+    width: 100%;
     z-index: 98;
     right: 0;
 }
 
 .playerBtn {
     position: relative;
+    float: right;
     z-index: 99;
     cursor: pointer;
-    width: 0.5vw;
+    width: 1%;
     height: 3.6vw;
     border-radius: 0.5vw;
     background-color: $sempa2;

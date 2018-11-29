@@ -58,12 +58,15 @@ gulp.task('js', function() {
             'resources/assets/js/materialize.min.js',
             'node_modules/materialize-css/extras/nouislider/nouislider.min.js',
             'node_modules/animejs/anime.min.js',
-            'node_modules/wavesurfer.js/dist/wavesurfer.min.js',
+            'node_modules/howler/dist/howler.min.js',
+            'node_modules/howler/dist/siriwave.min.js',
+            //  'node_modules/wavesurfer.js/dist/wavesurfer.min.js',
             //   'resources/assets/js/jquery.jplayer.min.js',
-            'resources/assets/js/jquery.simpleaudioplayer.js',
+            //     'resources/assets/js/jquery.simpleaudioplayer.js',
             //         'node_modules/waveform-data/dist/waveform-data.js',
 
             //'resources/assets/js/' + 'browserchk.js',
+            //  'resources/assets/js/html5media.min.js',
             'resources/assets/js/' + 'scripts.js'
         ])
         .pipe(concat('build.js'))
