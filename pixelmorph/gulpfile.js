@@ -56,7 +56,8 @@ gulp.task('js', function() {
 
             //    'resources/assets/js/fontawesome-all.min.js',
             'resources/assets/js/materialize.min.js',
-            'node_modules/materialize-css/extras/nouislider/nouislider.min.js',
+            //    'node_modules/materialize-css/extras/nouislider/nouislider.min.js',
+            'node_modules/nouislider/distribute/nouislider.min.js',
             'node_modules/animejs/anime.min.js',
             'node_modules/howler/dist/howler.min.js',
             'node_modules/howler/dist/siriwave.min.js',

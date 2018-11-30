@@ -1,50 +1,6 @@
 @extends('layouts.master')
 @section('content')
 
-<!--
-<div class="playerWrap">
-  <div id="title">
-    <span id="track"></span>
-    <div id="timer">0:00</div>
-    <div id="duration">0:00</div>
-  </div>
-
-
-  <div class="controlsOuter">
-    <div class="controlsInner">
-      <div id="loading"></div>
-      <div class="btn" id="playBtn"></div>
-      <div class="btn" id="pauseBtn"></div>
-      <div class="btn" id="prevBtn"></div>
-      <div class="btn" id="nextBtn"></div>
-    </div>
-    <div class="btn" id="playlistBtn"></div>
-    <div class="btn" id="volumeBtn"></div>
-  </div>
-
-
-  <div id="waveform"></div>
-  <div id="bar"></div>
-  <div id="progress"></div>
-
-
-  <div id="playlist">
-    <div id="list"></div>
-  </div>
-
-
-  <div id="volume" class="fadeout">
-    <div id="barFull" class="bar"></div>
-    <div id="barEmpty" class="bar"></div>
-    <div id="sliderBtn"></div>
-</div>
-</div>
-
-<hr>
--->
-
-
-
 <div class="setsWrap">
 <div class="filterWrap z-depth-3">
 	<div class="filterSwitchWrap">
@@ -69,17 +25,15 @@
 	</div>
 </div>
 
-<div class="setsWrap">
-	<div>{!! html_entity_decode($desc->body) !!}</div>
-	<div id="setsWrapList">
 
-	<div class="playerWrapOuter">
+<div>{!! html_entity_decode($desc->body) !!}</div>
+<div class="playerWrapOuter">
     <div class="playlist z-depth-2" id="playlistid">
         <div class="close" data-id=""><i class="fas fa-times fa-lg"></i></div>
     </div>
 	<div id="player" data-id="" class="playerWrap">
 		<div class="titleWrap">
-			<div id="track" class="playerTitle floatLeft"></div>
+			<div id="track" class="playerTitle floatLeft">{{ $items[0]->title }}</div>
 			<div class="playerDate floatRight">
 				{{ $items[0]->setlength }}<span class="playerDateSmall">min</span> {{ $items[0]->bpm }}<span class="playerDateSmall">BPM (&Oslash;)</span> {{ $items[0]->released }}
 				<div class="playerSocialIcons">
@@ -90,9 +44,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="clear"></div>
 		<div class="playerBtnWrap">
-			<div id="waveform{{ $items[0]->id }}" class="waveform" data-wave="{{ $items[0]->id }}"></div>
+            <div class="playerWaveformWrap">
+			    <div id="waveform{{ $items[0]->id }}" class="playerWaveform" data-wave="{{ $items[0]->id }}"></div>
+            </div>
 			<div id="playerBtn{{ $items[0]->id }}" class="playerBtn" data-id="{{ $items[0]->id }}" data-job="stop" data-track="{{ $items[0]->filename }}" data-title="{{ $items[0]->title }}">
 				<svg class="playerSVG icon60 icon-textcolor floatRight">
 					<use xlink:href="#player-play"></use>
@@ -108,14 +63,17 @@
 		<div class="tagWrapper">{!! $items[0]->tags !!}</div>
 	</div>
 
+<div class="setsListWrap">
+@foreach ($items as $item)
+    <div data-itemid="{{ $item->id }}" class="setsListItem btn waves-effect waves-light">{{ $item->title }}</div>
+@endforeach
 </div>
 </div>
-</div>
-
-
 
 <script>
-
+var tagBox = $('.tagBox');
+var slider = [];
+var id, dir, easing, count = 0;
 var playBtn = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-play"></use></svg>';
 var pauseBtn = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-pause"></use></svg>';
 var sound = new Howl({
@@ -124,11 +82,10 @@ var sound = new Howl({
 });
 
 
-
 sound.on('play', function(){
     setInterval(function(){
         var perc = (sound.seek() / sound._duration) * 100;
-        $('.playerBtn').css('width', perc + '%' );
+        $('.playerWaveform').css('width', perc + '%' );
     }, 500);
 });
 
@@ -137,9 +94,7 @@ sound.on('load', function(){
 });
 
 
-
-
-$('.playerBtn').click(function(){
+$('.playerBtn').on('click', function(){
     if (sound.playing() === false) {
         if (sound._state != 'loaded') {
             $('.overlay').css('display', 'block');
@@ -152,15 +107,186 @@ $('.playerBtn').click(function(){
     }
 });
 
-$('.playerBtnWrap').click(function(e) {
+$('.playerWaveformWrap').on('click', function(e) {
     var tmp, posX, perc, step;
     tmp = $(this).offset().left;
     posX = (e.pageX - tmp);
-    perc = 100 - (posX / $(this).width()) * 100;
+    //perc = 100 - (posX / $(this).width()) * 100;
+    perc = (posX / $(this).width()) * 100;
     step = (sound._duration / 100) * perc;
     sound.seek(step)
-    $('.playerBtn').css('width', perc + '%');
+    $('.playerWaveform').css('width', perc + '%');
 });
+
+
+
+$('.fiterBackBtnWrap').on('click', function() {
+    var div = $('.filterWrap');
+    var dir = div.data('pos');
+    var animate = anime({
+        targets: '.filterWrap',
+        top: dir,
+        duration: 700,
+        elasticity: 600
+    });
+    $('.fiterBtnWrap').html('<svg class="icon30 icon-textcolor"><use xlink:href="#lense"></use></svg>');
+});
+
+$('.fiterResetBtnWrap').on('click', function() {
+    tagBox.each(function (index, el) {
+        el.noUiSlider.set(0);
+    });
+});
+//$('.tooltipped').tooltip({enterDelay: 9000, exitDelay: 9000});
+
+$('.setsListItem').on('click', function () {
+	id = $(this).data('itemid');
+    $('.playerTitle').html(sets[id][0].title);
+    var div = $('.playerWrapOuter');
+    var dir = div.data('pos');
+    var animate = anime({
+        targets: '.playerWrapOuter',
+        top: dir,
+        duration: 700,
+        elasticity: 600
+    });
+});
+
+$('.fiterBtnWrap').on('click', function () {
+    var sliderValues = [];
+    var div = $('.filterWrap');
+    if (div.visible() === true) {
+        $(this).html('<svg class="icon30 icon-textcolor"><use xlink:href="#lense"></use></svg>');
+        dir = div.data('pos');
+        tagBox.each(function (index, el) {
+            var tag = {tagid: $(el).data('id'), tagvalue: parseInt(el.noUiSlider.get())};
+            sliderValues.push(tag);
+        });
+        $('.overlay').css('display','block');
+        $('.fiterBackBtnWrap').css('display', 'none');
+        $('.fiterResetBtnWrap').css('display', 'none');
+        getJSON(sliderValues);
+    } else {
+        $(this).html('<i class="fas fa-arrow-circle-right fa-3x icon-blue"></i>');
+        $('.fiterBackBtnWrap').css('display', 'block');
+        $('.fiterResetBtnWrap').css('display', 'block');
+        div.data('pos', div.position().top);
+        dir = 0;
+    }
+    var animate = anime({
+        targets: '.filterWrap',
+        top: dir,
+        duration: 700,
+        elasticity: 600
+    });
+});
+
+$('.setFilter').on('click', function () {
+    tagBox.each(function (index, el) {});
+});
+
+tagBox.each(function (index, el) {
+	id = $(el).data('id');
+	slider[count] = document.getElementById('tagBox' + id);
+	noUiSlider.create(slider[count], {
+		start: 0,
+		connect: [true, false],
+		orientation: 'vertical',
+		direction: 'rtl',
+		step: 1,
+		tooltips: [false],
+		range: {
+			'min': 0,
+			'max': 10
+		}
+	});
+	count++;
+});
+
+function doFilter(values) {
+	var i, html;
+	console.log(values)
+	if (typeof values === 'undefined' || values.length === 0) {
+    	html = '<div><div class="icon-red floatLeft marginDefault"><i class="fas fa-frown fa-5x"></i></div><h3>Sorry, nix gefunden :(<br>Versuch es noch mal oder fordere mich heraus ein Set mit diesen Moods zu schaffen.</h3></div>'
+	} else {
+
+	html = '<ul>';
+	for (i=0; i < values.length; i++) {
+		html += '<li>' +
+		'<div class="playerWrapOuter">' +
+		'<div id="player' + values[i][0].id + '" data-id="' + values[i][0].id + '" class="playerWrap">' +
+			'<div class="titleWrap">' +
+				'<div id="setTitleInner' + values[i][0].id + '" class="playerTitle floatLeft">' + values[i][0].title + '</div>' +
+				'<div class="playerDate floatRight">' +
+				values[i][0].setlength + '<span class="playerDateSmall">min</span> ' + values[i][0].bpm + '<span class="playerDateSmall">BPM (&Oslash;)</span> ' + values[i][0].released +
+					'<div class="playerSocialIcons">' +
+						'<a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sets/filter/' + values[i][0].id + '" target="_blank"><i class="fab fa-facebook-square fa-fw playerSocialIconsPadding"></i></a>' +
+						'<a href="https://twitter.com/home?status=https://pixelmorph.de/sets/filter/' + values[i][0].id + '" target="_blank"><i class="fab fa-twitter-square fa-fw playerSocialIconsPadding"></i></a>' +
+						'<a href="https://plus.google.com/share?url=https://pixelmorph.de/sets/filter/' + values[i][0].id + '" target="_blank"><i class="fab fa-google-plus-square fa-fw playerSocialIconsPadding"></i></a>' +
+					'</div>' +
+				'</div>' +
+			'</div>' +
+			'<div class="clear"></div>' +
+			'<div class="playerBtnWrap">' +
+				'<div id="waveform' + values[i][0].id + '" class="waveform" data-wave="' + values[i][0].id + '"></div>' +
+				'<div id="playerBtn' + values[i][0].id + '" class="playerBtn" data-id="' + values[i][0].id + '" data-job="stop" data-track="' + values[i][0].filename + '" data-title="' + values[i][0].title + '">' +
+					'<svg class="playerSVG icon60 icon-textcolor floatRight">' +
+						'<use xlink:href="#player-play"></use>' +
+					'</svg>' +
+				'</div>' +
+			'</div>' +
+		'</div>' +
+			'<div class="timelineWrap">' +
+				'<div id="timelineNow' + values[i][0].id + '" class="playerTimeText floatLeft"></div>' +
+				'<div id="timelineAll' + values[i][0].id + '" class="playerTimeText floatRight"></div>' +
+			'</div>' +
+			'<div class="clear"></div>' +
+			'<div class="tagWrapper">tags</div>' +
+		'</div>' +
+	'</li>';
+	}
+	html += '</ul>';
+	}
+	$('#setsWrapList').html(html);
+}
+
+function getJSON(values) {
+	var url, apidata;
+	url = 'http:{{ url('/') }}/api/sets/filter/';
+	for (var i=0; i<values.length; i++) {
+		url += values[i].tagid + ':' + values[i].tagvalue;
+		if (values.length - 1 > i) url += '-';
+	}
+	console.log(url);
+    $.ajax({
+        type: 'GET',
+        url: url,
+        crossDomain: true,
+        dataType: 'json',
+        timeout: 10000,
+        cache: true,
+        async: true,
+        success: function (data) {
+			doFilter(data);
+			$('.overlay').css('display','none');
+        },
+        error: function (errorThrown) {
+        	console.warn('Ajax Request failed!', errorThrown);
+        },
+        complete: function () {
+        }
+    });
+}
+
+var sets = {
+@foreach ($items as $item)
+    {{ $item->id }}: [
+        {
+            "title": "{{ $item->title }}"
+        }
+    ],
+@endforeach
+}
 
 </script>
 

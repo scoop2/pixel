@@ -46,6 +46,8 @@ Route::get('skills/person', 'SkillsController@person')->middleware('auth');
 Route::resource('blog', 'BlogController');
 Route::resource('kontakt', 'KontaktController');
 
+Route::resource('test', 'TestController');
+
 /*
 Route::get('wg/{id?}', array(
 'as' => 'id',
