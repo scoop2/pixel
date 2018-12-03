@@ -35,7 +35,13 @@
 		<div class="titleWrap">
 			<div id="track" class="playerTitle floatLeft">{{ $items[0]->title }}</div>
 			<div class="playerDate floatRight">
-				{{ $items[0]->setlength }}<span class="playerDateSmall">min</span> {{ $items[0]->bpm }}<span class="playerDateSmall">BPM (&Oslash;)</span> {{ $items[0]->released }}
+                <div class="playerInfoWrap">
+                    <div class="playerDataLength">{{ $items[0]->setlength }}</div>
+                    <div class="playerDateSmall">min&nbsp;</div>
+                    <div class="playerDataBpm"> {{ $items[0]->bpm }}</div>
+                    <div class="playerDateSmall">BPM (&Oslash;)}&nbsp;</div>
+                    <div class="playerDataReleased">{{ $items[0]->released }}</div>
+                </div>
 				<div class="playerSocialIcons">
                     <div class="playlists" data-id="{{ $items[0]->id }}"><i class="fas fa-list-ol"></i></div>
 					<a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sets/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-facebook-square fa-fw playerSocialIconsPadding"></i></a>
@@ -75,38 +81,49 @@ var tagBox = $('.tagBox');
 var slider = [];
 var id, dir, easing, count = 0;
 var playBtn = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-play"></use></svg>';
+var playBtnAction = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-playaction"></use></svg>';
 var pauseBtn = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-pause"></use></svg>';
 var sound = new Howl({
-  src: ['enjoy/autopahn.mp3'],
-  html5: true,
+    buffer: true,
+    src: ['enjoy/{{ $items[0]->filename }}'],
+    html5: true,
 });
 
 
 sound.on('play', function(){
+    $('.overlay').css('display', 'hidden');
     setInterval(function(){
         var perc = (sound.seek() / sound._duration) * 100;
         $('.playerWaveform').css('width', perc + '%' );
     }, 500);
 });
-
+sound.on('stop', function(){
+  //  $('.playerBtn').html(playBtn);
+});
+sound.on('pause', function(){
+  //  $('.playerBtn').html(pauseBtn);
+});
 sound.on('load', function(){
+  //  $('.overlay').css('display', 'block');
     $('.overlay').css('display', 'none');
 });
 
 
 $('.playerBtn').on('click', function(){
     if (sound.playing() === false) {
-        if (sound._state != 'loaded') {
-            $('.overlay').css('display', 'block');
-        }
-        sound.play();
-        $('.playerBtn').html(playBtn);
-    } else {
-        sound.pause();
-        $('.playerBtn').html(pauseBtn);
-    }
-});
+    $('.playerBtn').html(pauseBtn);
+      //     $('.overlay').css('display', 'block');
 
+        sound.play();
+        $('.playerBtn').html(pauseBtn);
+    } else {
+        $('.overlay').css('display', 'hidden');
+        sound.pause();
+        $('.playerBtn').html(playBtn);
+    }
+
+
+});
 $('.playerWaveformWrap').on('click', function(e) {
     var tmp, posX, perc, step;
     tmp = $(this).offset().left;
@@ -117,9 +134,6 @@ $('.playerWaveformWrap').on('click', function(e) {
     sound.seek(step)
     $('.playerWaveform').css('width', perc + '%');
 });
-
-
-
 $('.fiterBackBtnWrap').on('click', function() {
     var div = $('.filterWrap');
     var dir = div.data('pos');
@@ -131,7 +145,6 @@ $('.fiterBackBtnWrap').on('click', function() {
     });
     $('.fiterBtnWrap').html('<svg class="icon30 icon-textcolor"><use xlink:href="#lense"></use></svg>');
 });
-
 $('.fiterResetBtnWrap').on('click', function() {
     tagBox.each(function (index, el) {
         el.noUiSlider.set(0);
@@ -140,8 +153,23 @@ $('.fiterResetBtnWrap').on('click', function() {
 //$('.tooltipped').tooltip({enterDelay: 9000, exitDelay: 9000});
 
 $('.setsListItem').on('click', function () {
-	id = $(this).data('itemid');
+    id = $(this).data('itemid');
+    sound.stop();
+    sound.unload();
+    sound._src = ['enjoy/' + sets[id][0].filename];
+    sound.load();
+
+
+
+
+
+   // sound.urls = 'enjoy/' + sets[id][0].filename;
     $('.playerTitle').html(sets[id][0].title);
+    $('.playerDataLength').html(sets[id][0].setlength);
+    $('.playerDataBpm').html(sets[id][0].bpm);
+    $('.playerDataReleased').html(sets[id][0].released);
+    $('.playerBtn').trigger('click');
+    /*
     var div = $('.playerWrapOuter');
     var dir = div.data('pos');
     var animate = anime({
@@ -150,6 +178,7 @@ $('.setsListItem').on('click', function () {
         duration: 700,
         elasticity: 600
     });
+    */
 });
 
 $('.fiterBtnWrap').on('click', function () {
@@ -282,7 +311,13 @@ var sets = {
 @foreach ($items as $item)
     {{ $item->id }}: [
         {
-            "title": "{{ $item->title }}"
+            "id": "{{ $item->id }}",
+            "title": "{{ $item->title }}",
+            "setlength": "{{ $item->setlength }}",
+            "bpm": "{{ $item->bpm }}",
+            "released": "{{ $item->released }}",
+            "tags": "{{ $item->tags }}",
+            "filename": "{{ $item->filename }}"
         }
     ],
 @endforeach

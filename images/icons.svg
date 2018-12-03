@@ -19,25 +19,29 @@
     C18.656,41.056,18.315,41.147,17.973,41.147z M17.957,14.851L18,39.125l21.043-12.15L17.957,14.851z" />
       </g>
     </symbol>
-
-    <symbol id="player-playaction" viewBox="0 0 54 54">
-      <defs>  
-        <linearGradient id="logo-gradient" x1="50%" y1="0%" x2="50%" y2="100%" > 
-            <stop offset="0%" stop-color="#7A5FFF">
-                <animate attributeName="stop-color" values="#7A5FFF; #01FF89; #7A5FFF" dur="4s" repeatCount="indefinite"></animate>
-            </stop>
-            <stop offset="100%" stop-color="#01FF89">
-                <animate attributeName="stop-color" values="#01FF89; #7A5FFF; #01FF89" dur="4s" repeatCount="indefinite"></animate>
-            </stop>
-        </linearGradient> 
-      </defs>
-      <g>
-        <path fill="url('#logo-gradient')" d="M39.544,27.841L18.456,40.016C17.809,40.389,17,39.922,17,39.175V14.825
-    c0-0.747,0.809-1.215,1.456-0.841l21.087,12.175C40.191,26.533,40.191,27.467,39.544,27.841z" />
-        <path fill="url('#logo-gradient')" d="M17.973,41.147c-1.088,0-1.973-0.885-1.973-1.973v-24.35c0-1.088,0.885-1.973,1.973-1.973
-    c0.343,0,0.683,0.092,0.984,0.266l21.087,12.175c0.617,0.356,0.986,0.995,0.986,1.707s-0.369,1.351-0.986,1.707L18.957,40.882
-    C18.656,41.056,18.315,41.147,17.973,41.147z M17.957,14.851L18,39.125l21.043-12.15L17.957,14.851z" />
-      </g>
+    
+    <symbol id="player-playx" viewBox="0 0 54 54">
+    <defs>
+      <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style="stop-color:rgb(255,0,0);stop-opacity:1" />
+        <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" >
+          <animate 
+            attributeName="offset" 
+            from="0%"
+            to="100%"
+            dur="5s"
+            repeatCount="indefinite"/>
+        </stop>
+        <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" />
+      </linearGradient>
+    </defs>
+    <g>
+      <path fill="url('#grad1')" d="M39.544,27.841L18.456,40.016C17.809,40.389,17,39.922,17,39.175V14.825
+  c0-0.747,0.809-1.215,1.456-0.841l21.087,12.175C40.191,26.533,40.191,27.467,39.544,27.841z" />
+      <path class="playerBtnColorB" fill="url('#grad1')" d="M17.973,41.147c-1.088,0-1.973-0.885-1.973-1.973v-24.35c0-1.088,0.885-1.973,1.973-1.973
+  c0.343,0,0.683,0.092,0.984,0.266l21.087,12.175c0.617,0.356,0.986,0.995,0.986,1.707s-0.369,1.351-0.986,1.707L18.957,40.882
+  C18.656,41.056,18.315,41.147,17.973,41.147z M17.957,14.851L18,39.125l21.043-12.15L17.957,14.851z" />
+    </g>
     </symbol>
 
     <symbol id="player-pause" viewBox="0 0 54 54">
