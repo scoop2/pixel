@@ -2,8 +2,7 @@ audio {
     width: 100%;
 }
 
-.playerWrap {
-    width: 100%;
+.setsWrap {
     padding: 0.5vw;
 }
 
@@ -181,6 +180,8 @@ audio {
 }
 
 .playerWaveWrap {
+    display: flex;
+    flex-direction: row;
     width: 100%;
     border-bottom: 2px solid $sempa4;
     padding: 0.4vw;

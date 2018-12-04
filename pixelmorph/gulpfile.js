@@ -59,8 +59,9 @@ gulp.task('js', function() {
             //    'node_modules/materialize-css/extras/nouislider/nouislider.min.js',
             'node_modules/nouislider/distribute/nouislider.min.js',
             'node_modules/animejs/anime.min.js',
-            'node_modules/howler/dist/howler.min.js',
-            'node_modules/howler/dist/siriwave.min.js',
+            'node_modules/plyr/dist/plyr.min.js',
+            // 'node_modules/plyr/dist/html5media.min.js',
+            //'node_modules/howler/dist/howler.min.js',
             //  'node_modules/wavesurfer.js/dist/wavesurfer.min.js',
             //   'resources/assets/js/jquery.jplayer.min.js',
             //     'resources/assets/js/jquery.simpleaudioplayer.js',
@@ -68,7 +69,7 @@ gulp.task('js', function() {
 
             //'resources/assets/js/' + 'browserchk.js',
             //  'resources/assets/js/html5media.min.js',
-            'resources/assets/js/' + 'scripts.js'
+            'resources/assets/js/scripts.js'
         ])
         .pipe(concat('build.js'))
 

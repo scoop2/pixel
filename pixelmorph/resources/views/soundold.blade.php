@@ -51,9 +51,17 @@
 			</div>
 		</div>
 		<div class="playerWaveWrap">
-            <audio crossorigin playsinline>
-                <source src="enjoy/{{ $items[0]->filename }}" type="audio/mp3">
-            </audio>
+            <div class="playerWaveformWrap">
+			    <div class="playerWaveform"></div>
+            </div>
+            <div class="playerBtnWrap">
+                <div class="playerBtn">
+                    <svg class="playerSVG icon60 icon-textcolor floatRight">
+                        <use xlink:href="#player-play"></use>
+                    </svg>
+                </div>
+                <div class="playerCurTime"></div>
+            </div>
 		</div>
 	</div>
 		<div class="timelineWrap">
@@ -79,45 +87,109 @@ var refreshIntervalId, easing, count = 0;
 var playBtn = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-play"></use></svg>';
 var playBtnAction = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-playaction"></use></svg>';
 var pauseBtn = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-pause"></use></svg>';
-
-
-const player = new Plyr('audio', {
-    settings: ''
+var sound = new Howl({
+    buffer: true,
+    preload: true,
+    html5: true,
+    usingWebAudio: true,
+    src: ['enjoy/{{ $items[0]->filename }}'],
+    html5: true,
 });
-window.player = player;
 
-
+sound.on('play', function(){
+    var perc, durc;
+        console.log('play')
+    $('.overlay').css('display', 'hidden');
+    $('.playerBtn').html(pauseBtn);
+    var waveform = $('.playerWaveform');
+    var curtime = $('.playerCurTime');
+    setInterval(function(){
+        perc = (sound.seek() / sound._duration) * 100;
+        var measuredTime = new Date(null);
+        measuredTime.setSeconds(sound.seek());
+        var MHSTime = measuredTime.toISOString().substr(11, 8);
+        curtime.html(MHSTime);
+        waveform.css('width', perc + '%' );
+    }, 500);
+});
+sound.on('stop', function(){
+    console.log('stop')
+    $('.playerBtn').html(playBtn);
+});
+sound.on('pause', function(){
+    console.log('pause')
+    $('.playerBtn').html(playBtn);
+});
+sound.on('load', function(){
+    $('.overlay').css('display', 'none');
+});
+$('.playerBtn').on('click', function(){
+    if (sound.playing() === false) {
+        sound.play();
+    } else {
+        sound.pause();
+    }
+});
 $('.setsListWrap').on('click', '.setsListItem', function () {
     $('.overlay').css('display', 'block');
+     console.log('new')
     var id = $(this).data('itemid');
-    player.source = {
-        type: 'audio',
-        sources: [
-            {
-                src: 'enjoy/'+ sets[id][0].filename,
-                type: 'audio/' + sets[id][0].filetype
-            }]
+    sound.stop();
+    sound.unload();
+    //sound = null;
+    //delete sound;
+    sound._src = ['enjoy/' + sets[id][0].filename];
+    sound.load();
+
+/*
+    sound = new Howl({
+    buffer: true,
+    src: ['enjoy/' + sets[id][0].filename],
+    html5: true,
+});
+*/
+sound.play();
+/*
+    if (sound.playing() === false){
+        refreshIntervalId = setInterval(function(){
+            if (sound._state === 'loaded') {
+                sound.play();
+                clearInterval(refreshIntervalId);
+            }
+        }, 100);
     }
-    player.autoplay = true;
+    */
     $('.playerTitle').html(sets[id][0].title);
     $('.playerDataLength').html(sets[id][0].setlength);
     $('.playerDataBpm').html(sets[id][0].bpm);
     $('.playerDataReleased').html(sets[id][0].released);
+   // $('.playerBtn').trigger('click');
+    /*
+    var div = $('.playerWrapOuter');
+    var dir = div.data('pos');
+    var animate = anime({
+        targets: '.playerWrapOuter',
+        top: dir,
+        duration: 700,
+        elasticity: 600
+    });
+    */
+ //  return sound;
 });
-
-player.on('progress', event => {
-   // const instance = event.detail.plyr;
-   //console.log(player.buffered)
-  // if (player.buffered === 1) {
-    //   $('.overlay').css('display', 'none');
-  // }
+$('.playerWaveformWrap').on('click', function(e) {
+    console.log(sound.seek())
+    if (sound._state === 'loaded') {
+        console.log(sound._state)
+    var tmp, posX, perc, step;
+    tmp = $(this).offset().left;
+    posX = (e.pageX - tmp);
+    //perc = 100 - (posX / $(this).width()) * 100;
+    perc = (posX / $(this).width()) * 100;
+    step = (sound._duration / 100) * perc;
+    sound.seek(step)
+    $('.playerWaveform').css('width', perc + '%');
+    }
 });
-
-player.on('ready', event => {
-    $('.overlay').css('display', 'none');
-});
-
-
 $('.fiterBackBtnWrap').on('click', function() {
     var div = $('.filterWrap');
     var dir = div.data('pos');
@@ -241,8 +313,7 @@ sets = {
             "bpm": "{{ $item->bpm }}",
             "released": "{{ $item->released }}",
             "tags": "{{ $item->tags }}",
-            "filename": "{{ $item->filename }}",
-            "filetype": "{{ $item->filetype }}",
+            "filename": "{{ $item->filename }}"
         }
     ],
 @endforeach

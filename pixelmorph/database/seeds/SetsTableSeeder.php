@@ -18,9 +18,10 @@ class SetsTableSeeder extends Seeder
                 'setlength' => 75,
                 'bpm' => 121,
                 'filename' => 'zauberwesen_pokes_around_the_world.mp3',
+                'filetype' => 'mp3',
                 'description' => '',
                 'created_at' => '2017-09-09 03:51:05',
-                'updated_at' => '2017-09-09 03:51:05'
+                'updated_at' => '2017-09-09 03:51:05',
             ),
             1 => array(
                 'active' => 1,
@@ -31,9 +32,10 @@ class SetsTableSeeder extends Seeder
                 'setlength' => 85,
                 'bpm' => 123,
                 'filename' => 'sie_kamen_aus_rackzoohm.mp3',
+                'filetype' => 'mp3',
                 'description' => '',
                 'created_at' => '2017-09-09 03:51:05',
-                'updated_at' => '2017-09-09 03:51:05'
+                'updated_at' => '2017-09-09 03:51:05',
             ),
             2 => array(
                 'active' => 1,
@@ -44,9 +46,10 @@ class SetsTableSeeder extends Seeder
                 'setlength' => 69,
                 'bpm' => 122,
                 'filename' => 'mondseeanbewohner.mp3',
+                'filetype' => 'mp3',
                 'description' => '',
                 'created_at' => '2017-09-09 03:51:05',
-                'updated_at' => '2017-09-09 03:51:05'
+                'updated_at' => '2017-09-09 03:51:05',
             ),
             3 => array(
                 'active' => 1,
@@ -57,9 +60,10 @@ class SetsTableSeeder extends Seeder
                 'setlength' => 74,
                 'bpm' => 118,
                 'filename' => 'liquid_session_in_hamburg_01.mp3',
+                'filetype' => 'mp3',
                 'description' => '',
                 'created_at' => '2017-09-09 03:51:05',
-                'updated_at' => '2017-09-09 03:51:05'
+                'updated_at' => '2017-09-09 03:51:05',
             ),
             4 => array(
                 'active' => 1,
@@ -70,9 +74,10 @@ class SetsTableSeeder extends Seeder
                 'setlength' => 97,
                 'bpm' => 123,
                 'filename' => 'liquid_session_in_hamburg_02.mp3',
+                'filetype' => 'mp3',
                 'description' => '',
                 'created_at' => '2017-09-09 03:51:05',
-                'updated_at' => '2017-09-09 03:51:05'
+                'updated_at' => '2017-09-09 03:51:05',
             ),
             5 => array(
                 'active' => 1,
@@ -83,9 +88,10 @@ class SetsTableSeeder extends Seeder
                 'setlength' => 75,
                 'bpm' => 122,
                 'filename' => 'keine_bademeister_bitte.mp3',
+                'filetype' => 'mp3',
                 'description' => '',
                 'created_at' => '2017-09-09 03:51:05',
-                'updated_at' => '2017-09-09 03:51:05'
+                'updated_at' => '2017-09-09 03:51:05',
             ),
             6 => array(
                 'active' => 1,
@@ -96,9 +102,10 @@ class SetsTableSeeder extends Seeder
                 'setlength' => 73,
                 'bpm' => 122,
                 'filename' => 'dubno.mp3',
+                'filetype' => 'mp3',
                 'description' => '',
                 'created_at' => '2017-09-09 03:51:05',
-                'updated_at' => '2017-09-09 03:51:05'
+                'updated_at' => '2017-09-09 03:51:05',
             ),
             7 => array(
                 'active' => 1,
@@ -109,9 +116,10 @@ class SetsTableSeeder extends Seeder
                 'setlength' => 53,
                 'bpm' => 122,
                 'filename' => 'autophan.mp3',
+                'filetype' => 'mp3',
                 'description' => '',
                 'created_at' => '2017-09-09 03:51:05',
-                'updated_at' => '2017-09-09 03:51:05'
+                'updated_at' => '2017-09-09 03:51:05',
             ),
         ));
     }

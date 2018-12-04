@@ -23,6 +23,7 @@ class CreateSetsTable extends Migration
             $table->mediumInteger('setlength');
             $table->smallInteger('bpm');
             $table->char('filename');
+            $table->char('filetype');
             $table->text('description');
             $table->timestamps();
         });
