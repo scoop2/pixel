@@ -1,4 +1,3 @@
-
 <div class="nav-wrap">
 	<div class="nav-line-wrap">
 		<div class="containerShape">
@@ -149,7 +148,11 @@
 		<a class="nav-menuItem" id="mKontakt" href="/kontakt">Kontakt</a>
 	<div id="menu-hover" class="animation"></div>
 	</nav>
-	<div class="nav-right-stripe"></div>
+	<div class="nav-right-stripe">
+    <!--
+        <a href="/login"><div class="nav_user_icon"><i class="fas fa-sign-out-alt fa-lg"></i></div></a>
+        -->
+    </div>
 </div>
 
 </div>

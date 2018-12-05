@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PostsTableSeeder::class);
         $this->call(PagesTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
-        $this->call(TranslationsTableSeeder::class);
+//        $this->call(TranslationsTableSeeder::class);
 
         $this->call(SkillsTableSeeder::class);
         $this->call(SkillscatsTableSeeder::class);

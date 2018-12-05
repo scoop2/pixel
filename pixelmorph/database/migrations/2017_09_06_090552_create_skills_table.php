@@ -1,7 +1,7 @@
 <?php
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateSkillsTable extends Migration
 {
@@ -21,6 +21,7 @@ class CreateSkillsTable extends Migration
             $table->text('description');
             $table->integer('perc');
             $table->char('icon');
+            $table->char('image');
             $table->timestamps();
         });
     }

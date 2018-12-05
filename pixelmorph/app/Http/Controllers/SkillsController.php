@@ -15,9 +15,9 @@ class SkillsController extends Controller
 
     public function index(Request $request)
     {
-        if (!Auth::check()){
+        if (!Auth::check()) {
             $user = false;
-        }else{
+        } else {
             $user = true;
         }
 
@@ -34,7 +34,13 @@ class SkillsController extends Controller
                 $cats[$i]['items'][$x]['title'] = $skill->title;
                 $cats[$i]['items'][$x]['description'] = $skill->description;
                 $cats[$i]['items'][$x]['perc'] = $skill->perc;
-                $cats[$i]['items'][$x]['icon'] = $skill->icon;
+                if ($skill->icon != '') {
+                    $cats[$i]['items'][$x]['icon'] = '<i class="' . $skill->icon . ' fa-3x"></i>';
+                } else if ($skill->image != '') {
+                    $cats[$i]['items'][$x]['icon'] = '<img src="/images/logos/' . $skill->image . '"></img>';
+                } else {
+                    $cats[$i]['items'][$x]['icon'] = '';
+                }
                 $x++;
             }
             $i++;

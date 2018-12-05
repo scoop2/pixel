@@ -16,25 +16,24 @@
     margin-left: auto;
     margin-right: auto;
     width: 60%;
-    height: 4vw; // background-color: $color5;
+    height: 3vw;
     background-color: rgba(121, 105, 66, 0.4);
     box-shadow: 0 -1px 5px $color7;
     line-height: 1.7;
     text-align: center;
-    z-index: 10; // filter: blur(1px);
-    // opacity: 0.4;
+    z-index: 10;
 }
 
 .nav-headlineTypo {
     font-family: Headline;
-    font-size: 2.4vw;
+    font-size: 1.9vw;
     text-transform: uppercase;
     letter-spacing: 3.2vw;
     margin-left: 3vw;
 }
 
 .nav-menuItem {
-    font-size: 1.9vw;
+    font-size: 1.2vw;
 }
 
 .nav-line-wrap {
@@ -58,7 +57,7 @@
     width: 20%;
     height: 0.6vw;
     z-index: 99;
-    opacity: 0.9; //opacity: 0.85;
+    opacity: 0.9;
 }
 
 .stripes {
@@ -79,9 +78,8 @@
 }
 
 .menu-wrap {
-    display: flex; //flex-direction: row;
-    //min-height: 50px;
-    width: 100%; //padding-bottom: 0.9vw;
+    display: flex;
+    width: 100%;
     background-color: $color5;
 }
 
@@ -90,7 +88,6 @@
 }
 
 .nav-left-stripe {
-    //min-height: 3vw;
     width: 20%;
     background-color: $color5;
     opacity: .88;
@@ -104,14 +101,13 @@ nav {
     position: relative;
     display: flex;
     flex-direction: row;
-    width: 60%; //height: 3vw;
+    width: 60%;
     background-color: $color5;
     font-size: 0;
     opacity: .88;
 }
 
 nav a {
-    // line-height: 50px;
     height: 100%;
     font-size: 1vw;
     display: inline-block;
@@ -221,4 +217,10 @@ a:nth-child(4):hover~.animation {
     text-transform: uppercase;
     padding: 0.2vw;
     cursor: pointer;
+}
+
+.nav_user_icon {
+    float: right;
+    padding: 0.2vw;
+    color: $color12;
 }
