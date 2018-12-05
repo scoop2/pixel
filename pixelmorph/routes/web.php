@@ -31,14 +31,12 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::resource('sets', 'SetsController');
-Route::get('sets/filter/{filter?}', array(
+Route::resource('sound', 'SoundController');
+Route::get('sound/filter/{filter?}', array(
     'as' => 'filter',
-    'uses' => 'SetsController@index',
+    'uses' => 'SoundController@index',
 ));
 Route::resource('setsadmin', 'SetsadminController');
-
-Route::resource('sound', 'SoundController');
 
 Route::get('skills', 'SkillsController@index');
 Route::get('skills/vita', 'SkillsController@vita')->middleware('auth');

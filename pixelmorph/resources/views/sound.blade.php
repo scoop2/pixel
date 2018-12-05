@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
-<div class="setsWrap">
+<div class="setsWrap containerContent">
 <div class="filterWrap z-depth-3">
 	<div class="filterSwitchWrap">
 		@foreach ($tags as $key => $tag)
@@ -44,9 +44,9 @@
                 </div>
 				<div class="playerSocialIcons">
                     <div class="playlists"><i class="fas fa-list-ol"></i></div>
-					<a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sets/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-facebook-square fa-fw playerSocialIconsPadding"></i></a>
-					<a href="https://twitter.com/home?status=https://pixelmorph.de/sets/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-twitter-square fa-fw playerSocialIconsPadding"></i></a>
-					<a href="https://plus.google.com/share?url=https://pixelmorph.de/sets/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-google-plus-square fa-fw playerSocialIconsPadding"></i></a>
+					<a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-facebook-square fa-fw playerSocialIconsPadding"></i></a>
+					<a href="https://twitter.com/home?status=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-twitter-square fa-fw playerSocialIconsPadding"></i></a>
+					<a href="https://plus.google.com/share?url=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-google-plus-square fa-fw playerSocialIconsPadding"></i></a>
 				</div>
 			</div>
 		</div>
@@ -137,7 +137,6 @@ $('.fiterResetBtnWrap').on('click', function() {
 //$('.tooltipped').tooltip({enterDelay: 9000, exitDelay: 9000});
 
 $('.fiterBtnWrap').on('click', function () {
-
     var sliderValues = [];
     var div = $('.filterWrap');
     if (div.visible(true) === true) {

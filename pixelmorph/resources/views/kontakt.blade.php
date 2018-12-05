@@ -1,22 +1,25 @@
 @extends('layouts.master')
 @section('content')
+<div class="containerContent">
 	<h1>Kontakt</h1>
 
     <form method="post" action="">
     <div class="row">
         <div class="input-field col s6">
-            <input id="username" type="text">
+            <input id="username" name="user" type="text">
             <label for="username">Dein Name</label>
         </div>
         <div class="input-field col s6">
-            <input id="email" type="text">
+            <input id="email" name="email" type="text">
             <label for="email">Deine Email</label>
         </div>
     </div>
 
     <div class="row">
         <div class="input-field col s12">
-        <select>
+        <select name="woher">
+            <option value="1">noch gar nicht oder egal</option>
+            <option value="1">beruflich</option>
             <option value="1">Berlin</option>
             <option value="2">Hamburg</option>
             <option value="3">Ozzora</option>
@@ -30,7 +33,7 @@
 
     <div class="row">
         <div class="input-field col s12">
-            <textarea id="textarea1" class="materialize-textarea"></textarea>
+            <textarea name="text" id="textarea1" class="materialize-textarea"></textarea>
             <label for="textarea1">Dein Text</label>
         </div>
     </div>
@@ -41,7 +44,7 @@
         </div>
     </div>
     <form/>
-
+</div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('select');
