@@ -546,7 +546,7 @@ class Factory
         $im->addInstaller(new Installer\LibraryInstaller($io, $composer, null));
         $im->addInstaller(new Installer\PearInstaller($io, $composer, 'pear-library'));
         $im->addInstaller(new Installer\PluginInstaller($io, $composer));
-        $im->addInstaller(new Installer\MetapackageInstaller($io));
+        $im->addInstaller(new Installer\MetapackageInstaller());
     }
 
     /**
@@ -588,7 +588,7 @@ class Factory
         $disableTls = false;
         if ($config && $config->get('disable-tls') === true) {
             if (!$warned) {
-                $io->write('<warning>You are running Composer with SSL/TLS protection disabled.</warning>');
+                $io->writeError('<warning>You are running Composer with SSL/TLS protection disabled.</warning>');
             }
             $warned = true;
             $disableTls = true;

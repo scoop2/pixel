@@ -33,6 +33,7 @@ use Composer\Installer\NoopInstaller;
 use Composer\Installer\SuggestedPackagesReporter;
 use Composer\IO\IOInterface;
 use Composer\Package\AliasPackage;
+use Composer\Package\BasePackage;
 use Composer\Package\CompletePackage;
 use Composer\Package\Link;
 use Composer\Package\Loader\ArrayLoader;
@@ -251,7 +252,7 @@ class Installer
                 continue;
             }
 
-            $replacement = (is_string($package->getReplacementPackage()))
+            $replacement = is_string($package->getReplacementPackage())
                 ? 'Use ' . $package->getReplacementPackage() . ' instead'
                 : 'No replacement was suggested';
 
@@ -521,15 +522,15 @@ class Installer
                 }
             }
 
-            $this->io->writeError(
-                sprintf("<info>Package operations: %d install%s, %d update%s, %d removal%s</info>",
+            $this->io->writeError(sprintf(
+                "<info>Package operations: %d install%s, %d update%s, %d removal%s</info>",
                 count($installs),
                 1 === count($installs) ? '' : 's',
                 count($updates),
                 1 === count($updates) ? '' : 's',
                 count($uninstalls),
-                1 === count($uninstalls) ? '' : 's')
-            );
+                1 === count($uninstalls) ? '' : 's'
+            ));
             if ($installs) {
                 $this->io->writeError("Installs: ".implode(', ', $installs), true, IOInterface::VERBOSE);
             }
@@ -543,16 +544,17 @@ class Installer
 
         foreach ($operations as $operation) {
             // collect suggestions
-            if ('install' === $operation->getJobType()) {
+            $jobType = $operation->getJobType();
+            if ('install' === $jobType) {
                 $this->suggestedPackagesReporter->addSuggestionsFromPackage($operation->getPackage());
             }
 
             // updating, force dev packages' references if they're in root package refs
             if ($this->update) {
                 $package = null;
-                if ('update' === $operation->getJobType()) {
+                if ('update' === $jobType) {
                     $package = $operation->getTargetPackage();
-                } elseif ('install' === $operation->getJobType()) {
+                } elseif ('install' === $jobType) {
                     $package = $operation->getPackage();
                 }
                 if ($package && $package->isDev()) {
@@ -561,20 +563,24 @@ class Installer
                         $this->updateInstallReferences($package, $references[$package->getName()]);
                     }
                 }
-                if ('update' === $operation->getJobType()
-                    && $operation->getTargetPackage()->isDev()
-                    && $operation->getTargetPackage()->getVersion() === $operation->getInitialPackage()->getVersion()
-                    && (!$operation->getTargetPackage()->getSourceReference() || $operation->getTargetPackage()->getSourceReference() === $operation->getInitialPackage()->getSourceReference())
-                    && (!$operation->getTargetPackage()->getDistReference() || $operation->getTargetPackage()->getDistReference() === $operation->getInitialPackage()->getDistReference())
-                ) {
-                    $this->io->writeError('  - Skipping update of '. $operation->getTargetPackage()->getPrettyName().' to the same reference-locked version', true, IOInterface::DEBUG);
-                    $this->io->writeError('', true, IOInterface::DEBUG);
+                if ('update' === $jobType) {
+                    $targetPackage = $operation->getTargetPackage();
+                    if ($targetPackage->isDev()) {
+                        $initialPackage = $operation->getInitialPackage();
+                        if ($targetPackage->getVersion() === $initialPackage->getVersion()
+                            && (!$targetPackage->getSourceReference() || $targetPackage->getSourceReference() === $initialPackage->getSourceReference())
+                            && (!$targetPackage->getDistReference() || $targetPackage->getDistReference() === $initialPackage->getDistReference())
+                        ) {
+                            $this->io->writeError('  - Skipping update of ' . $targetPackage->getPrettyName() . ' to the same reference-locked version', true, IOInterface::DEBUG);
+                            $this->io->writeError('', true, IOInterface::DEBUG);
 
-                    continue;
+                            continue;
+                        }
+                    }
                 }
             }
 
-            $event = 'Composer\Installer\PackageEvents::PRE_PACKAGE_'.strtoupper($operation->getJobType());
+            $event = 'Composer\Installer\PackageEvents::PRE_PACKAGE_'.strtoupper($jobType);
             if (defined($event) && $this->runScripts) {
                 $this->eventDispatcher->dispatchPackageEvent(constant($event), $this->devMode, $policy, $pool, $installedRepo, $request, $operations, $operation);
             }
@@ -589,7 +595,7 @@ class Installer
             $this->installationManager->execute($localRepo, $operation);
 
             // output reasons why the operation was ran, only for install/update operations
-            if ($this->verbose && $this->io->isVeryVerbose() && in_array($operation->getJobType(), array('install', 'update'))) {
+            if ($this->verbose && $this->io->isVeryVerbose() && in_array($jobType, array('install', 'update'))) {
                 $reason = $operation->getReason();
                 if ($reason instanceof Rule) {
                     switch ($reason->getReason()) {
@@ -605,13 +611,13 @@ class Installer
                 }
             }
 
-            $event = 'Composer\Installer\PackageEvents::POST_PACKAGE_'.strtoupper($operation->getJobType());
-            if (defined($event) && $this->runScripts) {
-                $this->eventDispatcher->dispatchPackageEvent(constant($event), $this->devMode, $policy, $pool, $installedRepo, $request, $operations, $operation);
-            }
-
             if ($this->executeOperations || $this->writeLock) {
                 $localRepo->write();
+            }
+
+            $event = 'Composer\Installer\PackageEvents::POST_PACKAGE_'.strtoupper($jobType);
+            if (defined($event) && $this->runScripts) {
+                $this->eventDispatcher->dispatchPackageEvent(constant($event), $this->devMode, $policy, $pool, $installedRepo, $request, $operations, $operation);
             }
         }
 
@@ -1033,11 +1039,14 @@ class Installer
                         $package->setReplaces($newPackage->getReplaces());
                     }
 
-                    if ($task === 'force-updates' && $newPackage && (
-                        (($newPackage->getSourceReference() && $newPackage->getSourceReference() !== $package->getSourceReference())
+                    if (
+                        $task === 'force-updates'
+                        && $newPackage
+                        && (
+                            ($newPackage->getSourceReference() && $newPackage->getSourceReference() !== $package->getSourceReference())
                             || ($newPackage->getDistReference() && $newPackage->getDistReference() !== $package->getDistReference())
                         )
-                    )) {
+                    ) {
                         $operations[] = new UpdateOperation($package, $newPackage);
 
                         continue;
@@ -1246,26 +1255,13 @@ class Installer
         }
 
         foreach ($this->updateWhitelist as $whiteListedPattern => $void) {
-            $patternRegexp = $this->packageNameToRegexp($whiteListedPattern);
+            $patternRegexp = BasePackage::packageNameToRegexp($whiteListedPattern);
             if (preg_match($patternRegexp, $package->getName())) {
                 return true;
             }
         }
 
         return false;
-    }
-
-    /**
-     * Build a regexp from a package name, expanding * globs as required
-     *
-     * @param  string $whiteListedPattern
-     * @return string
-     */
-    private function packageNameToRegexp($whiteListedPattern)
-    {
-        $cleanedWhiteListedPattern = str_replace('\\*', '.*', preg_quote($whiteListedPattern));
-
-        return "{^" . $cleanedWhiteListedPattern . "$}i";
     }
 
     /**
@@ -1333,7 +1329,7 @@ class Installer
 
             // check if the name is a glob pattern that did not match directly
             if (!$nameMatchesRequiredPackage) {
-                $whitelistPatternRegexp = $this->packageNameToRegexp($packageName);
+                $whitelistPatternRegexp = BasePackage::packageNameToRegexp($packageName);
                 foreach ($rootRequiredPackageNames as $rootRequiredPackageName) {
                     if (preg_match($whitelistPatternRegexp, $rootRequiredPackageName)) {
                         $nameMatchesRequiredPackage = true;
@@ -1741,7 +1737,7 @@ class Installer
     }
 
     /**
-     * Should the operations (packge install, update and removal) be executed on disk?
+     * Should the operations (package install, update and removal) be executed on disk?
      *
      * This is disabled implicitly when enabling dryRun
      *

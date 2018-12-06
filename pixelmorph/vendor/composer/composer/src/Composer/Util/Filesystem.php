@@ -264,8 +264,8 @@ class Filesystem
     /**
      * Copies a file or directory from $source to $target.
      *
-     * @param $source
-     * @param $target
+     * @param string $source
+     * @param string $target
      * @return bool
      */
     public function copy($source, $target)
@@ -527,7 +527,7 @@ class Filesystem
 
     protected function getProcess()
     {
-        return new ProcessExecutor;
+        return $this->processExecutor;
     }
 
     /**
@@ -565,7 +565,7 @@ class Filesystem
 
         chdir($cwd);
 
-        return (bool) $result;
+        return $result;
     }
 
     /**
@@ -634,9 +634,11 @@ class Filesystem
         if (!is_dir($target)) {
             throw new IOException(sprintf('Cannot junction to "%s" as it is not a directory.', $target), 0, null, $target);
         }
-        $cmd = sprintf('mklink /J %s %s',
-                       ProcessExecutor::escape(str_replace('/', DIRECTORY_SEPARATOR, $junction)),
-                       ProcessExecutor::escape(realpath($target)));
+        $cmd = sprintf(
+            'mklink /J %s %s',
+            ProcessExecutor::escape(str_replace('/', DIRECTORY_SEPARATOR, $junction)),
+            ProcessExecutor::escape(realpath($target))
+        );
         if ($this->getProcess()->execute($cmd, $output) !== 0) {
             throw new IOException(sprintf('Failed to create junction to "%s" at "%s".', $target, $junction), 0, null, $target);
         }
