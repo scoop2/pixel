@@ -219,6 +219,20 @@ a:nth-child(4):hover~.animation {
     cursor: pointer;
 }
 
+
+/*
+ |--------------------------------------------------------------------------
+ | Nav User
+ |--------------------------------------------------------------------------
+ */
+
+.userNavWrap {
+    display: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 999;
+}
+
 .nav_user_icon {
     float: right;
     padding: 0.2vw;

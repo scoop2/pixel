@@ -16,3 +16,7 @@
 </div>
 
 @endsection
+@section('nav')
+    @component('components.nav', ['user' => $user])
+    @endcomponent
+@endsection

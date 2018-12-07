@@ -23,8 +23,7 @@ include (public_path() . '/images/icons.svg');
   </div>
 </div>
 <div class="wrap">
-	@component('components.nav')
-	@endcomponent
+
     <div class="wrapInner">
         <div class="left"></div>
         <div class="main">
@@ -43,6 +42,7 @@ include (public_path() . '/images/icons.svg');
         </div>
         <div class="right"></div>
     </div>
+    @yield('nav')
 </div>
 
 </body>

@@ -1,9 +1,9 @@
 @extends('layouts.master') @section('content')
-
-@component('components.navskills', ['active' => 'skills', 'user' => $user])
-@endcomponent
-
-
+@section('content')
+@if ($user === true)
+    @component('components.navskills', ['active' => 'skills'])
+    @endcomponent
+@endif
 <div class="containerContent">
 	{!! $desc->body !!}
 	<ul>
@@ -32,5 +32,9 @@
         @endforeach
 	</ul>
 </div>
+@endsection
 
+@section('nav')
+    @component('components.nav', ['user' => $user])
+    @endcomponent
 @endsection

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Pages;
 use Helper;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SoundController extends Controller
@@ -10,7 +11,12 @@ class SoundController extends Controller
 
     public function index($filter = '')
     {
-        $desc = Pages::where('status', 'ACTIVE')->where('title', 'Sets')->first();
+        if (!Auth::check()) {
+            $user = false;
+        } else {
+            $user = true;
+        }
+        $desc = Pages::where('status', '1')->where('title', 'Sets')->first();
 
         $i = 1;
         if ($filter != '') {
@@ -101,17 +107,13 @@ class SoundController extends Controller
             $items[$i]->playlist = $playlist;
         }
         $i++;
-/*
-echo "<pre>";
-echo var_dump($items);
-echo "</pre>";
-exit;
- */
+
         return view('sound')
             ->with('items', $items)
             ->with('all', $i)
             ->with('tags', $taglist)
-            ->with('desc', $desc);
+            ->with('desc', $desc)
+            ->with('user', $user);
     }
 }
 

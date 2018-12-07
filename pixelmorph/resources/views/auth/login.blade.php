@@ -67,3 +67,7 @@
     </div>
 </div>
 @endsection
+@section('nav')
+    @component('components.nav', ['user' => false])
+    @endcomponent
+@endsection

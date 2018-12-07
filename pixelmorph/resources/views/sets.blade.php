@@ -389,4 +389,7 @@ function getJSON(values) {
 
 </script>
 
+@section('nav')
+    @component('components.nav', ['active' => '1', 'user' => $user])
+    @endcomponent
 @endsection

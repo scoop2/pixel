@@ -13,6 +13,10 @@
 Route::resource('/', 'HomeController');
 Route::resource('home', 'HomeController');
 Route::get('/impressum', 'HomeController@impressum')->name('impressum');
+
+Route::get('/admin', 'Admin\AdminController@index');
+Route::post('/admin/update', 'Admin\AdminController@update');
+
 #
 //Route::get('login', array('uses' => 'HomeController@showLogin'));
 //Route::post('login', array('uses' => 'HomeController@doLogin'));
@@ -69,12 +73,13 @@ Route::resource('/cruds', 'CrudsController', [
     'except' => ['edit', 'show', 'store'],
 ]);
 
+/*
 Route::group([
-    'prefix' => 'admin',
+'prefix' => 'admin',
 ], function () {
-    Voyager::routes();
+Voyager::routes();
 });
-
+ */
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

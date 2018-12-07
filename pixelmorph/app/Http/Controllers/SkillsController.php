@@ -21,7 +21,7 @@ class SkillsController extends Controller
             $user = true;
         }
 
-        $desc = Pages::where('status', 'ACTIVE')->where('title', 'Skills')->first();
+        $desc = Pages::where('status', '1')->where('title', 'Skills')->first();
         $skillcats = Skillscats::all()->where('active', 1);
         $i = 0;
 

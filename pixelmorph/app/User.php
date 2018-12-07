@@ -1,10 +1,11 @@
 <?php
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
-class User extends \TCG\Voyager\Models\User
+class User extends Authenticatable
 {
     use Notifiable;
 
@@ -16,7 +17,7 @@ class User extends \TCG\Voyager\Models\User
     protected $fillable = [
         'name',
         'email',
-        'password'
+        'password',
     ];
 
     /**
@@ -26,6 +27,6 @@ class User extends \TCG\Voyager\Models\User
      */
     protected $hidden = [
         'password',
-        'remember_token'
+        'remember_token',
     ];
 }
