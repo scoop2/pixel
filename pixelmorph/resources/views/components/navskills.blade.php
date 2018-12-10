@@ -1,22 +1,20 @@
-<?php
-    if ($active == 'skills') {
+@if ($active == 'skills')
         $skills = 'nav_skills_item_active';
-    }else{
+@else
         $skills = 'nav_skills_item';
-    }
-    if ($active == 'vita') {
+@endif
+@if ($active == 'vita')
         $vita = 'nav_skills_item_active';
-     }else{
+@else
         $vita = 'nav_skills_item';
-     }
-    if ($active == 'person') {
+@endif
+@if ($active == 'person')
         $person = 'nav_skills_item_active';
-     }else{
+@else
         $person = 'nav_skills_item';
-     }
-?>
+@endif
 <div class="nav_skills_wrap z-depth-1">
-    <div class="nav_skills_item <?php echo $skills ?>"><a href="/skills">Skills</a></div>
-    <div class="nav_skills_item <?php echo $vita ?>"><a href="/skills/vita">Vita</a></div>
-    <div class="nav_skills_item <?php echo $person ?>"><a href="/skills/person">Personalien</a></div>
+    <div class="nav_skills_item {{ $skills }}"><a href="/skills">Skills</a></div>
+    <div class="nav_skills_item {{ $vita }}"><a href="/skills/vita">Vita</a></div>
+    <div class="nav_skills_item {{ $person }}"><a href="/skills/person">Personalien</a></div>
 </div>

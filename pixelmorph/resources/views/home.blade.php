@@ -5,6 +5,20 @@
         <h1>{{ $items->title }} {{ $items->username }}</h1>
         {!! $items->body !!}
     </div>
+
+    @if (Route::has('login'))
+
+
+  @auth
+  Home
+  Private
+  @else
+  Login
+  Register
+  @endauth
+
+
+@endif
 @endsection
 
 @section('nav')

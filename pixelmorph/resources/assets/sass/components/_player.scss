@@ -7,6 +7,24 @@ audio {
     padding: 0.5vw;
 }
 
+.playerWaveWrap {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-bottom: 2px solid $sempa4;
+    padding: 0.4vw;
+}
+
+.playerPlayerWrap {
+    width: 90%;
+}
+
+.playerPlayerChart {
+    position: relative;
+    height: 5vw;
+    width: 10vw;
+}
+
 .setsListWrap {
     display: flex;
     flex-direction: row;
@@ -178,12 +196,6 @@ audio {
 .playerInfoWrap {
     display: flex;
     flex-direction: row;
-}
-
-.playerWaveWrap {
-    width: 100%;
-    border-bottom: 2px solid $sempa4;
-    padding: 0.4vw;
 }
 
 .playerBtnWrap {

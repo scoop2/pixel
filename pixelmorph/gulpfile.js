@@ -48,11 +48,6 @@ gulp.task('js', function() {
     gulp.src([
             'node_modules/jquery/dist/jquery.min.js',
             'node_modules/jquery-visible/jquery.visible.min.js',
-            //'node_modules/vue/dist/vue.js',
-            //  'node_modules/vue/dist/vue.min.js',
-            //  'node_modules/vuex/dist/vuex.js',
-            //    'node_modules/vue-resource/dist/vue-resource.min.js',
-            // 'node_modules/materialize-css/dist/js/materialize.min.js',
 
             //    'resources/assets/js/fontawesome-all.min.js',
             'resources/assets/js/materialize.min.js',
@@ -60,10 +55,8 @@ gulp.task('js', function() {
             'node_modules/nouislider/distribute/nouislider.min.js',
             'node_modules/animejs/anime.min.js',
             'node_modules/plyr/dist/plyr.min.js',
-            // 'node_modules/plyr/dist/html5media.min.js',
-            //'node_modules/howler/dist/howler.min.js',
+            'node_modules/chart.js/dist/Chart.bundle.min.js',
             //  'node_modules/wavesurfer.js/dist/wavesurfer.min.js',
-            //   'resources/assets/js/jquery.jplayer.min.js',
             //     'resources/assets/js/jquery.simpleaudioplayer.js',
             //         'node_modules/waveform-data/dist/waveform-data.js',
 

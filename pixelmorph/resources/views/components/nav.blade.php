@@ -149,13 +149,9 @@
 	<div id="menu-hover" class="animation"></div>
 	</nav>
 	<div class="nav-right-stripe">
-<?php
-    if ($user != false) {
-?>
+@if ($user != false)
         <a href="/logout"><div class="nav_user_icon"><i class="fas fa-sign-out-alt fa-lg"></i></div></a>
-<?php
-    }
-?>
+@endif
     </div>
 </div>
 

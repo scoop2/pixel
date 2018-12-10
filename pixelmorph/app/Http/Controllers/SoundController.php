@@ -64,6 +64,7 @@ class SoundController extends Controller
                 $tags = [];
             }
 
+            $rawTagdata = [];
             foreach ($tags as $tag) {
                 $rateTotal += $tag->rate;
                 $thetag = DB::table('tags')->where('id', $tag->tag)->orderBy('title')->first();
@@ -71,6 +72,7 @@ class SoundController extends Controller
                 $tmp->title = $thetag->title;
                 $tmp->rate = $tag->rate;
                 array_push($htmltags, $tmp);
+                array_push($rawTagdata, $tag->rate);
             }
             $html = "";
             $quote = 100 / $rateTotal;
@@ -112,6 +114,7 @@ class SoundController extends Controller
             ->with('items', $items)
             ->with('all', $i)
             ->with('tags', $taglist)
+            ->with('rawTags', $rawTagdata)
             ->with('desc', $desc)
             ->with('user', $user);
     }

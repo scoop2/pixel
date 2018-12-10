@@ -14,9 +14,12 @@ Route::resource('/', 'HomeController');
 Route::resource('home', 'HomeController');
 Route::get('/impressum', 'HomeController@impressum')->name('impressum');
 
-Route::get('/admin', 'Admin\AdminController@index');
-Route::post('/admin/update', 'Admin\AdminController@update');
-
+Route::get('/admin', 'Admin\AdminController@index')->middleware('auth');
+Route::post('/admin', 'Admin\AdminController@update')->middleware('auth');
+Route::get('/admin/skills', 'Admin\AdminSkillsController@index')->middleware('auth');
+Route::post('/admin/skills', 'Admin\AdminSkillsController@update')->middleware('auth');
+Route::get('/admin/sound', 'Admin\AdminSoundController@index')->middleware('auth');
+Route::post('/admin/sound', 'Admin\AdminSoundController@update')->middleware('auth');
 #
 //Route::get('login', array('uses' => 'HomeController@showLogin'));
 //Route::post('login', array('uses' => 'HomeController@doLogin'));

@@ -20,8 +20,8 @@ class CreateSkillsTable extends Migration
             $table->char('title');
             $table->text('description');
             $table->integer('perc');
-            $table->char('icon');
-            $table->char('image');
+            $table->char('icon')->nullable();
+            $table->char('image')->nullable();
             $table->timestamps();
         });
     }

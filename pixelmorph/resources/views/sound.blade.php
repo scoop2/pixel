@@ -44,16 +44,22 @@
                 </div>
 				<div class="playerSocialIcons">
                     <div class="playlists"><i class="fas fa-list-ol"></i></div>
+                    <a href="{{ url('/') }}/enjoy/{{ $items[0]->filename }}" download><i class="fas fa-download"></i></a>
 					<a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-facebook-square fa-fw playerSocialIconsPadding"></i></a>
 					<a href="https://twitter.com/home?status=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-twitter-square fa-fw playerSocialIconsPadding"></i></a>
 					<a href="https://plus.google.com/share?url=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-google-plus-square fa-fw playerSocialIconsPadding"></i></a>
-				</div>
+                </div>
 			</div>
 		</div>
 		<div class="playerWaveWrap">
-            <audio crossorigin playsinline>
-                <source src="enjoy/{{ $items[0]->filename }}" type="audio/mp3">
-            </audio>
+            <div class="playerPlayerWrap">
+                <audio crossorigin playsinline>
+                    <source src="enjoy/{{ $items[0]->filename }}" type="audio/mp3">
+                </audio>
+            </div>
+            <div class="playerPlayerChart">
+                <canvas id="moods"></canvas>
+            </div>
 		</div>
 	</div>
 		<div class="timelineWrap">
@@ -74,13 +80,26 @@
 <script>
 var tagBox = $('.tagBox');
 var slider = [];
-var sets = {};
 var refreshIntervalId, easing, count = 0;
 var playBtn = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-play"></use></svg>';
 var playBtnAction = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-playaction"></use></svg>';
 var pauseBtn = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-pause"></use></svg>';
-
-
+var sets = {
+@foreach ($items as $item)
+    {{ $item->id }}: [
+        {
+            "id": "{{ $item->id }}",
+            "title": "{{ $item->title }}",
+            "setlength": "{{ $item->setlength }}",
+            "bpm": "{{ $item->bpm }}",
+            "released": "{{ $item->released }}",
+            "tags": "{{ $item->tags }}",
+            "filename": "{{ $item->filename }}",
+            "filetype": "{{ $item->filetype }}",
+        }
+    ],
+@endforeach
+}
 const player = new Plyr('audio', {
     settings: ''
 });
@@ -103,6 +122,7 @@ $('.setsListWrap').on('click', '.setsListItem', function () {
     $('.playerDataLength').html(sets[id][0].setlength);
     $('.playerDataBpm').html(sets[id][0].bpm);
     $('.playerDataReleased').html(sets[id][0].released);
+    renderChart([12, 19, 3, 5, 2, 3]);
 });
 
 player.on('progress', event => {
@@ -230,21 +250,49 @@ function getJSON(values) {
     });
 }
 
-sets = {
-@foreach ($items as $item)
-    {{ $item->id }}: [
-        {
-            "id": "{{ $item->id }}",
-            "title": "{{ $item->title }}",
-            "setlength": "{{ $item->setlength }}",
-            "bpm": "{{ $item->bpm }}",
-            "released": "{{ $item->released }}",
-            "tags": "{{ $item->tags }}",
-            "filename": "{{ $item->filename }}",
-            "filetype": "{{ $item->filetype }}",
+
+function renderChart(data) {
+    var ctx = document.getElementById("moods").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+                label: '# of Votes',
+                data: data,
+                responsive: true,
+                devicePixelRatio: 0.5,
+
+            maintainAspectRatio: true,
+                aspectRatio: 0.5,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: false
+            }
         }
-    ],
-@endforeach
+    });
 }
 
 </script>

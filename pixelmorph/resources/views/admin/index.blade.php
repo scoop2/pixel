@@ -1,14 +1,16 @@
 @extends('layouts.master')
+
 @section('content')
+@component('components.navadmin', ['active' => 'index'])
+@endcomponent
 <div class="containerContent">
-<h1>Admin</h1>
 
   <ul class="collapsible">
   @foreach ($pages as $page)
     <li>
     <div class="collapsible-header">{{ $page->title }}</div>
     <div class="collapsible-body">
-    <form action="{{ url('/admin/update') }}" method="POST" class="col s12">
+    <form action="{{ url('/admin') }}" method="POST" class="col s12">
         <div class="row">
             <div class="input-field col s12">
                 <input id="title" name="title" value="{{ $page->title }}" type="text">
@@ -51,4 +53,8 @@ $("form").submit(function(){
 </script>
 
 </div>
+@endsection
+@section('nav')
+    @component('components.nav', ['user' => $user])
+    @endcomponent
 @endsection
