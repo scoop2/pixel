@@ -20,9 +20,27 @@ class AdminSoundController extends Controller
     {
         $user = Auth::user();
         $sets = DB::table('sets')->get();
-        $tags = DB::table('tags')->get();
-        $tags_sets = DB::table('tags_sets')->get();
-        return view('admin.sound', ['sets' => $sets, 'tags' => $tags, 'tag_sets' => $tags_sets, 'user' => $user]);
+        $alltags = DB::table('tags')->get();
+        $x = 0;
+
+        foreach ($sets as $set) {
+            $tagsets = DB::table('tags_sets')->where('setid', $set->id)->get();
+            $i = 0;
+            $tagbag = [];
+            foreach ($tagsets as $tag) {
+                $tagtitle = DB::table('tags')->where('id', $tag->tag)->get();
+                $tmp = new tagBag;
+                $tmp->tagid = $tag->tag;
+                $tmp->tagrate = $tag->rate;
+                $tmp->tagname = $tagtitle[0]->title;
+                $tagbag[$i] = $tmp;
+                $i++;
+            }
+            $sets[$x]->tagbag = $tagbag;
+            $x++;
+        }
+
+        return view('admin.sound', ['sets' => $sets, 'tags' => $tagbag, 'alltags' => $alltags, 'user' => $user]);
     }
 
     public function update(Request $request)
@@ -40,5 +58,18 @@ class AdminSoundController extends Controller
         $cats = DB::table('skillscats')->get();
         return view('admin.skills', ['skills' => $skills, 'cats' => $cats, 'user' => $user]);
     }
+/*
 
+ */
+
+}
+
+class tagBag
+{
+    public function tagBags()
+    {
+        $this->tagid = 0;
+        $this->tagname = 0;
+        $this->tagrate = 0;
+    }
 }
