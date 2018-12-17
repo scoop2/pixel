@@ -15,9 +15,10 @@ class PersosTableSeeder extends Seeder
                 'tele' => '+49 0151 75032189',
                 'geb' => '13.4. 1972',
                 'family' => 'ledig',
-                'state' => 'Deutsch',
+                'state' => 'deutsch',
                 'driver' => 'AM/A1/A/B/C1/BE/C1E/CE/L',
                 'lang' => 'Deutsch (Muttersprache)<br>Englisch (konversationssicher)<br>Französisch (mittlere Kenntnisse)',
+                'rel' => 'Buddhist',
                 'email' => 'info@pixelmorph.de',
                 'pgp' => '-----BEGIN PGP PUBLIC KEY BLOCK-----
 

@@ -57,17 +57,24 @@
                     <source src="enjoy/{{ $items[0]->filename }}" type="audio/mp3">
                 </audio>
             </div>
-            <div class="playerPlayerChart">
+		</div>
+        <div class="playerMetaWrap">
+            <div class="playerMetaCover">
+                <img src="/images/covers/{{ $items[0]->cover }}">
+            </div>
+            <div class="playerMetaChart">
                 <canvas id="moods"></canvas>
             </div>
-		</div>
+            <div class="playerMetaDesc">
+                {{ $items[0]->description }}
+            </div>
+            </div>
+        </div>
 	</div>
 		<div class="timelineWrap">
 			<div id="timelineNow{{ $items[0]->id }}" class="playerTimeText floatLeft"></div>
 			<div id="timelineAll{{ $items[0]->id }}" class="playerTimeText floatRight"></div>
 		</div>
-		<div class="clear"></div>
-		<div class="tagWrapper">{!! $items[0]->tags !!}</div>
 	</div>
 
 <div class="setsListWrap">
@@ -93,7 +100,6 @@ var sets = {
             "setlength": "{{ $item->setlength }}",
             "bpm": "{{ $item->bpm }}",
             "released": "{{ $item->released }}",
-            "tags": "{{ $item->tags }}",
             "filename": "{{ $item->filename }}",
             "filetype": "{{ $item->filetype }}",
         }
@@ -105,6 +111,13 @@ const player = new Plyr('audio', {
 });
 window.player = player;
 
+$(document).ready(function() {
+    renderChart([
+        @foreach ($items[0]->chart as $chart)
+            {{ $chart}},
+        @endforeach
+    ]);
+});
 
 $('.setsListWrap').on('click', '.setsListItem', function () {
     $('.overlay').css('display', 'block');

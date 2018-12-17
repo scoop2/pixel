@@ -19,10 +19,24 @@ audio {
     width: 90%;
 }
 
-.playerPlayerChart {
+.playerMetaWrap {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.playerMetaCover {
+    width: 20%;
+}
+
+.playerMetaChart {
     position: relative;
     height: 5vw;
     width: 10vw;
+}
+
+.playerMetaDesc {
+    width: 60%;
 }
 
 .setsListWrap {

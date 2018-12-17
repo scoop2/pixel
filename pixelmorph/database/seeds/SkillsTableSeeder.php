@@ -12,7 +12,7 @@ class SkillsTableSeeder extends Seeder
             0 => array(
                 'active' => 1,
                 'title' => 'HTML5',
-                'description' => 'Schlafwandlerisch und browserübergreifend schreibe ich HTML freihand und W3C konform. Schon seit Langem entdeckte ich nichts mehr das mir nicht bekannt wäre. Hier sind auch ähnlich umschreibende Sprachtypen zu erwähnen wie z.B. XML',
+                'description' => 'Schlafwandlerisch und browserübergreifend schreibe ich HTML freihand und W3C konform. Gewöhnlich mache ich die Qualitätssicherung mit Chrome, Firefox und Safari. Hier sind auch ähnlich umschreibende Sprachtypen zu erwähnen wie z.B. XML oder XSL.',
                 'skillscats_id' => 2,
                 'perc' => 100,
                 'icon' => 'fab fa-html5',
@@ -34,7 +34,7 @@ class SkillsTableSeeder extends Seeder
             2 => array(
                 'active' => 1,
                 'title' => 'SVG',
-                'description' => 'Ich erachte SVG wichtiger als es z.Z. weltweit Verwendung findet. Ich habe mich auch in die tiefere Programmierung eingearbeitet. Mein routinierter Umgang mit SVG Programmen wie Illustrator oder Inkscape helfen hier sehr.',
+                'description' => 'Ich erachte SVG wichtiger als es z.Z. weltweit Verwendung findet. Ich habe mich auch etwas in die Programmierung eingearbeitet um komplexere SVGs und etwas Animation in der Griff zu bekommen. Mein routinierter Umgang mit SVG Programmen wie Illustrator oder Inkscape helfen hier sehr.',
                 'skillscats_id' => 2,
                 'perc' => 70,
                 'icon' => '',
@@ -122,7 +122,7 @@ class SkillsTableSeeder extends Seeder
             10 => array(
                 'active' => 1,
                 'title' => 'Vue',
-                'description' => 'Nach sehr langen und intensiven Suche ist Vue das JS Framework meiner Wahl und ich besitze entsprechned damit am meisten Erfahrung.',
+                'description' => 'Nach sehr langen und intensiven Suche ist Vue das JS Framework meiner Wahl und ich besitze entsprechned damit am meisten Erfahrung. Das einzige JS Framework mit dem ich eingesetzte Apps entwickelt habe.',
                 'skillscats_id' => 4,
                 'perc' => 65,
                 'icon' => 'fab fa-vuejs',
@@ -166,7 +166,7 @@ class SkillsTableSeeder extends Seeder
             14 => array(
                 'active' => 1,
                 'title' => 'Node',
-                'description' => 'Effektive Frontendentwicklung kommt ohne Node nicht aus. Ich habe mich deshalb damit arrangiert was das Erstellen von Entwicklungsumgebungen betrifft. Dazu verwende ich NPM.',
+                'description' => 'Für effektive Frontendentwicklung bietet Node.js gute Dienste. Ich habe mich deshalb damit arrangiert was das Erstellen von Entwicklungsumgebungen betrifft. Dazu verwende ich NPM.',
                 'skillscats_id' => 4,
                 'perc' => 30,
                 'icon' => 'fab fa-node-js',
@@ -177,7 +177,7 @@ class SkillsTableSeeder extends Seeder
             15 => array(
                 'active' => 1,
                 'title' => 'Gulp',
-                'description' => 'Für meine Entwicklungsumgebung verwende ich Gulp am liebsten und kenne mich gut aus mit Gulptasks und Pipes. Grunt kenne ich nur von der Theorie',
+                'description' => 'Für meine Entwicklungsumgebung verwende ich Gulp am liebsten und kenne mich gut aus mit Gulptasks und Pipes. Grunt kenne ich nur von der Theorie.',
                 'skillscats_id' => 4,
                 'perc' => 40,
                 'icon' => 'fab fa-gulp',
@@ -287,7 +287,7 @@ class SkillsTableSeeder extends Seeder
             25 => array(
                 'active' => 1,
                 'title' => 'GUI',
-                'description' => 'Die Schnittstelle zwischen Mensch und Maschine ist das was mich am meisten interessiert. Ich befasse mich mit Wirkung und Psychologie von Farben und Formen. Kleinste Details sind mir wichtig. Durch mein Design orientiertes Studium und viel Praxis mit Zusammenarbeit mit Designern bin ich das Pixelgneaue arbeite gewohnt und besitze die Notwendige Awareness die man bei so manchen Programmierer vermissen könnte :)',
+                'description' => 'Die Schnittstelle zwischen Mensch und Maschine ist das was mich am meisten interessiert. Ich befasse mich mit Wirkung und Psychologie von Farben und Formen. Das erarbeiten von GUIs ist genau mein Ding, hier bin ich zuhause. Kleinste Details sind mir wichtig. Durch mein Design orientiertes Studium und viel Praxis in Zusammenarbeit mit Designern bin ich das pixelgneaue arbeiten gewohnt und besitze die notwendige Awareness die man bei so manchen Programmierer vermissen wird :)',
                 'skillscats_id' => 8,
                 'perc' => 100,
                 'icon' => 'fas fa-tv',
@@ -298,7 +298,7 @@ class SkillsTableSeeder extends Seeder
             26 => array(
                 'active' => 1,
                 'title' => 'Fotografie',
-                'description' => 'Während meines Studiums durfte ich auch ein Fotoseminar genießen und lernte alles über Blenden und Belichtungszeiten. Photoshop und Illustrator sind bis heute für mich wichtige Programme geblieben. In Zeiten von Flat-Material-Design kaum noch gebraucht, aber der Skill anspruchsvolle Grafiken zu erstellen ist nach wie vor vorhanden und wird weiterhin gepflegt.',
+                'description' => 'Während meines Studiums durfte ich auch ein Fotoseminar genießen und lernte alles über Blenden und Belichtungszeiten. Photoshop und Illustrator sind bis heute für mich wichtige Programme geblieben und ihre professionelle Verwendung schon sehr lange Normalität. In Zeiten von Flat-Material-Design kaum noch gebraucht, aber der Skill anspruchsvolle Grafiken zu erstellen ist nach wie vor vorhanden und wird weiterhin gepflegt.',
                 'skillscats_id' => 8,
                 'perc' => 70,
                 'icon' => 'fas fa-camera-retro',

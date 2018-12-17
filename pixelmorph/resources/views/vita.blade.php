@@ -3,16 +3,19 @@
 @endcomponent
 
 <div class="containerContent">
-<div class="hoverPDFIcon"><i class="fas fa-3x fa-file-pdf"></i></div>
 <ul>
 @foreach ($items as $item)
     <li>
-        <h6><b>{{ $item['start'] }} - {{ $item['end'] }}</b> {{ $item['title'] }}</h6>
-        <p>{{ $item['desc'] }}</p>
+        <h5><b>{{ $item['start'] }} - {{ $item['end'] }}</b></h5>
+        <p>
+        <b>{{ $item['title'] }}</b>
+        <br>
+        {!! $item['desc'] !!}
+        </p>
+        <hr>
     </li>
 @endforeach
 </ul>
-
 </div>
 
 @endsection

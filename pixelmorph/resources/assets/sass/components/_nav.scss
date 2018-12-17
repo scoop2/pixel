@@ -181,11 +181,6 @@ a:nth-child(4):hover~.animation {
  |--------------------------------------------------------------------------
  */
 
-.hoverPDFIcon {
-    position: relative;
-    float: right;
-}
-
 .nav_skills_wrap {
     position: sticky;
     top: 0;
@@ -205,15 +200,11 @@ a:nth-child(4):hover~.animation {
     text-transform: uppercase;
     padding: 0.2vw;
     cursor: pointer;
-    color: $color11;
-    border-bottom: 2px solid $color11;
+    border-bottom: 3px solid $color11;
 }
 
-.nav_item:hover {
-    color: $color11;
-    background-color: #e9be61;
-    border-bottom: 2px solid $color11;
-    transition: 0.4s;
+.nav_item_active a {
+    color: $color13;
 }
 
 .nav_item {
@@ -223,6 +214,25 @@ a:nth-child(4):hover~.animation {
     text-transform: uppercase;
     padding: 0.2 0.4 0.2 0.4vw;
     cursor: pointer;
+}
+
+.nav_item:hover {
+    color: $color11;
+    border: none;
+    //border-bottom: 3px solid $color11;
+    transition: 0.3s;
+}
+
+.nav_item a {
+    color: $color13;
+    text-decoration: none;
+}
+
+.nav_item a:hover {
+    color: $color11;
+    text-decoration: none;
+    border-bottom: 3px solid $color11;
+    transition: 0.3s;
 }
 
 

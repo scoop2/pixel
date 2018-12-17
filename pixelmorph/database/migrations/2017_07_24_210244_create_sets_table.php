@@ -15,16 +15,17 @@ class CreateSetsTable extends Migration
     {
         Schema::create('sets', function (Blueprint $table) {
             $table->increments('id');
-            $table->tinyInteger('active');
-            $table->tinyInteger('promo');
-            $table->smallInteger('setorder');
-            $table->dateTime('released');
-            $table->char('title');
-            $table->mediumInteger('setlength');
-            $table->smallInteger('bpm');
-            $table->char('filename');
-            $table->char('filetype');
-            $table->text('description');
+            $table->tinyInteger('active')->default(0);
+            $table->tinyInteger('promo')->default(0);
+            $table->smallInteger('setorder')->default(1);
+            $table->dateTime('released')->nullable();
+            $table->char('title')->nullable();
+            $table->mediumInteger('setlength')->default(0);
+            $table->smallInteger('bpm')->default(0);
+            $table->char('filename')->nullable();
+            $table->char('filetype')->nullable();
+            $table->char('cover')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

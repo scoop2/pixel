@@ -13,7 +13,7 @@
     <tr>
         <td class="icon"><i class="far fa-address-card fa-2x"></i></td>
         <td class="person">{!! $items[0]->name !!}<br>{!! $items[0]->adress !!}</td>
-        <td class="person">{!! $items[0]->geb !!}<br>{!! $items[0]->state !!}<br>{!! $items[0]->family !!}</td>
+        <td class="person">{!! $items[0]->geb !!}<br>{!! $items[0]->state !!}<br>{!! $items[0]->family !!} / {!! $items[0]->rel !!}</td>
     </tr>
     <tr>
         <td class="icon"><i class="fas fa-phone fa-2x"></i></td>

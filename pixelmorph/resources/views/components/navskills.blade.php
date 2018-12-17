@@ -29,4 +29,5 @@
     <div class="nav_item {{ $skills }}"><a href="/skills">Skills</a></div>
     <div class="nav_item {{ $vita }}"><a href="/skills/vita">Vita</a></div>
     <div class="nav_item {{ $person }}"><a href="/skills/person">Personalien</a></div>
+    <div class="nav_item"><i class="fas fa-sm fa-file-pdf"></i></div>
 </div>

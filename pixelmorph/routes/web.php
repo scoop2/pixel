@@ -20,6 +20,12 @@ Route::get('/admin/skills', 'Admin\AdminSkillsController@index')->middleware('au
 Route::post('/admin/skills', 'Admin\AdminSkillsController@update')->middleware('auth');
 Route::get('/admin/sound', 'Admin\AdminSoundController@index')->middleware('auth');
 Route::post('/admin/sound', 'Admin\AdminSoundController@update')->middleware('auth');
+Route::post('/admin/sound/insert', 'Admin\AdminSoundController@insert')->middleware('auth');
+Route::get('/admin/sound/delete/{id?}', array(
+    'as' => 'id',
+    'uses' => 'Admin\AdminSoundController@delete',
+));
+
 #
 //Route::get('login', array('uses' => 'HomeController@showLogin'));
 //Route::post('login', array('uses' => 'HomeController@doLogin'));
@@ -38,7 +44,7 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::resource('sound', 'SoundController');
+Route::resource('/sound', 'SoundController');
 Route::get('sound/filter/{filter?}', array(
     'as' => 'filter',
     'uses' => 'SoundController@index',

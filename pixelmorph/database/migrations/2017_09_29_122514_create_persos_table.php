@@ -23,6 +23,7 @@ class CreatePersosTable extends Migration
             $table->char('state');
             $table->char('driver');
             $table->char('lang');
+            $table->char('rel');
             $table->char('email');
             $table->text('pgp');
             $table->timestamps();

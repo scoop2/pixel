@@ -85,6 +85,14 @@
     cursor: pointer;
 }
 
+.btnDelete {
+    background-color: $coloralert;
+}
+
+.btnAgree {
+    background-color: $coloragree;
+}
+
 
 /*
  |--------------------------------------------------------------------------
@@ -114,6 +122,11 @@
  |--------------------------------------------------------------------------
  */
 
+a {
+    color: $color11;
+    text-decoration: underline;
+}
+
 b,
 strong {
     font-weight: bold;
@@ -128,8 +141,20 @@ h1 {
     margin: 0;
 }
 
+hr {
+    border: 1px solid $color8;
+}
+
 .row {
     margin-bottom: 0;
+}
+
+.modal {
+    background-color: $color12;
+}
+
+.modal-footer {
+    background-color: $color12 !important;
 }
 
 .noUi-target.noUi-vertical .noUi-tooltip {
