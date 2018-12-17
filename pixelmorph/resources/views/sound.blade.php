@@ -66,8 +66,20 @@
                 <canvas id="moods"></canvas>
             </div>
             <div class="playerMetaDesc">
-                {{ $items[0]->description }}
-            </div>
+                <div>
+                    {{ $items[0]->description }}
+                </div>
+                <div class="playerMetaLegend">
+                    @php
+                        $i = 0;
+                    @endphp
+                    @foreach ($items[0]->label as $chartlabel)
+                        @php
+                            $i++;
+                        @endphp
+                        <div class="playerMetaLegendItem" id="label{{ $i }}" style="background-color: ">{{ $chartlabel }}</div>
+                    @endforeach
+                </div>
             </div>
         </div>
 	</div>
@@ -87,10 +99,29 @@
 <script>
 var tagBox = $('.tagBox');
 var slider = [];
-var refreshIntervalId, easing, count = 0;
-var playBtn = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-play"></use></svg>';
-var playBtnAction = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-playaction"></use></svg>';
-var pauseBtn = '<svg class="playerSVG icon60 icon-textcolor floatRight"><use xlink:href="#player-pause"></use></svg>';
+var count = 0;
+var ChartBackgroundColor = [
+    'rgba(198, 122, 85, 1)',
+    'rgba(228, 143, 84, 1)',
+    'rgba(245, 185, 72, 1)',
+    'rgba(224, 232, 124, 1)',
+    'rgba(195, 244, 130, 1)',
+    'rgba(193, 213, 95, 1)',
+    'rgba(151, 216, 86, 1)',
+    'rgba(73, 244, 84, 1)'
+];
+var ChartBorderColor = [
+    'rgba(54, 16, 8, 1)',
+    'rgba(54, 16, 8, 1)',
+    'rgba(54, 16, 8, 1)',
+    'rgba(54, 16, 8, 1)',
+    'rgba(54, 16, 8, 1)',
+    'rgba(54, 16, 8, 1)',
+    'rgba(54, 16, 8, 1)',
+    'rgba(54, 16, 8, 1)'
+];
+
+
 var sets = {
 @foreach ($items as $item)
     {{ $item->id }}: [
@@ -102,6 +133,16 @@ var sets = {
             "released": "{{ $item->released }}",
             "filename": "{{ $item->filename }}",
             "filetype": "{{ $item->filetype }}",
+            "chartdata": [
+            @foreach ($item->chart as $chart)
+                {{ $chart }},
+            @endforeach
+            ],
+            "chartlabel": [
+            @foreach ($item->label as $label)
+                '{{ $label }}',
+            @endforeach
+            ]
         }
     ],
 @endforeach
@@ -114,9 +155,27 @@ window.player = player;
 $(document).ready(function() {
     renderChart([
         @foreach ($items[0]->chart as $chart)
-            {{ $chart}},
+            {{ $chart }},
+        @endforeach
+    ],
+    [
+        @foreach ($items[0]->label as $chartlabel)
+            '{{ $chartlabel }}',
         @endforeach
     ]);
+    @php
+        $i = 0;
+        $x = 0;
+    @endphp
+    @foreach ($items[0]->label as $chartlabel)
+        @php
+            $i++;
+        @endphp
+        $('#label{{ $i }}').css('background-color', ChartBackgroundColor[{{ $i }}])
+        @php
+            $x++;
+        @endphp
+    @endforeach
 });
 
 $('.setsListWrap').on('click', '.setsListItem', function () {
@@ -135,7 +194,13 @@ $('.setsListWrap').on('click', '.setsListItem', function () {
     $('.playerDataLength').html(sets[id][0].setlength);
     $('.playerDataBpm').html(sets[id][0].bpm);
     $('.playerDataReleased').html(sets[id][0].released);
-    renderChart([12, 19, 3, 5, 2, 3]);
+    renderChart(sets[id][0].chartdata, sets[id][0].chartlabel);
+    var div = $('.playerMetaLegend');
+    $(div).html('');
+    for (var i = 0; i < sets[id][0].chartlabel.length; i++) {
+        html = '<div class="playerMetaLegendItem" style="background-color: ' + ChartBackgroundColor[i] + '">' + sets[id][0].chartlabel[i] + '</div>';
+        $(div).append(html);
+    }
 });
 
 player.on('progress', event => {
@@ -230,7 +295,6 @@ function doFilter(values) {
         for (i=0; i < values.length; i++) {
             html += '<div data-itemid="' + values[i][0].id + '" class="setsListItem btn waves-effect waves-light">' + values[i][0].title + '</div>';
         }
-
 	}
 	$('.setsListWrap').html(html);
 }
@@ -264,12 +328,13 @@ function getJSON(values) {
 }
 
 
-function renderChart(data) {
+function renderChart(data, labels) {
+    console.log(data,labels)
     var ctx = document.getElementById("moods").getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            labels: labels,
             datasets: [{
                 label: '# of Votes',
                 data: data,
@@ -278,36 +343,29 @@ function renderChart(data) {
 
             maintainAspectRatio: true,
                 aspectRatio: 0.5,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
+                backgroundColor: ChartBackgroundColor,
+                borderColor: ChartBorderColor,
                 borderWidth: 1
             }]
         },
         options: {
             legend: {
-                display: false
+                display: false,
+                fullWidth: false
             },
             title: {
                 display: false
-            }
+            },
+            layout: {
+                padding: 0
+            },
         }
     });
 }
 
+function renderLegend() {
+
+}
 </script>
 
 @endsection

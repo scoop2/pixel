@@ -38,6 +38,7 @@ class SoundController extends Controller
         $items = DB::select('SELECT * FROM sets WHERE active = ? ' . $and . ' ORDER BY setorder LIMIT 10', [1]);
         $taglist = DB::select('SELECT * FROM tags ORDER BY title');
         $chart = [];
+        $label = [];
         $playlists = [];
         $playlist = "";
         $month = ['', 'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
@@ -54,11 +55,13 @@ class SoundController extends Controller
                 }
             }
             $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$items[$i]->id]);
-
             foreach ($tags as $tag) {
+                $labels = DB::table('tags')->where('id', $tag->id)->first();
                 array_push($chart, $tag->rate);
+                array_push($label, $labels->title);
             }
             $items[$i]->chart = $chart;
+            $items[$i]->label = $label;
             $items[$i]->playlist = $playlist;
         }
 

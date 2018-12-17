@@ -16,7 +16,7 @@ audio {
 }
 
 .playerPlayerWrap {
-    width: 90%;
+    width: 100%;
 }
 
 .playerMetaWrap {
@@ -30,13 +30,24 @@ audio {
 }
 
 .playerMetaChart {
-    position: relative;
-    height: 5vw;
-    width: 10vw;
+    margin-left: -3vw;
+}
+
+.playerMetaLegend {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 1vw;
+}
+
+.playerMetaLegendItem {
+    margin: 0.2vw;
+    padding: 0.4vw;
+    border-radius: 11%;
 }
 
 .playerMetaDesc {
-    width: 60%;
+    width: 50%;
+    margin-left: -3vw;
 }
 
 .setsListWrap {
