@@ -19,8 +19,6 @@ class CreatePlaylistsTable extends Migration
             $table->integer('position');
             $table->char('title');
             $table->char('artist');
-            $table->char('mix');
-            $table->timestamps();
         });
     }
 

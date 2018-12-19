@@ -14,7 +14,6 @@ class PlaylistsTableSeeder extends Seeder
                 'position' => 1,
                 'title' => 'Mein Baum der Traum',
                 'artist' => 'DJ Bobo',
-                'mix' => 'Original Mix',
             ),
         ));
 
@@ -24,7 +23,6 @@ class PlaylistsTableSeeder extends Seeder
                 'position' => 2,
                 'title' => 'Ibizia Saufparty',
                 'artist' => 'DJ Ponk',
-                'mix' => 'Original Mix',
             ),
         ));
 
@@ -34,7 +32,6 @@ class PlaylistsTableSeeder extends Seeder
                 'position' => 3,
                 'title' => 'You Love Me',
                 'artist' => 'Allstar',
-                'mix' => 'DJ Bobo  Remix',
             ),
         ));
 
@@ -44,7 +41,6 @@ class PlaylistsTableSeeder extends Seeder
                 'position' => 4,
                 'title' => 'Bla Blub Sabbel',
                 'artist' => 'Quatscher',
-                'mix' => 'Original Mix',
             ),
         ));
 
@@ -54,7 +50,6 @@ class PlaylistsTableSeeder extends Seeder
                 'position' => 5,
                 'title' => 'Grosser Sieg',
                 'artist' => 'Auch wenn du sagst',
-                'mix' => 'Original Mix',
             ),
         ));
 
@@ -64,7 +59,6 @@ class PlaylistsTableSeeder extends Seeder
                 'position' => 6,
                 'title' => 'Untergang',
                 'artist' => 'Marsch',
-                'mix' => 'Original Mix',
             ),
         ));
 
@@ -74,7 +68,6 @@ class PlaylistsTableSeeder extends Seeder
                 'position' => 6,
                 'title' => 'Spiele und Bäder',
                 'artist' => 'Rom',
-                'mix' => 'Original Mix',
             ),
         ));
     }

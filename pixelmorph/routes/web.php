@@ -57,6 +57,9 @@ Route::get('skills/person', 'SkillsController@person')->middleware('auth');
 Route::resource('blog', 'BlogController');
 Route::resource('kontakt', 'KontaktController');
 
+Route::get('m3u/url/{url?}', 'M3uController@index');
+Route::get('m3u/batch', 'M3uController@batchM3u')->middleware('auth');
+
 Route::resource('test', 'TestController');
 
 /*

@@ -12,25 +12,27 @@
 		@endforeach
 		<div class="tagBoxWrap"></div>
 	</div>
-</div>
-<div class="filterNav">
-	<div class="fiterBtnWrap tooltipped" data-position="left" data-tooltip="Starte Suche nach Sets mit diesen Moods">
-		<svg class="icon30 icon-textcolor"><use xlink:href="#lense"></use></svg>
-	</div>
-	<div class="fiterBackBtnWrap tooltipped" data-position="left" data-tooltip="Versteck mich wieder">
-		<i class="fas fa-arrow-circle-up fa-3x icon-blue"></i>
-	</div>
-	<div class="fiterResetBtnWrap tooltipped" data-position="left" data-tooltip="Alle Moods auf Null zurück stellen">
-		<i class="fas fa-arrow-circle-down fa-3x icon-blue"></i>
-	</div>
-</div>
-
-
-<div>{!! html_entity_decode($desc->body) !!}</div>
-<div class="playerWrapOuter">
-    <div class="playlist z-depth-2" id="playlistid">
-        <div class="close"><i class="fas fa-times fa-lg"></i></div>
+    <div class="filterNav">
+        <div class="fiterBtnWrap tooltipped" data-position="left" data-tooltip="Starte eine Suche nach Sets mit diesen Moods">
+            <i class="fas fa-arrow-circle-right fa-3x icon-blue"></i>
+        </div>
+        <div class="fiterBackBtnWrap tooltipped" data-position="left" data-tooltip="Versteck mich wieder">
+            <i class="fas fa-arrow-circle-up fa-3x icon-blue"></i>
+        </div>
+        <div class="fiterResetBtnWrap tooltipped" data-position="left" data-tooltip="Alle Moods auf Null zurück stellen">
+            <i class="fas fa-arrow-circle-down fa-3x icon-blue"></i>
+        </div>
     </div>
+</div>
+
+
+<div class="center-align">
+    <button class="btn btnSearch"><i class="fas fa-headphones"></i> LOOK FOR MORE MUSIC <i class="fas fa-headphones"></i></button>
+</div>
+<!--
+<div>{!! html_entity_decode($desc->body) !!}</div>
+-->
+<div class="playerWrapOuter">
 	<div id="player" class="playerWrap">
 		<div class="titleWrap">
 			<div id="track" class="playerTitle floatLeft">{{ $items[0]->title }}</div>
@@ -43,7 +45,17 @@
                     <div class="playerDataReleased">{{ $items[0]->released }}</div>
                 </div>
 				<div class="playerSocialIcons">
-                    <div class="playlists"><i class="fas fa-list-ol"></i></div>
+                    <div class="playlists">
+                        <i id="openPlaylist" class="fas fa-list-ol"></i>
+                        <div class="playlist z-depth-2" id="playlistid">
+                            <div class="close"><i id="closePlaylist" class="fas fa-times fa-lg"></i></div>
+                            <ul id="playlistUl">
+                                @foreach ($items[0]->playlist as $playlist)
+                                    <li><b>{{ $playlist->title }}</b> - {{ $playlist->artist }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
                     <a href="{{ url('/') }}/enjoy/{{ $items[0]->filename }}" download><i class="fas fa-download"></i></a>
 					<a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-facebook-square fa-fw playerSocialIconsPadding"></i></a>
 					<a href="https://twitter.com/home?status=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-twitter-square fa-fw playerSocialIconsPadding"></i></a>
@@ -54,13 +66,13 @@
 		<div class="playerWaveWrap">
             <div class="playerPlayerWrap">
                 <audio crossorigin playsinline>
-                    <source src="enjoy/{{ $items[0]->filename }}" type="audio/mp3">
+                    <source src="{{ url('/') }}/enjoy/{{ $items[0]->filename }}" type="audio/mp3">
                 </audio>
             </div>
 		</div>
         <div class="playerMetaWrap">
             <div class="playerMetaCover">
-                <img src="/images/covers/{{ $items[0]->cover }}">
+                <img id="playerCover" src="{{ url('/') }}/images/covers/{{ $items[0]->cover }}">
             </div>
             <div class="playerMetaChart">
                 <canvas id="moods"></canvas>
@@ -74,10 +86,10 @@
                         $i = 0;
                     @endphp
                     @foreach ($items[0]->label as $chartlabel)
+                        <div class="playerMetaLegendItem" id="label{{ $i }}" style="background-color: ">{{ $chartlabel }}</div>
                         @php
                             $i++;
                         @endphp
-                        <div class="playerMetaLegendItem" id="label{{ $i }}" style="background-color: ">{{ $chartlabel }}</div>
                     @endforeach
                 </div>
             </div>
@@ -99,6 +111,7 @@
 <script>
 var tagBox = $('.tagBox');
 var slider = [];
+var sliderValues = [];
 var count = 0;
 var ChartBackgroundColor = [
     'rgba(198, 122, 85, 1)',
@@ -121,7 +134,6 @@ var ChartBorderColor = [
     'rgba(54, 16, 8, 1)'
 ];
 
-
 var sets = {
 @foreach ($items as $item)
     {{ $item->id }}: [
@@ -133,6 +145,15 @@ var sets = {
             "released": "{{ $item->released }}",
             "filename": "{{ $item->filename }}",
             "filetype": "{{ $item->filetype }}",
+            "cover": "{{ $item->cover }}",
+            "playlist": [
+                @foreach ($item->playlist as $playlist)
+                {
+                    "title": "{{ $playlist->title }}",
+                    "artist": "{{ $playlist->artist }}"
+                },
+                @endforeach
+            ],
             "chartdata": [
             @foreach ($item->chart as $chart)
                 {{ $chart }},
@@ -147,6 +168,7 @@ var sets = {
     ],
 @endforeach
 }
+
 const player = new Plyr('audio', {
     settings: ''
 });
@@ -165,35 +187,46 @@ $(document).ready(function() {
     ]);
     @php
         $i = 0;
-        $x = 0;
     @endphp
     @foreach ($items[0]->label as $chartlabel)
+        $('#label{{ $i }}').css('background-color', ChartBackgroundColor[{{ $i }}])
         @php
             $i++;
         @endphp
-        $('#label{{ $i }}').css('background-color', ChartBackgroundColor[{{ $i }}])
-        @php
-            $x++;
-        @endphp
     @endforeach
+
+    tagBox.each(function (index, el) {
+        var tag = {tagid: $(el).data('id'), tagvalue: parseInt(el.noUiSlider.get())};
+        sliderValues.push(tag);
+    });
+    getJSON(sliderValues);
+
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems);
 });
 
 $('.setsListWrap').on('click', '.setsListItem', function () {
-    $('.overlay').css('display', 'block');
     var id = $(this).data('itemid');
+
     player.source = {
         type: 'audio',
         sources: [
             {
-                src: 'enjoy/'+ sets[id][0].filename,
+                src: '{{ url('/') }}/enjoy/'+ sets[id][0].filename,
                 type: 'audio/' + sets[id][0].filetype
             }]
     }
     player.autoplay = true;
+    $('#playerCover').attr('src', '{{ url('/') }}/images/covers/' + sets[id][0].cover)
     $('.playerTitle').html(sets[id][0].title);
     $('.playerDataLength').html(sets[id][0].setlength);
     $('.playerDataBpm').html(sets[id][0].bpm);
     $('.playerDataReleased').html(sets[id][0].released);
+    var html = '';
+    for (var i=0; i<sets[id][0].playlist.length; i++) {
+        html += '<li><b>' + sets[id][0].playlist[i].title + '</b> - ' + sets[id][0].playlist[i].artist + '</li>';
+    }
+    $('#playlistUl').html(html);
     renderChart(sets[id][0].chartdata, sets[id][0].chartlabel);
     var div = $('.playerMetaLegend');
     $(div).html('');
@@ -201,14 +234,6 @@ $('.setsListWrap').on('click', '.setsListItem', function () {
         html = '<div class="playerMetaLegendItem" style="background-color: ' + ChartBackgroundColor[i] + '">' + sets[id][0].chartlabel[i] + '</div>';
         $(div).append(html);
     }
-});
-
-player.on('progress', event => {
-   // const instance = event.detail.plyr;
-   //console.log(player.buffered)
-  // if (player.buffered === 1) {
-    //   $('.overlay').css('display', 'none');
-  // }
 });
 
 player.on('ready', event => {
@@ -232,9 +257,46 @@ $('.fiterResetBtnWrap').on('click', function() {
         el.noUiSlider.set(0);
     });
 });
-//$('.tooltipped').tooltip({enterDelay: 9000, exitDelay: 9000});
+$('#openPlaylist').on('click', function() {
+    var div = $('.playlist');
+    div.css('display', 'block');
+    var animate = anime({
+        targets: '.playlist',
+        width: '100%',
+        height: '100%',
+        duration: 1800,
+        complete: function() {
+            div.css('overflow', 'auto');
+        }
+    });
+});
+$('#closePlaylist').on('click', function() {
+    var div = $('.playlist');
+    div.css('overflow', 'hidden');
+    var animate = anime({
+        targets: '.playlist',
+        width: '0%',
+        height: '0%',
+        duration: 1200,
+        complete: function() {
+            div.css('display', 'none');
+        }
+    });
+});
 
-$('.fiterBtnWrap').on('click', function () {
+$('.btnSearch').on('click', function(){
+    var sliderValues = [];
+
+
+    var animate = anime({
+        targets: '.filterWrap',
+        top: 0,
+        duration: 700,
+        elasticity: 600
+    });
+});
+
+$('.fiterBtnWrap').on('click', function() {
     var sliderValues = [];
     var div = $('.filterWrap');
     if (div.visible(true) === true) {
@@ -329,7 +391,6 @@ function getJSON(values) {
 
 
 function renderChart(data, labels) {
-    console.log(data,labels)
     var ctx = document.getElementById("moods").getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'doughnut',
@@ -340,8 +401,7 @@ function renderChart(data, labels) {
                 data: data,
                 responsive: true,
                 devicePixelRatio: 0.5,
-
-            maintainAspectRatio: true,
+                maintainAspectRatio: true,
                 aspectRatio: 0.5,
                 backgroundColor: ChartBackgroundColor,
                 borderColor: ChartBorderColor,
@@ -359,6 +419,10 @@ function renderChart(data, labels) {
             layout: {
                 padding: 0
             },
+            tooltips: {
+                enabled: false,
+                intersects: false
+            }
         }
     });
 }

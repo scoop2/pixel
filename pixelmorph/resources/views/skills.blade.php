@@ -32,6 +32,19 @@
         @endforeach
 	</ul>
 </div>
+<script>
+$(document).ready(function(){
+    $('.circle').css('animation', 'progress 1s ease-out forwards');
+
+    $(".skillItemText").mouseenter(function(e) {
+        e.stopPropagation();
+        var el = $(this).prev();
+        var html = $(this).prev().html();
+        el.html('');
+        el.html(html);
+    });
+});
+</script>
 @endsection
 
 @section('nav')

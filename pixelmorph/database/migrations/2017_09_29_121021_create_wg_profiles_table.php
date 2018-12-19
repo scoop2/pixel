@@ -1,7 +1,7 @@
 <?php
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateWgProfilesTable extends Migration
 {
@@ -18,7 +18,6 @@ class CreateWgProfilesTable extends Migration
             $table->tinyInteger('active');
             $table->char('title');
             $table->text('content');
-            $table->timestamps();
         });
     }
 

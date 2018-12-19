@@ -19,7 +19,7 @@ class SetsTableSeeder extends Seeder
                 'bpm' => 121,
                 'filename' => 'zauberwesen_pokes_around_the_world.mp3',
                 'filetype' => 'mp3',
-                'cover' => 'dubno.jpg',
+                'cover' => 'zauberwesen.jpg',
                 'description' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.',
                 'created_at' => '2017-09-09 03:51:05',
                 'updated_at' => '2017-09-09 03:51:05',

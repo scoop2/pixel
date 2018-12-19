@@ -45,15 +45,7 @@ class SoundController extends Controller
 
         foreach ($items as $i => $item) {
             $items[$i]->released = Helper::convertRelease($items[$i]->released);
-            $playlist = "<ul>";
-            $playlistquery = DB::select('SELECT * FROM playlists WHERE set_id = ? ORDER BY position', [$items[$i]->id]);
-            if (empty($playlistquery)) {
-                $playlist .= '<li><div class="playlistitem"><p>Keine Playlist vorhanden</p></div></li></ul>';
-            } else {
-                foreach ($playlistquery as $playlistitem) {
-                    $playlist .= '<li><div class="playlistitem"><b>' . $playlistitem->artist . '</b> - ' . $playlistitem->title . ' (' . $playlistitem->mix . ')</div></li>';
-                }
-            }
+            $playlist = DB::select('SELECT * FROM playlists WHERE set_id = ? ORDER BY position', [$items[$i]->id]);
             $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$items[$i]->id]);
             foreach ($tags as $tag) {
                 $labels = DB::table('tags')->where('id', $tag->id)->first();

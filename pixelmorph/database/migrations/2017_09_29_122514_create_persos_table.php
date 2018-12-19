@@ -26,7 +26,6 @@ class CreatePersosTable extends Migration
             $table->char('rel');
             $table->char('email');
             $table->text('pgp');
-            $table->timestamps();
         });
     }
 

@@ -2,6 +2,13 @@ audio {
     width: 100%;
 }
 
+.btnSearch {
+    width: 90%;
+    background-color: $color9;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .playerWrap {
     width: 100%;
     padding: 0.5vw;
@@ -16,7 +23,7 @@ audio {
 }
 
 .playerPlayerWrap {
-    width: 100%;
+    width: 95%;
 }
 
 .playerMetaWrap {
@@ -79,21 +86,14 @@ audio {
     top: -10vw;
     z-index: 100;
     width: 100%;
-    background-color: $color3;
+    background-color: $color14;
     left: 0;
 }
 
 .filterNav {
     display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 1vw;
-    right: -0.8vw;
-    z-index: 101;
-    width: 4vw;
-    height: 4vw;
-    cursor: pointer;
-    color: $color2;
+    flex-direction: row;
+    color: $color4;
 }
 
 .fiterBtnWrap {
@@ -130,7 +130,7 @@ audio {
     height: 8vw;
     margin-left: auto;
     margin-right: auto;
-    color: $color2;
+    color: $fontcolor;
 }
 
 .tagTitle {
@@ -275,8 +275,7 @@ audio {
 
 .tagWrapper {
     display: flex;
-    flex-direction: row; //flex-wrap: wrap;
-    width: 100%;
+    flex-direction: row;
 }
 
 .playlists {
@@ -287,15 +286,20 @@ audio {
 .playlist {
     display: none;
     position: absolute;
+    right: 0;
+    top: 0;
     z-index: 100;
-    width: 100%;
-    max-width: 0;
-    overflow: hidden;
+    width: 0%;
+    max-width: 100%;
+    height: 0%;
+    padding: 1vw;
     white-space: nowrap;
+    overflow: hidden;
     background-color: $color2;
 }
 
 .playlistitem {
+    font-size: 1vw;
     padding: 0.1vw;
 }
 
