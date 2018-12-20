@@ -1,0 +1,12 @@
+.textShadow {
+    text-shadow: 1px 1px 1px rgba(0,0,0,.3);
+}
+
+.shaped {
+    float: left;
+    shape-outside: url(/images/shape01.png);
+    shape-image-threshold: 0.0;
+    shape-margin: 10px;
+    width: 30vw;
+    height: auto;
+}

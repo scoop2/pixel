@@ -15,7 +15,7 @@ class PagesTableSeeder extends Seeder
                 'author' => 1,
                 'title' => 'Home',
                 'headline' => 'Willkommen',
-                'body' => 'bla bla bla',
+                'body' => '<p>Ein Angler braucht eine Angel, ein Schachspieler ein Schachbrett und ein Webentwickler eine Webseite. Dies ist der einzige Grund warum es diese Seite gibt ... mein Spielplatz.<br>Hast Du - warum auch immer - Bedarf an einen Internetspezialisten werfe einen Blick auf die <a href="/skills">Skills</a> und entscheide ob ich Dir behilflich sein kann. Ich helfe nicht nur aus kommerziellen Interesse. Hast Du eine Idee welche die Welt besser oder einfach nur schöner machen würden kann man mich leicht beigeistern. Ist Dir das studieren der Skills zu technisch, <a href="/kontakt">kontaktiere</a> mich einfach.</p><p>Als Freund der elektronischen Unterhaltungsmusik könnten <a href="/sound">hier</a> einige akustische Überraschungen auf dich warten. Dort findest Du einige Sets mit eleketronischer Musik verschiedenster Art. Vornehmlich Sachen zum grooven, zum entspannten Tanzen und treiben lassen oder einfach nur zum Träumen und wohl fühlen. Da ich nicht glaube das man elektronische Musik in Schubladen wie Techno oder Trance aufräumen kann, kannst Du Deine Musik durch das Einstellen von sogenannten Moods aussuchen, probier es einfach mal aus :)</p>',
                 'meta_description' => 'home',
                 'created_at' => '2017-09-09 03:51:05',
                 'updated_at' => '2017-09-09 03:51:05',

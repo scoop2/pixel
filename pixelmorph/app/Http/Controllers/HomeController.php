@@ -19,7 +19,7 @@ class HomeController extends Controller
             $items->username = $user['name'];
             $items->check = '(Logged in!)';
         } else {
-            $items->username = 'Gast';
+            $items->username = 'werter Gast';
         }
         return view('home', ['items' => $items, 'user' => $user]);
     }

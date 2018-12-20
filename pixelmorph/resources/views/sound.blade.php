@@ -10,16 +10,15 @@
 				<div id="tagBox{{ $tag->id }}" class="tagBox" data-id="{{ $tag->id }}"></div>
 			</div>
 		@endforeach
-		<div class="tagBoxWrap"></div>
 	</div>
-    <div class="filterNav">
-        <div class="fiterBtnWrap tooltipped" data-position="left" data-tooltip="Starte eine Suche nach Sets mit diesen Moods">
+    <div class="filterNavWrap">
+        <div class="fiterBtnWrap tooltipped" data-position="right" data-tooltip="Alle Moods eingestellt? Hier startet die Suche">
             <i class="fas fa-arrow-circle-right fa-3x icon-blue"></i>
         </div>
-        <div class="fiterBackBtnWrap tooltipped" data-position="left" data-tooltip="Versteck mich wieder">
+        <div class="fiterBackBtnWrap tooltipped" data-position="right" data-tooltip="Versteck mich wieder">
             <i class="fas fa-arrow-circle-up fa-3x icon-blue"></i>
         </div>
-        <div class="fiterResetBtnWrap tooltipped" data-position="left" data-tooltip="Alle Moods auf Null zurück stellen">
+        <div class="fiterResetBtnWrap tooltipped" data-position="right" data-tooltip="Alle Moods auf Null zurück stellen">
             <i class="fas fa-arrow-circle-down fa-3x icon-blue"></i>
         </div>
     </div>
@@ -27,7 +26,7 @@
 
 
 <div class="center-align">
-    <button class="btn btnSearch"><i class="fas fa-headphones"></i> LOOK FOR MORE MUSIC <i class="fas fa-headphones"></i></button>
+    <button class="btn btnSearch"><i class="fas fa-headphones"></i> FINDE MEHR MUSIK <i class="fas fa-headphones"></i></button>
 </div>
 <!--
 <div>{!! html_entity_decode($desc->body) !!}</div>
@@ -46,7 +45,7 @@
                 </div>
 				<div class="playerSocialIcons">
                     <div class="playlists">
-                        <i id="openPlaylist" class="fas fa-list-ol"></i>
+                        <i id="openPlaylist" class="fas fa-list-ol tooltipped" data-position="right" data-tooltip="Playlist"></i>
                         <div class="playlist z-depth-2" id="playlistid">
                             <div class="close"><i id="closePlaylist" class="fas fa-times fa-lg"></i></div>
                             <ul id="playlistUl">
@@ -56,7 +55,7 @@
                             </ul>
                         </div>
                     </div>
-                    <a href="{{ url('/') }}/enjoy/{{ $items[0]->filename }}" download><i class="fas fa-download"></i></a>
+                    <a href="{{ url('/') }}/enjoy/{{ $items[0]->filename }}" download><i class="fas fa-download tooltipped" data-position="right" data-tooltip="Download"></i></a>
 					<a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-facebook-square fa-fw playerSocialIconsPadding"></i></a>
 					<a href="https://twitter.com/home?status=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-twitter-square fa-fw playerSocialIconsPadding"></i></a>
 					<a href="https://plus.google.com/share?url=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-google-plus-square fa-fw playerSocialIconsPadding"></i></a>
@@ -71,14 +70,14 @@
             </div>
 		</div>
         <div class="playerMetaWrap">
-            <div class="playerMetaCover">
+            <div class="playerMetaCover imageRoundedBorder">
                 <img id="playerCover" src="{{ url('/') }}/images/covers/{{ $items[0]->cover }}">
             </div>
             <div class="playerMetaChart">
                 <canvas id="moods"></canvas>
             </div>
             <div class="playerMetaDesc">
-                <div>
+                <div class="description">
                     {{ $items[0]->description }}
                 </div>
                 <div class="playerMetaLegend">
@@ -95,10 +94,6 @@
             </div>
         </div>
 	</div>
-		<div class="timelineWrap">
-			<div id="timelineNow{{ $items[0]->id }}" class="playerTimeText floatLeft"></div>
-			<div id="timelineAll{{ $items[0]->id }}" class="playerTimeText floatRight"></div>
-		</div>
 	</div>
 
 <div class="setsListWrap">
@@ -112,7 +107,6 @@
 var tagBox = $('.tagBox');
 var slider = [];
 var sliderValues = [];
-var count = 0;
 var ChartBackgroundColor = [
     'rgba(198, 122, 85, 1)',
     'rgba(228, 143, 84, 1)',
@@ -146,6 +140,7 @@ var sets = {
             "filename": "{{ $item->filename }}",
             "filetype": "{{ $item->filetype }}",
             "cover": "{{ $item->cover }}",
+            "description": "{{ $item->description }}",
             "playlist": [
                 @foreach ($item->playlist as $playlist)
                 {
@@ -199,8 +194,6 @@ $(document).ready(function() {
         var tag = {tagid: $(el).data('id'), tagvalue: parseInt(el.noUiSlider.get())};
         sliderValues.push(tag);
     });
-    getJSON(sliderValues);
-
     var elems = document.querySelectorAll('.tooltipped');
     var instances = M.Tooltip.init(elems);
 });
@@ -222,6 +215,7 @@ $('.setsListWrap').on('click', '.setsListItem', function () {
     $('.playerDataLength').html(sets[id][0].setlength);
     $('.playerDataBpm').html(sets[id][0].bpm);
     $('.playerDataReleased').html(sets[id][0].released);
+    $('.description').html(sets[id][0].description);
     var html = '';
     for (var i=0; i<sets[id][0].playlist.length; i++) {
         html += '<li><b>' + sets[id][0].playlist[i].title + '</b> - ' + sets[id][0].playlist[i].artist + '</li>';
@@ -240,23 +234,47 @@ player.on('ready', event => {
     $('.overlay').css('display', 'none');
 });
 
-
-$('.fiterBackBtnWrap').on('click', function() {
-    var div = $('.filterWrap');
-    var dir = div.data('pos');
+$('.fiterBtnWrap').on('click', function() {
+    $('.overlay').css('display', 'block');
+    var sliderValues = [];
+     tagBox.each(function (index, el) {
+        var tag = {tagid: $(el).data('id'), tagvalue: parseInt(el.noUiSlider.get())};
+        sliderValues.push(tag);
+    });
+    getJSON(sliderValues);
     var animate = anime({
         targets: '.filterWrap',
-        top: dir,
+        top: -122,
         duration: 700,
         elasticity: 600
     });
-    div.html('<svg class="icon30 icon-textcolor"><use xlink:href="#lense"></use></svg>');
 });
+
+$('.fiterBackBtnWrap').on('click', function() {
+    var animate = anime({
+        targets: '.filterWrap',
+        top: -122,
+        duration: 700,
+        elasticity: 600
+    });
+});
+
+$('.btnSearch').on('click', function(){
+    var animate = anime({
+        targets: '.filterWrap',
+        top: 14,
+        duration: 700,
+        elasticity: 600
+    });
+});
+
+
 $('.fiterResetBtnWrap').on('click', function() {
     tagBox.each(function (index, el) {
         el.noUiSlider.set(0);
     });
 });
+
 $('#openPlaylist').on('click', function() {
     var div = $('.playlist');
     div.css('display', 'block');
@@ -284,52 +302,11 @@ $('#closePlaylist').on('click', function() {
     });
 });
 
-$('.btnSearch').on('click', function(){
-    var sliderValues = [];
-
-
-    var animate = anime({
-        targets: '.filterWrap',
-        top: 0,
-        duration: 700,
-        elasticity: 600
-    });
-});
-
-$('.fiterBtnWrap').on('click', function() {
-    var sliderValues = [];
-    var div = $('.filterWrap');
-    if (div.visible(true) === true) {
-         console.log('click')
-        $(this).html('<svg class="icon30 icon-textcolor"><use xlink:href="#lense"></use></svg>');
-        dir = div.data('pos');
-        tagBox.each(function (index, el) {
-            var tag = {tagid: $(el).data('id'), tagvalue: parseInt(el.noUiSlider.get())};
-            sliderValues.push(tag);
-        });
-        $('.overlay').css('display','block');
-        $('.fiterBackBtnWrap').css('display', 'none');
-        $('.fiterResetBtnWrap').css('display', 'none');
-        getJSON(sliderValues);
-    } else {
-        console.log('clack')
-        $(this).html('<i class="fas fa-arrow-circle-right fa-3x icon-blue"></i>');
-        $('.fiterBackBtnWrap').css('display', 'block');
-        $('.fiterResetBtnWrap').css('display', 'block');
-        div.data('pos', div.position().top);
-        dir = 0;
-    }
-    var animate = anime({
-        targets: '.filterWrap',
-        top: dir,
-        duration: 700,
-        elasticity: 600
-    });
-});
 $('.setFilter').on('click', function () {
     tagBox.each(function (index, el) {});
 });
 
+var count = 0;
 tagBox.each(function (index, el) {
 	id = $(el).data('id');
 	slider[count] = document.getElementById('tagBox' + id);
@@ -391,8 +368,10 @@ function getJSON(values) {
 
 
 function renderChart(data, labels) {
-    var ctx = document.getElementById("moods").getContext('2d');
-    var myChart = new Chart(ctx, {
+    $('#moods').remove();
+    $('.playerMetaChart').append('<canvas id="moods"></canvas>');
+    ctx = document.getElementById("moods").getContext('2d');
+    myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: labels,
@@ -420,18 +399,13 @@ function renderChart(data, labels) {
                 padding: 0
             },
             tooltips: {
-                enabled: false,
+                enabled: true,
                 intersects: false
             }
         }
     });
 }
-
-function renderLegend() {
-
-}
 </script>
-
 @endsection
 
 @section('nav')

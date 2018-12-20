@@ -2,13 +2,6 @@ audio {
     width: 100%;
 }
 
-.btnSearch {
-    width: 90%;
-    background-color: $color9;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .playerWrap {
     width: 100%;
     padding: 0.5vw;
@@ -20,6 +13,7 @@ audio {
     width: 100%;
     border-bottom: 2px solid $sempa4;
     padding: 0.4vw;
+    margin-bottom: 0.4vw;
 }
 
 .playerPlayerWrap {
@@ -30,10 +24,6 @@ audio {
     width: 100%;
     display: flex;
     flex-direction: row;
-}
-
-.playerMetaCover {
-    width: 20%;
 }
 
 .playerMetaChart {
@@ -53,7 +43,7 @@ audio {
 }
 
 .playerMetaDesc {
-    width: 50%;
+    width: 65%;
     margin-left: -3vw;
 }
 
@@ -73,42 +63,54 @@ audio {
     color: $color12;
 }
 
-.filterSwitchWrap {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    padding-bottom: 1vw;
-    padding-top: 0.4vw;
-}
-
 .filterWrap {
     position: absolute;
-    top: -10vw;
+    top: -12vw;
     z-index: 100;
+    display: flex;
+    flex-direction: row;
     width: 100%;
     background-color: $color14;
     left: 0;
 }
 
-.filterNav {
+.filterSwitchWrap {
     display: flex;
     flex-direction: row;
+    width: 95%;
+    padding-bottom: 1vw;
+    padding-top: 0.4vw;
+}
+
+.filterNavWrap {
+    display: flex;
+    flex-direction: column;
+    width: 5%;
+    padding-top: 1vw;
     color: $color4;
 }
 
+.btnSearch {
+    width: 90%;
+    background-color: $color9;
+    color: $color14;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .fiterBtnWrap {
-    display: block;
     margin: 0.2vw;
+    cursor: pointer;
 }
 
 .fiterResetBtnWrap {
-    display: none;
     margin: 0.2vw;
+    cursor: pointer;
 }
 
 .fiterBackBtnWrap {
-    display: none;
     margin: 0.2vw;
+    cursor: pointer;
 }
 
 .setsWrap {
@@ -206,12 +208,6 @@ audio {
 .playerWrap {
     position: relative;
     width: 100%;
-    //min-height: 6vw; //  background-color: $color4;
-    //border-radius: 10px;
-    // box-shadow: 0 0 5px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.2);
-    //box-shadow: 0 3px 5px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.2);
-    //box-sizing: border-box;
-    //opacity: 0.8;
 }
 
 .playerWrapOuter {
@@ -239,7 +235,6 @@ audio {
 .playerWaveformWrap {
     width: 100%;
     height: 3.6vw;
-    //border-bottom: 2px solid $color9;
 }
 
 .playerWaveform {
@@ -320,54 +315,6 @@ audio {
     padding-left: 2vw;
     color: $sempa5;
     overflow: hidden;
-}
-
-.gradientTag1 {
-    background: linear-gradient(to right, #FFD799 0%, #E9B565 85%, #E9B565 100%);
-}
-
-.gradientTag1end {
-    background: linear-gradient(to right, #FFD799 0%, #E9B565 85%);
-}
-
-.gradientTag2 {
-    background: linear-gradient(to right, #E9B565 0%, #A97320 85%, #b7723e 100%);
-}
-
-.gradientTag2end {
-    background: linear-gradient(to right, #E9B565 0%, #b7723e 85%);
-}
-
-.gradientTag3 {
-    background: linear-gradient(to right, #b7723e 0%, #94723e 85%, #905a32 100%);
-}
-
-.gradientTag3end {
-    background: linear-gradient(to right, #b7723e 0%, #905a32 85%);
-}
-
-.gradientTag4 {
-    background: linear-gradient(to right, #905a32 0%, #6a4326 85%, #6a4326 100%);
-}
-
-.gradientTag4end {
-    background: linear-gradient(to right, #905a32 0%, #6a4326 85%);
-}
-
-.gradientTag5 {
-    background: linear-gradient(to right, #d788fc 0%, #d788fc 85%, #ff58b4 100%);
-}
-
-.gradientTag5end {
-    background: linear-gradient(to right, #d788fc 0%, #d788fc 85%);
-}
-
-.gradientTag6 {
-    background: linear-gradient(to right, #ff58b4 0%, #ff58b4 85%, #f73535 100%);
-}
-
-.gradientTag6end {
-    background: linear-gradient(to right, #ff58b4 0%, #ff58b4 85%);
 }
 
 .lenseIcon {

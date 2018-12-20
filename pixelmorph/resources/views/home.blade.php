@@ -1,24 +1,16 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="containerContent">
-        <h1>{{ $items->title }} {{ $items->username }}</h1>
-        {!! $items->body !!}
+    <div class="containerContent homeText">
+        <h1 class="center textShadow">{{ $items->headline }} {{ $items->username }}</h1>
+        <div>
+            <img src="{{ url('/') }}/images/shape01.png" class="shaped" />
+            <p>{!! $items->body !!}</p>
+        </div>
+        <div>
+        <h2 class="center textShadow">Die neueste Klangwelt</h2>
+        </div>
     </div>
-
-    @if (Route::has('login'))
-
-
-  @auth
-  Home
-  Private
-  @else
-  Login
-  Register
-  @endauth
-
-
-@endif
 @endsection
 
 @section('nav')
