@@ -1,5 +1,5 @@
 .textShadow {
-    text-shadow: 1px 1px 1px rgba(0,0,0,.3);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
 }
 
 .shaped {
@@ -9,4 +9,102 @@
     shape-margin: 10px;
     width: 30vw;
     height: auto;
+}
+
+@mixin background {
+    padding: .8vw;
+    background-color: $color16;
+}
+
+.homeTopWrap {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.homeTopLeftCorner {
+    width: 10%;
+    border-top-left-radius: 50%;
+    @include background
+}
+
+.homeTopRightCorner {
+    width: 10%;
+    border-bottom-right-radius: 50%;
+    @include background
+}
+
+.homeTopHeadline {
+    width: 80%;
+    color: $color2;
+    @include background
+}
+
+@mixin teaser {
+    width: 50%;
+    min-height: 20vw;
+    padding: 0 1vw 0 1vw;
+    margin: .5vw;
+    background-color: $color16;
+    border-radius: 3%;
+    font-size: .8vw;
+    cursor: pointer;
+}
+
+.homeTeaserHead {
+    padding-top: .6vw;
+    font-size: 1.2vw;
+    text-align: center;
+    min-height: 4vw;
+}
+
+.teaserA {
+    @include teaser;
+    text-align: left;
+}
+
+.teaserA:hover {
+    background-color: $color4;
+    transition: .5s;
+}
+
+.teaserB {
+    @include teaser;
+    text-align: right;
+}
+
+.teaserB:hover {
+    background-color: $color4;
+    transition: .5s;
+}
+
+.teaserWrap {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.labelWrap {
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 1px solid;
+    padding: .3vw;
+    margin-bottom: .3vw;
+}
+
+.labelChartWrap {
+    padding: .2vw;
+}
+
+.teaserA img {
+    float: left;
+    margin: 0 1vw 0 -.5vw;
+    border-radius: 8%;
+}
+
+.teaserB img {
+    float: right;
+    margin: 0 -.5vw 0 1vw;
+    border-radius: 8%;
 }

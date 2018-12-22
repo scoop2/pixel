@@ -36,12 +36,15 @@ class SoundController extends Controller
         }
 
         $items = DB::select('SELECT * FROM sets WHERE active = ? ' . $and . ' ORDER BY released LIMIT 5', [1]);
+
+        //echo "<pre>";
+        //var_dump($items);
+        //echo "</pre>";
         $taglist = DB::select('SELECT * FROM tags ORDER BY title');
         $chart = [];
         $label = [];
         $playlists = [];
         $playlist = "";
-        $month = ['', 'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 
         foreach ($items as $i => $item) {
             $items[$i]->released = Helper::convertRelease($items[$i]->released);

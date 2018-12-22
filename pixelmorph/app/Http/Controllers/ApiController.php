@@ -38,20 +38,16 @@ class ApiController extends Controller
                     $tmp = new tagBags();
                     $tmp->tag = $tag[0];
                     $tmp->userRate = $tag[1];
+
                     $tmp->sets = $sets;
                     array_push($results, $tmp);
                 }
             }
+
             usort($results, function ($first, $second) {
                 return $first->userRate < $second->userRate;
             });
         }
-        /*
-        echo "<pre>";
-        echo var_dump($results);
-        echo "</pre>";
-        exit;
-         */
 
         foreach ($results as $result) {
             if (empty($result->sets)) {
@@ -67,26 +63,28 @@ class ApiController extends Controller
         }
 
         foreach ($respSets as $respSet) {
-            array_push($response, DB::select('SELECT * FROM sets WHERE id = ?', [$respSet->setid]));
+            $chart = [];
+            $label = [];
+            $newset = DB::select('SELECT * FROM sets WHERE id = ?', [$respSet->setid]);
+            $newset[0]->playlist = DB::select('SELECT * FROM playlists WHERE set_id = ? ORDER BY position', [$respSet->setid]);
+            $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$respSet->setid]);
+            foreach ($tags as $tag) {
+                $labels = DB::table('tags')->where('id', $tag->id)->first();
+                array_push($chart, $tag->rate);
+                array_push($label, $labels->title);
+            }
+            $newset[0]->chartdata = $chart;
+            $newset[0]->chartlabel = $label;
+            array_push($response, $newset);
         }
+        
         foreach ($response as $tmp) {
             $tmp[0]->released = Helper::convertRelease($tmp[0]->released);
         }
 
-        /*
-        echo "<pre>";
-        echo var_dump($response);
-        echo "</pre><hr>";
-        exit;
-         */
-
         return response()->json($response);
     }
 
-    public function playlist($playlist = 0)
-    {
-        //echo $playlist;
-    }
 }
 
 class tagBags

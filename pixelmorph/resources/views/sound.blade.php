@@ -12,13 +12,13 @@
 		@endforeach
 	</div>
     <div class="filterNavWrap">
-        <div class="fiterBtnWrap tooltipped" data-position="right" data-tooltip="Alle Moods eingestellt? Hier startet die Suche">
+        <div class="fiterBtnWrap tooltipped" data-position="bottom" data-tooltip="Alle Moods eingestellt? Hier startet die Suche">
             <i class="fas fa-arrow-circle-right fa-3x icon-blue"></i>
         </div>
-        <div class="fiterBackBtnWrap tooltipped" data-position="right" data-tooltip="Versteck mich wieder">
+        <div class="fiterBackBtnWrap tooltipped" data-position="bottom" data-tooltip="Versteck mich wieder">
             <i class="fas fa-arrow-circle-up fa-3x icon-blue"></i>
         </div>
-        <div class="fiterResetBtnWrap tooltipped" data-position="right" data-tooltip="Alle Moods auf Null zurück stellen">
+        <div class="fiterResetBtnWrap tooltipped" data-position="bottom" data-tooltip="Alle Moods auf Null zurück stellen">
             <i class="fas fa-arrow-circle-down fa-3x icon-blue"></i>
         </div>
     </div>
@@ -45,7 +45,7 @@
                 </div>
 				<div class="playerSocialIcons">
                     <div class="playlists">
-                        <i id="openPlaylist" class="fas fa-list-ol tooltipped" data-position="right" data-tooltip="Playlist"></i>
+                        <i id="openPlaylist" class="fas fa-list-ol tooltipped" data-position="bottom" data-tooltip="Playlist"></i>
                         <div class="playlist z-depth-2" id="playlistid">
                             <div class="close"><i id="closePlaylist" class="fas fa-times fa-lg"></i></div>
                             <ul id="playlistUl">
@@ -205,27 +205,27 @@ $('.setsListWrap').on('click', '.setsListItem', function () {
         type: 'audio',
         sources: [
             {
-                src: '{{ url('/') }}/enjoy/'+ sets[id][0].filename,
-                type: 'audio/' + sets[id][0].filetype
+                src: '{{ url('/') }}/enjoy/'+ sets[id].filename,
+                type: 'audio/' + sets[id].filetype
             }]
     }
     player.autoplay = true;
-    $('#playerCover').attr('src', '{{ url('/') }}/images/covers/' + sets[id][0].cover)
-    $('.playerTitle').html(sets[id][0].title);
-    $('.playerDataLength').html(sets[id][0].setlength);
-    $('.playerDataBpm').html(sets[id][0].bpm);
-    $('.playerDataReleased').html(sets[id][0].released);
-    $('.description').html(sets[id][0].description);
+    $('#playerCover').attr('src', '{{ url('/') }}/images/covers/' + sets[id].cover)
+    $('.playerTitle').html(sets[id].title);
+    $('.playerDataLength').html(sets[id].setlength);
+    $('.playerDataBpm').html(sets[id].bpm);
+    $('.playerDataReleased').html(sets[id].released);
+    $('.description').html(sets[id].description);
     var html = '';
-    for (var i=0; i<sets[id][0].playlist.length; i++) {
-        html += '<li><b>' + sets[id][0].playlist[i].title + '</b> - ' + sets[id][0].playlist[i].artist + '</li>';
+    for (var i=0; i<sets[id].playlist.length; i++) {
+        html += '<li><b>' + sets[id].playlist[i].title + '</b> - ' + sets[id].playlist[i].artist + '</li>';
     }
     $('#playlistUl').html(html);
-    renderChart(sets[id][0].chartdata, sets[id][0].chartlabel);
+    renderChart(sets[id].chartdata, sets[id].chartlabel);
     var div = $('.playerMetaLegend');
     $(div).html('');
-    for (var i = 0; i < sets[id][0].chartlabel.length; i++) {
-        html = '<div class="playerMetaLegendItem" style="background-color: ' + ChartBackgroundColor[i] + '">' + sets[id][0].chartlabel[i] + '</div>';
+    for (var i = 0; i < sets[id].chartlabel.length; i++) {
+        html = '<div class="playerMetaLegendItem" style="background-color: ' + ChartBackgroundColor[i] + '">' + sets[id].chartlabel[i] + '</div>';
         $(div).append(html);
     }
 });
@@ -327,6 +327,10 @@ tagBox.each(function (index, el) {
 
 function doFilter(values) {
 	var i, html = '';
+    sets = [];
+    for (i=0; i<values.length; i++) {
+        sets[values[i][0].id] = values[i][0];
+    }
 	console.log('values: ', values)
 	if (typeof values === 'undefined' || values.length === 0) {
     	html = '<div><div class="icon-red floatLeft marginDefault"><i class="fas fa-frown fa-5x"></i></div><h3>Sorry, nix gefunden :(<br>Versuch es noch mal oder fordere mich heraus ein Set mit diesen Moods zu schaffen.</h3></div>'
@@ -339,8 +343,7 @@ function doFilter(values) {
 }
 
 function getJSON(values) {
-	var url, apidata;
-	url = 'http:{{ url('/') }}/api/sets/filter/';
+	var url = 'http:{{ url('/') }}/api/sets/filter/';
 	for (var i=0; i<values.length; i++) {
 		url += values[i].tagid + ':' + values[i].tagvalue;
 		if (values.length - 1 > i) url += '-';
@@ -355,6 +358,10 @@ function getJSON(values) {
         cache: true,
         async: true,
         success: function (data) {
+            //data = {data};
+            //console.log(data);
+            //data = {data};
+
 			doFilter(data);
 			$('.overlay').css('display','none');
         },
