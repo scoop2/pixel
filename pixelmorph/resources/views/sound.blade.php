@@ -4,12 +4,12 @@
 <div class="setsWrap containerContent">
 <div class="filterWrap z-depth-3">
 	<div class="filterSwitchWrap">
-		@foreach ($tags as $key => $tag)
-			<div class="tagBoxWrap">
-				<div class="tagTitle">{{ $tag->title }}</div>
-				<div id="tagBox{{ $tag->id }}" class="tagBox" data-id="{{ $tag->id }}"></div>
-			</div>
-		@endforeach
+    @foreach ($tags as $key => $tag)
+        <div class="tagBoxWrap">
+            <div class="tagTitle">{{ $tag->title }}</div>
+            <div id="tagBox{{ $tag->id }}" class="tagBox" data-id="{{ $tag->id }}"></div>
+        </div>
+    @endforeach
 	</div>
     <div class="filterNavWrap">
         <div class="fiterBtnWrap tooltipped" data-position="bottom" data-tooltip="Alle Moods eingestellt? Hier startet die Suche">
@@ -24,13 +24,11 @@
     </div>
 </div>
 
-
 <div class="center-align">
-    <button class="btn btnSearch"><i class="fas fa-headphones"></i> FINDE MEHR MUSIK <i class="fas fa-headphones"></i></button>
+    <button class="btn btnSearch"><i class="fas fa-headphones"></i> (¯`·._.·(¯`·._.· FINDE MEHR MUSIK ·._.·´¯)·._.·´¯) <i class="fas fa-headphones"></i></button>
+    <a class="waves-effect btn modal-trigger" href="#modalhelp"><i class="fas fa-question"></i></a>
 </div>
-<!--
-<div>{!! html_entity_decode($desc->body) !!}</div>
--->
+
 <div class="playerWrapOuter">
 	<div id="player" class="playerWrap">
 		<div class="titleWrap">
@@ -49,9 +47,11 @@
                         <div class="playlist z-depth-2" id="playlistid">
                             <div class="close"><i id="closePlaylist" class="fas fa-times fa-lg"></i></div>
                             <ul id="playlistUl">
+                            @if($items[0]->playlist != false)
                                 @foreach ($items[0]->playlist as $playlist)
                                     <li><b>{{ $playlist->title }}</b> - {{ $playlist->artist }}</li>
                                 @endforeach
+                            @endif
                             </ul>
                         </div>
                     </div>
@@ -81,15 +81,15 @@
                     {{ $items[0]->description }}
                 </div>
                 <div class="playerMetaLegend">
+                @php
+                    $i = 0;
+                @endphp
+                @foreach ($items[0]->label as $chartlabel)
+                    <div class="playerMetaLegendItem" id="label{{ $i }}" style="background-color: ">{{ $chartlabel }}</div>
                     @php
-                        $i = 0;
+                        $i++;
                     @endphp
-                    @foreach ($items[0]->label as $chartlabel)
-                        <div class="playerMetaLegendItem" id="label{{ $i }}" style="background-color: ">{{ $chartlabel }}</div>
-                        @php
-                            $i++;
-                        @endphp
-                    @endforeach
+                @endforeach
                 </div>
             </div>
         </div>
@@ -102,11 +102,18 @@
 @endforeach
 </div>
 </div>
+<div id="modalhelp" class="modal">
+    <div class="modal-content">
+    {!! html_entity_decode($desc->body) !!}
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close btn waves-effect">Achso</a>
+    </div>
+</div>
 
 <script>
 var tagBox = $('.tagBox');
-var slider = [];
-var sliderValues = [];
+var slider = [], sliderValues = [];
 var ChartBackgroundColor = [
     'rgba(198, 122, 85, 1)',
     'rgba(228, 143, 84, 1)',
@@ -130,7 +137,7 @@ var ChartBorderColor = [
 
 var sets = {
 @foreach ($items as $item)
-    {{ $item->id }}: [
+    {{ $item->id }}:
         {
             "id": "{{ $item->id }}",
             "title": "{{ $item->title }}",
@@ -141,6 +148,7 @@ var sets = {
             "filetype": "{{ $item->filetype }}",
             "cover": "{{ $item->cover }}",
             "description": "{{ $item->description }}",
+            @if ($item->playlist != false)
             "playlist": [
                 @foreach ($item->playlist as $playlist)
                 {
@@ -149,6 +157,9 @@ var sets = {
                 },
                 @endforeach
             ],
+            @else
+            "playlist": false,
+            @endif
             "chartdata": [
             @foreach ($item->chart as $chart)
                 {{ $chart }},
@@ -159,8 +170,7 @@ var sets = {
                 '{{ $label }}',
             @endforeach
             ]
-        }
-    ],
+        },
 @endforeach
 }
 
@@ -194,40 +204,19 @@ $(document).ready(function() {
         var tag = {tagid: $(el).data('id'), tagvalue: parseInt(el.noUiSlider.get())};
         sliderValues.push(tag);
     });
-    var elems = document.querySelectorAll('.tooltipped');
-    var instances = M.Tooltip.init(elems);
+
+    if ($.trim($('#playlistUl').html()) === '') {
+        $('.playlists').css('display', 'none');
+    }
+    var elems, instances;
+    elems = document.querySelectorAll('.tooltipped');
+    instances = M.Tooltip.init(elems,{'enterDelay':'1000'});
+    elems = document.querySelectorAll('#modalhelp');
+    instances = M.Modal.init(elems, {'startingTop':'0', 'endingTop':'1%'});
 });
 
 $('.setsListWrap').on('click', '.setsListItem', function () {
-    var id = $(this).data('itemid');
-
-    player.source = {
-        type: 'audio',
-        sources: [
-            {
-                src: '{{ url('/') }}/enjoy/'+ sets[id].filename,
-                type: 'audio/' + sets[id].filetype
-            }]
-    }
-    player.autoplay = true;
-    $('#playerCover').attr('src', '{{ url('/') }}/images/covers/' + sets[id].cover)
-    $('.playerTitle').html(sets[id].title);
-    $('.playerDataLength').html(sets[id].setlength);
-    $('.playerDataBpm').html(sets[id].bpm);
-    $('.playerDataReleased').html(sets[id].released);
-    $('.description').html(sets[id].description);
-    var html = '';
-    for (var i=0; i<sets[id].playlist.length; i++) {
-        html += '<li><b>' + sets[id].playlist[i].title + '</b> - ' + sets[id].playlist[i].artist + '</li>';
-    }
-    $('#playlistUl').html(html);
-    renderChart(sets[id].chartdata, sets[id].chartlabel);
-    var div = $('.playerMetaLegend');
-    $(div).html('');
-    for (var i = 0; i < sets[id].chartlabel.length; i++) {
-        html = '<div class="playerMetaLegendItem" style="background-color: ' + ChartBackgroundColor[i] + '">' + sets[id].chartlabel[i] + '</div>';
-        $(div).append(html);
-    }
+    redoPlayer( $(this).data('itemid'));
 });
 
 player.on('ready', event => {
@@ -288,6 +277,7 @@ $('#openPlaylist').on('click', function() {
         }
     });
 });
+
 $('#closePlaylist').on('click', function() {
     var div = $('.playlist');
     div.css('overflow', 'hidden');
@@ -325,19 +315,57 @@ tagBox.each(function (index, el) {
 	count++;
 });
 
+function redoPlayer(id) {
+    player.source = {
+        type: 'audio',
+        sources: [
+            {
+                src: '{{ url('/') }}/enjoy/'+ sets[id].filename,
+                type: 'audio/' + sets[id].filetype
+            }]
+    }
+    player.autoplay = true;
+    $('#playerCover').attr('src', '{{ url('/') }}/images/covers/' + sets[id].cover)
+    $('.playerTitle').html(sets[id].title);
+    $('.playerDataLength').html(sets[id].setlength);
+    $('.playerDataBpm').html(sets[id].bpm);
+    $('.playerDataReleased').html(sets[id].released);
+    $('.description').html(sets[id].description);
+    if (sets[id].playlist != false) {
+            var html = '';
+        for (var i=0; i<sets[id].playlist.length; i++) {
+            html += '<li><b>' + sets[id].playlist[i].title + '</b> - ' + sets[id].playlist[i].artist + '</li>';
+        }
+        $('#playlistUl').html(html);
+        $('.playlists').css('display', 'block');
+    } else {
+        $('.playlists').css('display', 'none');
+    }
+    renderChart(sets[id].chartdata, sets[id].chartlabel);
+    var div = $('.playerMetaLegend');
+    $(div).html('');
+    for (var i = 0; i < sets[id].chartlabel.length; i++) {
+        html = '<div class="playerMetaLegendItem" style="background-color: ' + ChartBackgroundColor[i] + '">' + sets[id].chartlabel[i] + '</div>';
+        $(div).append(html);
+    }
+}
+
 function doFilter(values) {
-	var i, html = '';
+	var i, firstId = 0, html = '';
     sets = [];
     for (i=0; i<values.length; i++) {
         sets[values[i][0].id] = values[i][0];
+        if (firstId === 0) {
+            firstId = values[i][0].id;
+        }
     }
-	console.log('values: ', values)
 	if (typeof values === 'undefined' || values.length === 0) {
-    	html = '<div><div class="icon-red floatLeft marginDefault"><i class="fas fa-frown fa-5x"></i></div><h3>Sorry, nix gefunden :(<br>Versuch es noch mal oder fordere mich heraus ein Set mit diesen Moods zu schaffen.</h3></div>'
+    	html = '<div class="noFound"><i class="icon-red floatLeft alertNoFound fas fa-frown fa-5x"></i><b>Sorry, nix gefunden :(</b><br>Versuch es noch mal. Je mehr Moods Du hinzufügst umso sicherer wird etwas gefunden. Wenn trotzdem nichts gesuchtes kommt <a href="{{ url('/') }}/kontakt">fordere</a> mich doch heraus ein Set mit diesen Moods zu schaffen.</div>'
 	} else {
-        for (i=0; i < values.length; i++) {
+        for (i=0; i<values.length; i++) {
             html += '<div data-itemid="' + values[i][0].id + '" class="setsListItem btn waves-effect waves-light">' + values[i][0].title + '</div>';
         }
+        redoPlayer(firstId);
 	}
 	$('.setsListWrap').html(html);
 }
@@ -348,7 +376,6 @@ function getJSON(values) {
 		url += values[i].tagid + ':' + values[i].tagvalue;
 		if (values.length - 1 > i) url += '-';
 	}
-	console.log(url);
     $.ajax({
         type: 'GET',
         url: url,
@@ -358,10 +385,6 @@ function getJSON(values) {
         cache: true,
         async: true,
         success: function (data) {
-            //data = {data};
-            //console.log(data);
-            //data = {data};
-
 			doFilter(data);
 			$('.overlay').css('display','none');
         },

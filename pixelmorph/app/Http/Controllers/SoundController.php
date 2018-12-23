@@ -27,7 +27,6 @@ class SoundController extends Controller
                 if (count($sets) > $i) {
                     $and .= ',';
                 }
-
                 $i++;
             }
             $and .= ')';
@@ -36,10 +35,6 @@ class SoundController extends Controller
         }
 
         $items = DB::select('SELECT * FROM sets WHERE active = ? ' . $and . ' ORDER BY released LIMIT 5', [1]);
-
-        //echo "<pre>";
-        //var_dump($items);
-        //echo "</pre>";
         $taglist = DB::select('SELECT * FROM tags ORDER BY title');
         $chart = [];
         $label = [];
@@ -49,6 +44,9 @@ class SoundController extends Controller
         foreach ($items as $i => $item) {
             $items[$i]->released = Helper::convertRelease($items[$i]->released);
             $playlist = DB::select('SELECT * FROM playlists WHERE set_id = ? ORDER BY position', [$items[$i]->id]);
+            if (empty($playlist)) {
+                $playlist = false;
+            }
             $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$items[$i]->id]);
             foreach ($tags as $tag) {
                 $labels = DB::table('tags')->where('id', $tag->id)->first();

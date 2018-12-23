@@ -1,23 +1,23 @@
 .floatLeft {
-  float: left;
+    float: left;
 }
 
 .floatRight {
-  float: right;
+    float: right;
 }
 
 .clear:after {
-  content: ".";
-  clear: both;
-  display: block;
-  visibility: hidden;
-  height: 0px;
+    content: ".";
+    clear: both;
+    display: block;
+    visibility: hidden;
+    height: 0px;
 }
 
 .paddingDefault {
-  padding: 1vw;
+    padding: 1vw;
 }
 
 .marginDefault {
-  margin: 1vw;
+    margin: 1vw;
 }

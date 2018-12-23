@@ -67,6 +67,9 @@ class ApiController extends Controller
             $label = [];
             $newset = DB::select('SELECT * FROM sets WHERE id = ?', [$respSet->setid]);
             $newset[0]->playlist = DB::select('SELECT * FROM playlists WHERE set_id = ? ORDER BY position', [$respSet->setid]);
+            if (empty($newset[0]->playlist)) {
+                $newset[0]->playlist = false;
+            }
             $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$respSet->setid]);
             foreach ($tags as $tag) {
                 $labels = DB::table('tags')->where('id', $tag->id)->first();
@@ -77,7 +80,7 @@ class ApiController extends Controller
             $newset[0]->chartlabel = $label;
             array_push($response, $newset);
         }
-        
+
         foreach ($response as $tmp) {
             $tmp[0]->released = Helper::convertRelease($tmp[0]->released);
         }
