@@ -228,16 +228,7 @@
         <div class="row">
             <div class="col s12">
                 <input type="submit" value="Abschicken" class="btnSubmit btn">
-                <div data-target="confirm" class="btnDelete btn modal-trigger right">Löschen</div>
-            </div>
-        </div>
-        <div id="confirm" class="modal">
-            <div class="modal-content">
-            <h4>Achtung!</h4>
-            <p>Sicherlöschen?</p>
-            </div>
-            <div class="modal-footer">
-            <a href="#!" data-deleteid="{{ $set->id }}" class="btnAgree btn modal-close waves-effect waves-green btn-flat">Agree</a>
+                <button data-deleteid="{{ $set->id }}" class="btnDelete btn modal-trigger right">Löschen</button>
             </div>
         </div>
         <input type="hidden" name="id" value="{{ $set->id }}">
@@ -250,18 +241,16 @@
 <script>
 
 
-
 $('#addTag').on('click', function(e){
     var html = '<select>' +
-    <?php
-    foreach ($alltags[0] as $settag) {
-        echo '\'<option value="">'.$settag.'</option>\' +';
-    }
-    echo '\'</select>\';';
-    ?>
+    @foreach ($alltags[0] as $settag) 
+       '<option value="">{{ $settag }}</option>' +
+    @endforeach
+    '</select>';
 });
 
-$('.btnAgree').on('click', function(e){
+
+$('.btnDelete').on('click', function(e){
     window.location.replace("{{ url('/admin/sound/delete/') }}" + '/' + $(this).data('deleteid'));
 });
 
@@ -272,14 +261,15 @@ $('.btnAgree').on('click', function(e){
     instances = M.Collapsible.init(elems);
     elems = document.querySelectorAll('select');
     instances = M.FormSelect.init(elems);
-    elems = document.querySelectorAll('.modal');
-    instances = M.Modal.init(elems);
   });
+
+
 </script>
 
 </div>
 @endsection
+
 @section('nav')
-    @component('components.nav', ['user' => $user])
+    @component('components.navadminbottom', ['active' => '1', 'user' => $user])
     @endcomponent
 @endsection
