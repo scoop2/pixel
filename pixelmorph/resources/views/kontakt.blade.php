@@ -22,6 +22,7 @@
             <option value="1">beruflich</option>
             <option value="1">Berlin</option>
             <option value="2">Hamburg</option>
+            <option value="2">München</option>
             <option value="3">Ozzora</option>
             <option value="3">Meeresrausch</option>
             <option value="3">Fusion</option>

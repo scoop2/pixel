@@ -19,16 +19,20 @@ class HomeController extends Controller
         } else {
             $items->username = 'werter Gast';
         }
-        $teaser = DB::table('sets')->where([['promo', '=', '1'], ['active', '=', '1']])->orderBy('released', 'desc')->take(2)->get();
+        $teaser = DB::table('sets')->where([['promo', '=', '1'], ['active', '=', '1']])->orderBy('released', 'desc')->take(4)->get();
         if (!$teaser->isEmpty()) {
-            for ($i = 0; $i < 2; $i++) {
+            for ($i = 0; $i < 4; $i++) {
                 $tags = DB::table('tags_sets')->where('setid', $teaser[$i]->id)->orderBy('rate')->get();
+                $chart = [];
                 $label = [];
+                $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$teaser[$i]->id]);
                 foreach ($tags as $tag) {
                     $labels = DB::table('tags')->where('id', $tag->id)->first();
+                    array_push($chart, $tag->rate);
                     array_push($label, $labels->title);
                 }
                 $teaser[$i]->label = $label;
+                $teaser[$i]->chart = $chart;
                 $teaser[$i]->released = Helper::convertRelease($teaser[$i]->released);
             }
         }
@@ -38,6 +42,13 @@ class HomeController extends Controller
 
     public function impressum()
     {
+        $user = Auth::user();
         return view('impressum');
+    }
+    public function festival()
+    {
+        $user = Auth::user();
+        $desc = DB::table('pages')->where('meta_description', 'festival')->get();
+        return view('festival', ['item' => $desc, 'user' => $user]);
     }
 }

@@ -48,6 +48,31 @@ class TagsSetsTableSeeder extends Seeder
                 'setid' => '6',
                 'tag' => '5',
                 'rate' => '4'
+            ),
+            8 => array(
+                'setid' => '3',
+                'tag' => '2',
+                'rate' => '7'
+            ),
+            9 => array(
+                'setid' => '3',
+                'tag' => '4',
+                'rate' => '7'
+            ),
+            10 => array(
+                'setid' => '4',
+                'tag' => '5',
+                'rate' => '7'
+            ),
+            11 => array(
+                'setid' => '4',
+                'tag' => '8',
+                'rate' => '1'
+            ),
+            12 => array(
+                'setid' => '4',
+                'tag' => '8',
+                'rate' => '3'
             )
         ));
     }

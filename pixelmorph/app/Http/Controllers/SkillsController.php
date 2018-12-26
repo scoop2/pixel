@@ -37,7 +37,7 @@ class SkillsController extends Controller
                 if ($skill->icon != '') {
                     $cats[$i]['items'][$x]['icon'] = '<i class="' . $skill->icon . ' fa-3x"></i>';
                 } else if ($skill->image != '') {
-                    $cats[$i]['items'][$x]['icon'] = '<img src="/images/logos/' . $skill->image . '"></img>';
+                    $cats[$i]['items'][$x]['icon'] = '<img src="'.url('/').'/images/logos/' . $skill->image . '"></img>';
                 } else {
                     $cats[$i]['items'][$x]['icon'] = '';
                 }

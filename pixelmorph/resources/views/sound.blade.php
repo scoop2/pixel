@@ -25,7 +25,7 @@
 </div>
 
 <div class="center-align">
-    <button class="btn btnSearch"><i class="fas fa-headphones"></i> (¯`·._.·(¯`·._.· FINDE MEHR MUSIK ·._.·´¯)·._.·´¯) <i class="fas fa-headphones"></i></button>
+    <button class="btn btnSearch"><i class="fas fa-headphones"></i> FINDE MEHR MUSIK <i class="fas fa-headphones"></i></button>
     <a class="waves-effect btn modal-trigger" href="#modalhelp"><i class="fas fa-question"></i></a>
 </div>
 

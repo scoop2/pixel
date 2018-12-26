@@ -13,6 +13,7 @@
 Route::resource('/', 'HomeController');
 Route::resource('home', 'HomeController');
 Route::get('/impressum', 'HomeController@impressum')->name('impressum');
+Route::get('/festival', 'HomeController@festival')->name('festival');
 
 Route::get('/admin', 'Admin\AdminController@index')->middleware('auth');
 Route::post('/admin', 'Admin\AdminController@update')->middleware('auth');
@@ -54,7 +55,6 @@ Route::resource('setsadmin', 'SetsadminController');
 Route::get('skills', 'SkillsController@index');
 Route::get('skills/vita', 'SkillsController@vita')->middleware('auth');
 Route::get('skills/person', 'SkillsController@person')->middleware('auth');
-Route::resource('blog', 'BlogController');
 Route::resource('kontakt', 'KontaktController');
 
 Route::get('m3u/url/{url?}', 'M3uController@index');

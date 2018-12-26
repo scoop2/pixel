@@ -11,7 +11,7 @@ class SetsTableSeeder extends Seeder
         DB::table('sets')->insert(array(
             0 => array(
                 'active' => 1,
-                'promo' => 0,
+                'promo' => 1,
                 'setorder' => 1,
                 'released' => '2017-03-09 03:51:05',
                 'title' => 'Zauberwesen Pokes Around The World',
@@ -26,7 +26,7 @@ class SetsTableSeeder extends Seeder
             ),
             1 => array(
                 'active' => 1,
-                'promo' => 0,
+                'promo' => 1,
                 'setorder' => 1,
                 'released' => '2016-10-07 03:51:05',
                 'title' => 'Sie Kamen Aus Rackzoohm',
@@ -41,7 +41,7 @@ class SetsTableSeeder extends Seeder
             ),
             2 => array(
                 'active' => 1,
-                'promo' => 0,
+                'promo' => 1,
                 'setorder' => 1,
                 'released' => '2017-01-05 03:51:05',
                 'title' => 'Mondseeanbewohner',
@@ -56,7 +56,7 @@ class SetsTableSeeder extends Seeder
             ),
             3 => array(
                 'active' => 1,
-                'promo' => 0,
+                'promo' => 1,
                 'setorder' => 1,
                 'released' => '2016-02-05 03:51:05',
                 'title' => 'Liquid Session In Hamburg I',
