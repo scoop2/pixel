@@ -192,7 +192,7 @@
                     @endif
                 <option value="{{ $settag->id }}"{{ $selected }}>{{ $settag->title }}</option>
                 @endforeach
-                <option value="delte">DELETE</option>
+                <option value="delete">DELETE</option>
             </select>
             <select name="rate[]">
             @for ($y= 1; $y < 11; $y++ )
@@ -243,7 +243,7 @@
 
 $('#addTag').on('click', function(e){
     var html = '<select>' +
-    @foreach ($alltags[0] as $settag) 
+    @foreach ($alltags[0] as $settag)
        '<option value="">{{ $settag }}</option>' +
     @endforeach
     '</select>';

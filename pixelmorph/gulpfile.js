@@ -47,22 +47,12 @@ gulp.task('dev', ['sass']);
 gulp.task('js', function() {
     gulp.src([
             'node_modules/jquery/dist/jquery.min.js',
-            'node_modules/jquery-visible/jquery.visible.min.js',
-
-            //    'resources/assets/js/fontawesome-all.min.js',
             'resources/assets/js/materialize.min.js',
-            //    'node_modules/materialize-css/extras/nouislider/nouislider.min.js',
             'node_modules/nouislider/distribute/nouislider.min.js',
             'node_modules/animejs/anime.min.js',
             'node_modules/plyr/dist/plyr.min.js',
             'node_modules/chart.js/dist/Chart.bundle.min.js',
-            //  'node_modules/wavesurfer.js/dist/wavesurfer.min.js',
-            //     'resources/assets/js/jquery.simpleaudioplayer.js',
-            //         'node_modules/waveform-data/dist/waveform-data.js',
-
-            //'resources/assets/js/' + 'browserchk.js',
-            //  'resources/assets/js/html5media.min.js',
-            'resources/assets/js/scripts.js'
+            // 'resources/assets/js/scripts.js'
         ])
         .pipe(concat('build.js'))
 

@@ -4,24 +4,21 @@
 <div class="containerHome homeText">
     <div class="visionWrap">
         <div class="valign-wrapper">
-            <a class="vision" href="{{ url('/') }}/festival"><button class="btn btnVision">Vision of a Festival</button></a>
+            <a class="vision" href="{{ url('/') }}/festival"><button class="btn btnVision">vision of a festival</button></a>
         </div>
-        <div class="vision visionSVG"><img src="{{ url('/') }}/images/ornament.svg"></div>
     </div>
     <div id="teaserA" class="homeBox">
         <div class="homeTeaserHead">{{ $teaser[0]->title }}</div>
-        <div class="labelWrap"></div>
         <div class="chartbox1"></div>
     </div>
     <div id="teaserB" class="homeBox">
         <div class="homeTeaserHead">{{ $teaser[1]->title }}</div>
-        <div class="labelWrap"></div>
         <div class="chartbox2"></div>
     </div>
 </div>
-    
+
 <script>
-    var ChartBackgroundColor = [
+var ChartBackgroundColor = [
     'rgba(198, 122, 85, 1)',
     'rgba(228, 143, 84, 1)',
     'rgba(245, 185, 72, 1)',
@@ -41,6 +38,7 @@ var ChartBorderColor = [
     'rgba(54, 16, 8, 1)',
     'rgba(54, 16, 8, 1)'
 ];
+
 var charts = [
 @foreach ($teaser as $charts)
 [
@@ -62,13 +60,13 @@ var labels = [
 
 $(document).ready(function(){
 @if (!empty($teaser[0]->id))
-    renderChart('.chartbox1', '#canvas1', charts[0], labels[0]);
+    renderChart('.chartbox1', '#canvas1', charts[0], labels[0], 'right');
     $('#teaserA').on('click', function(){
         window.location = "{{ url('/') }}/sound/filter/{{ $teaser[0]->id }}";
     })
 @endif
 @if (!empty($teaser[1]->id))
-    renderChart('.chartbox2', '#canvas2', charts[1], labels[1]);
+    renderChart('.chartbox2', '#canvas2', charts[1], labels[1], 'left');
     $('#teaserB').on('click', function(){
         window.location = "{{ url('/') }}/sound/filter/{{ $teaser[1]->id }}";
     })
@@ -83,16 +81,15 @@ function spreadIt() {
     });
 }
 
-function renderChart(chartdiv, canvas, data, labels) {
+function renderChart(chartdiv, canvas, data, labels, position) {
     $('#moods').remove();
     $(chartdiv).append('<canvas id="' + canvas + '"></canvas>');
     ctx = document.getElementById(canvas).getContext('2d');
     myChart = new Chart(ctx, {
-        type: 'doughnut',
+        type: 'bar',
         data: {
             labels: labels,
             datasets: [{
-                label: '# of Votes',
                 data: data,
                 responsive: true,
                 devicePixelRatio: 0.5,
@@ -100,14 +97,23 @@ function renderChart(chartdiv, canvas, data, labels) {
                 aspectRatio: 0.5,
                 backgroundColor: ChartBackgroundColor,
                 borderColor: ChartBorderColor,
-                borderWidth: 1
+                borderWidth: 1,
             }]
         },
         options: {
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }
+                ]
+            },
             legend: {
-                display: true,
+                display: false,
                 fullWidth: false,
-                position: 'bottom'
+                position: position
             },
             title: {
                 display: false

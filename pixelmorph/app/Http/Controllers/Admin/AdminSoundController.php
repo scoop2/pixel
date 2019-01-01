@@ -69,15 +69,19 @@ class AdminSoundController extends Controller
             'description' => $request->input('description'),
         ]);
 
-        $i = 0;
-        DB::table('tags_sets')->where('setid', $request->input('id'))->delete();
-        foreach ($request->input('settag') as $tag) {
-            DB::table('tags_sets')->insert([
-                'setid' => $request->input('id'),
-                'tag' => $tag,
-                'rate' => $request->input('rate')[$i]
-            ]);
-            $i++;
+        if (($request->input('settag'))){
+            $i = 0;
+            DB::table('tags_sets')->where('setid', $request->input('id'))->delete();
+            foreach ($request->input('settag') as $tag) {
+                if ($tag != 'delete') {
+                    DB::table('tags_sets')->insert([
+                        'setid' => $request->input('id'),
+                        'tag' => $tag,
+                        'rate' => $request->input('rate')[$i]
+                    ]);
+                    $i++;
+                }
+            }
         }
         if ($request->input('newtag') != 'new') {
             DB::table('tags_sets')->insert([
@@ -126,20 +130,25 @@ class AdminSoundController extends Controller
             $active = 0;
         }
     
-        DB::table('sets')->insert([
-            [
-                'title' => $request->input('title'),
-                'setorder' => '1',
-                'promo' => $promo,
-                'active' => $active,
-                'released' => $request->input('released'),
-                'setlength' => $request->input('setlength'),
-                'bpm' => $request->input('bpm'),
-                'filename' => $request->input('filename'),
-                'filetype' => $request->input('filetype'),
-                'description' => $request->input('description'),
-            ],
+        $id = DB::table('sets')->insertGetId([
+            'title' => $request->input('title'),
+            'setorder' => '1',
+            'promo' => $promo,
+            'active' => $active,
+            'released' => $request->input('released'),
+            'setlength' => $request->input('setlength'),
+            'bpm' => $request->input('bpm'),
+            'filename' => $request->input('filename'),
+            'filetype' => $request->input('filetype'),
+            'description' => $request->input('description')
         ]);
+
+        DB::table('tags_sets')->insert([
+            'setid' => $id,
+            'tag' => $request->input('newtag'),
+            'rate' => $request->input('newrate')
+            ]
+        );
 
         /* TODO: redundant see index, needs to be fixed */
         $sets = DB::table('sets')->get();

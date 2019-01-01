@@ -19,9 +19,9 @@ class HomeController extends Controller
         } else {
             $items->username = 'werter Gast';
         }
-        $teaser = DB::table('sets')->where([['promo', '=', '1'], ['active', '=', '1']])->orderBy('released', 'desc')->take(4)->get();
+        $teaser = DB::table('sets')->where([['promo', '=', '1'], ['active', '=', '1']])->orderBy('released', 'desc')->take(2)->get();
         if (!$teaser->isEmpty()) {
-            for ($i = 0; $i < 4; $i++) {
+            for ($i = 0; $i < 2; $i++) {
                 $tags = DB::table('tags_sets')->where('setid', $teaser[$i]->id)->orderBy('rate')->get();
                 $chart = [];
                 $label = [];

@@ -3,12 +3,6 @@
 @endcomponent
 
 <div class="containerContent">
-<div class="hoverPDFIcon"><i class="fas fa-3x fa-file-pdf"></i></div>
-
-<div class="personWrap">
-
-</div>
-
 <table class="person">
     <tr>
         <td class="icon"><i class="far fa-address-card fa-2x"></i></td>
@@ -36,21 +30,20 @@
         <td class="icon"><i class="fas fa-key fa-2x"></i></td>
         <td class="person" colspan="2"><a class="waves-effect btn modal-trigger" href="#modalpgp">PGP public key</a></td>
     </tr>
-
-
 </table>
-  <div id="modalpgp" class="modal">
+
+<div id="modalpgp" class="modal">
     <div class="modal-content pgp">
-      <pre>{!! $items[0]->pgp !!}</pre>
-      <textarea id="pgpkey">{!! $items[0]->pgp !!}</textarea>
+        <pre>{!! $items[0]->pgp !!}</pre>
+        <textarea id="pgpkey">{!! $items[0]->pgp !!}</textarea>
     </div>
     <div class="modal-footer">
         <a href="#!" onclick="copyText()" data-clipboard-target=".pgpkey" class="modal-close btn waves-effect">Kopieren</a>
         <a href="#!" class="modal-close waves-effect btn">Schliessen</a>
     </div>
-  </div>
-
 </div>
+</div>
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('#modalpgp');
