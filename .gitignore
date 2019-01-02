@@ -1,7 +1,16 @@
 /pixelmorph/node_modules/
+/pixelmorph/.htpasswd
+/pixelmorph/.htpasswd.bak
+/pixelmorph/.htaccess
+/pixelmorph/.htaccess.bak
+/pixelmorph/.env.txt
+/pixelmorph/.env
+/pixelmorph/.editorconfig
+/pixelmorph/sets.sql
 /.idea
 /.vscode
 /.vagrant
 /css/styles.css
 /js/build.js
 /enjoy
+.htaccess.bak
