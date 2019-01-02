@@ -52,7 +52,7 @@ gulp.task('js', function() {
             'node_modules/animejs/anime.min.js',
             'node_modules/plyr/dist/plyr.min.js',
             'node_modules/chart.js/dist/Chart.bundle.min.js',
-            // 'resources/assets/js/scripts.js'
+            'resources/assets/js/scripts.js'
         ])
         .pipe(concat('build.js'))
 

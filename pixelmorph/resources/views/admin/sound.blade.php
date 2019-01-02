@@ -101,7 +101,16 @@
     </li>
 @foreach ($sets as $set)
     <li>
-    <div class="collapsible-header">{{ $set->title }}</div>
+    @if ($set->promo == 1)
+        @php
+            $promo = '<i class="fas fa-bell fa-xs"></i>';
+        @endphp
+    @else
+        @php
+            $promo = '';
+        @endphp
+    @endif
+    <div class="collapsible-header">{!! $promo !!}{{ $set->title }}</div>
     <div class="collapsible-body">
     <form action="{{ url('/admin/sound') }}" method="POST" class="col s12">
         <div class="row">
@@ -255,13 +264,13 @@ $('.btnDelete').on('click', function(e){
 });
 
 
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     var elems, instances;
     elems = document.querySelectorAll('.collapsible');
     instances = M.Collapsible.init(elems);
     elems = document.querySelectorAll('select');
     instances = M.FormSelect.init(elems);
-  });
+});
 
 
 </script>

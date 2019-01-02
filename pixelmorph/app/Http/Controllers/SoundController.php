@@ -49,7 +49,7 @@ class SoundController extends Controller
             }
             $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$items[$i]->id]);
             foreach ($tags as $tag) {
-                $labels = DB::table('tags')->where('id', $tag->id)->first();
+                $labels = DB::table('tags')->where('id', $tag->tag)->first();
                 array_push($chart, $tag->rate);
                 array_push($label, $labels->title);
             }

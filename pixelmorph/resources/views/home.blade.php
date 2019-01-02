@@ -7,13 +7,23 @@
             <a class="vision" href="{{ url('/') }}/festival"><button class="btn btnVision">vision of a festival</button></a>
         </div>
     </div>
-    <div id="teaserA" class="homeBox">
-        <div class="homeTeaserHead">{{ $teaser[0]->title }}</div>
-        <div class="chartbox1"></div>
-    </div>
-    <div id="teaserB" class="homeBox">
-        <div class="homeTeaserHead">{{ $teaser[1]->title }}</div>
-        <div class="chartbox2"></div>
+    <div class="homeTeaserWrap">
+        <div class="homeRow">
+            <div class="homeTeaserTag homeCell">Neu {{ $promo->released }}</div>
+            <div class="homeTeaserTag homeCell">Beliebt</div>
+        </div>
+        <div class="homeRow">
+            <div class="homeCell">{{ $promo->description }}</div>
+            <div class="homeCell">{{ $teaser->description }}</div>
+        </div>
+        <div class="homeRow">
+            <div class="homeTeaserHead homeCell">{{ $promo->title }}</div>
+            <div class="homeTeaserHead homeCell">{{ $teaser->title }}</div>
+        </div>
+        <div class="homeRow">
+            <div class="chartbox1 homeCell"></div>
+            <div class="chartbox2 homeCell"></div>
+        </div>
     </div>
 </div>
 
@@ -40,35 +50,41 @@ var ChartBorderColor = [
 ];
 
 var charts = [
-@foreach ($teaser as $charts)
 [
-    @foreach ($charts->chart as $chart)
+    @foreach ($teaser->chart as $chart)
         {{ $chart }},
     @endforeach
 ],
-@endforeach
+[
+    @foreach ($promo->chart as $chart)
+        {{ $chart }},
+    @endforeach
+],
 ];
 var labels = [
-@foreach ($teaser as $labels)
     [
-    @foreach ($labels->label as $label)
+    @foreach ($teaser->label as $label)
         '{{ $label }}',
     @endforeach
     ],
-@endforeach
+    [
+    @foreach ($promo->label as $label)
+        '{{ $label }}',
+    @endforeach
+    ],
 ];
 
 $(document).ready(function(){
-@if (!empty($teaser[0]->id))
+@if (!empty($teaser->id))
     renderChart('.chartbox1', '#canvas1', charts[0], labels[0], 'right');
     $('#teaserA').on('click', function(){
-        window.location = "{{ url('/') }}/sound/filter/{{ $teaser[0]->id }}";
+        window.location = "{{ url('/') }}/sound/filter/{{ $teaser->id }}";
     })
 @endif
-@if (!empty($teaser[1]->id))
+@if (!empty($promo->id))
     renderChart('.chartbox2', '#canvas2', charts[1], labels[1], 'left');
     $('#teaserB').on('click', function(){
-        window.location = "{{ url('/') }}/sound/filter/{{ $teaser[1]->id }}";
+        window.location = "{{ url('/') }}/sound/filter/{{ $promo->id }}";
     })
 @endif
 });
@@ -76,8 +92,8 @@ $(document).ready(function(){
 function spreadIt() {
     var animate = anime({
         targets: '.visionWrap',
-        height: '190px',
-        duration: 800
+        height: '150px',
+        duration: 2000
     });
 }
 
@@ -122,7 +138,7 @@ function renderChart(chartdiv, canvas, data, labels, position) {
                 padding: 0
             },
             tooltips: {
-                enabled: true,
+                enabled: false,
                 intersects: false
             },
             animation: {

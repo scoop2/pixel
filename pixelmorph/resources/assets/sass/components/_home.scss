@@ -10,10 +10,13 @@
 }
 
 .homeBox {
-    width: 50%;
+    width: 39%;
     cursor: pointer;
     transition: 1.3s;
     padding: 1vw;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
 .homeBox:hover {
@@ -32,7 +35,7 @@
 .vision {
     width: 100%;
     text-align: center;
-    min-height: 10vw;
+    min-height: 6vw;
 }
 
 .visionSVG {
@@ -53,8 +56,36 @@
     background-color: $color9;
 }
 
-.homeTeaserHead {
+.homeTeaserWrap {
+    display: table;
+    padding: 1vw;
+    margin: 1vw;
+}
+
+.homeRow {
+    display: table-row;
+}
+
+.homeCell {
+    display: table-cell;
+    width: 50%;
+    padding: 0 2vw 0 2vw;
+    text-align: center;
+}
+
+.homeTeaserTag {
     padding-top: .6vw;
+    font-family: "Headline";
+    font-size: 1.8vw;
+    text-align: center;
+    font-weight: bolder;
+    min-height: 6vw;
+    color: $color1;
+    text-transform: uppercase;
+}
+
+.homeTeaserHead {
+    display: table-cell;
     font-family: "Headline";
     font-size: 1.8vw;
     text-align: center;
@@ -66,20 +97,4 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-}
-
-.labelWrap {
-    display: flex;
-    justify-content: space-evenly;
-    // border-bottom: 1px solid;
-    padding: .3vw;
-    margin-bottom: .3vw;
-}
-
-.labelChartWrap {
-    padding: .2vw;
-}
-
-.labelItem {
-    padding: 0 .6vw 0 .6vw;
 }

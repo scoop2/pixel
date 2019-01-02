@@ -10,6 +10,18 @@ body {
     height: 100%;
 }
 
+.control {
+    display: none;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 9000;
+    width: 100%;
+    color: white;
+    font-size: 3vw;
+    background-color: black;
+}
+
 .overlay {
     display: none;
     position: fixed;
@@ -22,6 +34,10 @@ body {
 .wrap {
     position: absolute;
     width: 100%;
+}
+
+.mwrap {
+    display: none;
 }
 
 .left {
@@ -48,7 +64,7 @@ body {
     position: relative;
     z-index: 10;
     font-size: 0.85vw;
-    padding: 1vw 0 11vw 0;
+    padding: 1vw 0 12vw 0;
     min-height: 60vw;
     text-align: justify;
     background-color: $color2;
@@ -57,7 +73,6 @@ body {
 .containerContent {
     padding: .8vw 3vw 0 3vw;
 }
-
 
 .contentCentered {
     font-size: 20px;
@@ -107,18 +122,99 @@ body {
  |--------------------------------------------------------------------------
  */
 
-@media only screen and (max-width: 1000px) {
-    left {
+@media only screen and (max-width: 1300px) {
+    body {
+        background-color: #ff0000;
+    }
+    nav {
+        height: 3vw !important;
+    }
+    .left {
+        width: 10%;
+    }
+    .right {
+        width: 10%;
+    }
+    .main {
+        width: 80%;
+    }
+    .content {
+        font-size: 1.2vw;
+    }
+    .nav-menuItem {
+        font-size: 2vw !important;
+        line-height: 1.6 !important;
+    }
+    .nav-headline {
+        height: 4.8vw !important;
+    }
+    .nav-headlineTypo {
+        font-size: 2.9vw !important;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    body {
+        background-color: #004400;
+    }
+    nav {
+        height: 5vw !important;
+    }
+    .left {
         width: 5%;
     }
     .right {
         width: 5%;
     }
     .main {
-        width: 80%;
+        width: 90%;
     }
     .content {
-        font-size: 1.7vw;
+        font-size: 1.4vw;
+    }
+    .nav-menuItem {
+        font-size: 3vw !important;
+        line-height: 1.6 !important;
+    }
+    .nav-headline {
+        height: 6vw !important;
+    }
+    .nav-headlineTypo {
+        font-size: 3.9vw !important;
+    }
+    .homeTeaserHead {
+        font-size: 3vw !important;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    body {
+        background-color: #0000ff;
+    }
+    nav {
+        height: 5vw !important;
+    }
+    .left {
+        width: 5%;
+    }
+    .right {
+        width: 5%;
+    }
+    .main {
+        width: 90%;
+    }
+    .content {
+        font-size: 2vw;
+    }
+    .nav-menuItem {
+        font-size: 3vw !important;
+        line-height: 1.6 !important;
+    }
+    .nav-headline {
+        height: 6vw !important;
+    }
+    .nav-headlineTypo {
+        font-size: 3.9vw !important;
     }
 }
 

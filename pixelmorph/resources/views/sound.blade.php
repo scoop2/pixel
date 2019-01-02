@@ -38,7 +38,7 @@
                     <div class="playerDataLength">{{ $items[0]->setlength }}</div>
                     <div class="playerDateSmall">min&nbsp;</div>
                     <div class="playerDataBpm"> {{ $items[0]->bpm }}</div>
-                    <div class="playerDateSmall">BPM (&Oslash;)}&nbsp;</div>
+                    <div class="playerDateSmall">BPM (&Oslash;)&nbsp;</div>
                     <div class="playerDataReleased">{{ $items[0]->released }}</div>
                 </div>
 				<div class="playerSocialIcons">
@@ -316,6 +316,7 @@ tagBox.each(function (index, el) {
 });
 
 function redoPlayer(id) {
+    registerClick(id);
     player.source = {
         type: 'audio',
         sources: [
@@ -386,16 +387,37 @@ function getJSON(values) {
         async: true,
         success: function (data) {
 			doFilter(data);
-			$('.overlay').css('display','none');
         },
         error: function (errorThrown) {
-        	console.warn('Ajax Request failed!', errorThrown);
+        	console.warn('Ajax Request failed!', errorThrown, url);
+        },
+        complete: function () {
+            $('.overlay').css('display','none');
+        }
+    });
+}
+
+function registerClick(id) {
+    console.log('clioc')
+	var url = 'http:{{ url('/') }}/api/clicks/' + id;
+    console.log(url)
+    $.ajax({
+        type: 'GET',
+        url: url,
+        crossDomain: true,
+        dataType: 'json',
+        timeout: 10000,
+        cache: true,
+        async: true,
+        success: function (data) {
+        },
+        error: function (errorThrown) {
+        	console.warn('Ajax Request failed!', errorThrown, url);
         },
         complete: function () {
         }
     });
 }
-
 
 function renderChart(data, labels) {
     $('#moods').remove();

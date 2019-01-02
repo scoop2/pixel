@@ -26,6 +26,7 @@ class CreateSetsTable extends Migration
             $table->char('filetype')->nullable();
             $table->char('cover')->nullable();
             $table->text('description')->nullable();
+            $table->integer('clicks')->default(0);
             $table->timestamps();
         });
     }

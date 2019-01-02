@@ -19,25 +19,43 @@ class HomeController extends Controller
         } else {
             $items->username = 'werter Gast';
         }
-        $teaser = DB::table('sets')->where([['promo', '=', '1'], ['active', '=', '1']])->orderBy('released', 'desc')->take(2)->get();
-        if (!$teaser->isEmpty()) {
-            for ($i = 0; $i < 2; $i++) {
-                $tags = DB::table('tags_sets')->where('setid', $teaser[$i]->id)->orderBy('rate')->get();
-                $chart = [];
-                $label = [];
-                $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$teaser[$i]->id]);
-                foreach ($tags as $tag) {
-                    $labels = DB::table('tags')->where('id', $tag->id)->first();
-                    array_push($chart, $tag->rate);
-                    array_push($label, $labels->title);
-                }
-                $teaser[$i]->label = $label;
-                $teaser[$i]->chart = $chart;
-                $teaser[$i]->released = Helper::convertRelease($teaser[$i]->released);
+        $promo = DB::table('sets')->where([['promo', '=', '1'], ['active', '=', '1']])->orderBy('released', 'asc')->first();
+        if (empty($promo)) {
+            $promo = DB::table('sets')->where('active', '=', '1')->orderBy('released', 'desc')->get();
+            $promo = $promo[0];
+        }
+        if (!empty($promo)) {
+            $tags = DB::table('tags_sets')->where('setid', $promo->id)->orderBy('rate')->get();
+            $chart = [];
+            $label = [];
+            $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$promo->id]);
+            foreach ($tags as $tag) {
+                $labels = DB::table('tags')->where('id', $tag->tag)->first();
+                array_push($chart, $tag->rate);
+                array_push($label, $labels->title);
             }
+            $promo->label = $label;
+            $promo->chart = $chart;
+            $promo->released = Helper::convertRelease($promo->released);
         }
 
-        return view('home', ['items' => $items, 'user' => $user, 'teaser' => $teaser]);
+        $teaser = DB::table('sets')->where([['promo', '=', '0'], ['active', '=', '1'], ['id', '<>', $promo->id]])->orderBy('clicks', 'asc')->first();
+        if (!empty($teaser)) {
+            $tags = DB::table('tags_sets')->where('setid', $teaser->id)->orderBy('rate')->get();
+            $chart = [];
+            $label = [];
+            $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$teaser->id]);
+            foreach ($tags as $tag) {
+                $labels = DB::table('tags')->where('id', $tag->tag)->first();
+                array_push($chart, $tag->rate);
+                array_push($label, $labels->title);
+            }
+            $teaser->label = $label;
+            $teaser->chart = $chart;
+            $teaser->released = Helper::convertRelease($teaser->released);
+        }
+
+        return view('home', ['items' => $items, 'user' => $user, 'teaser' => $teaser, 'promo' => $promo]);
     }
 
     public function impressum()
@@ -45,6 +63,7 @@ class HomeController extends Controller
         $user = Auth::user();
         return view('impressum');
     }
+
     public function festival()
     {
         $user = Auth::user();

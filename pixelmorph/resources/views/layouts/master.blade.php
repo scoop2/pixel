@@ -17,13 +17,13 @@
 <?php
 include (public_path() . '/images/icons.svg');
 ?>
+<div class="control"></div>
 <div class="overlay">
   <div class="progress">
       <div class="indeterminate"></div>
   </div>
 </div>
 <div class="wrap">
-
     <div class="wrapInner">
         <div class="left"></div>
         <div class="main">
@@ -44,6 +44,19 @@ include (public_path() . '/images/icons.svg');
     </div>
     @yield('nav')
 </div>
-
+<div class="mwrap">
+        <div class="content">
+        <noscript>
+        <div class="noScriptAlert">
+            <svg class="icon40 icon-red floatLeft marginDefault"><use xlink:href="#icon-alert"></use></svg>
+            <b>Sry, die Seite wird nur mit Javascript nutzbar sein.</b>
+                <br>
+                Es gibt viele gute Gründe ohne Javascript zu surfen. Ein gesundes Bedürfnis nach Sicherheit und Schutz der eigenen Privatspähre dürften wohl die wichtigsten sein und deaktiviertes Javascript ist defakto die beste Lösung.
+                Doch dies ist lediglich der Spielplatz eines Frontend-Webentwicklers ohne für Dich relevante Inhalte die keiner Barrierefreiheit bedürfen. Eine javascriptfreie Version ist nicht vorgesehen. Auch wenn ich eher zum befriedigen meines Spieltriebs einiges was normal mit Javascript gelöst wird mit CSS gemacht habe, wird nicht alles nutzbar sein so lange Javascript deaktiviert bleibt.
+        </div>
+        </noscript>
+        @yield('content')
+    </div>
+</div>
 </body>
 </html>

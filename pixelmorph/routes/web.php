@@ -84,6 +84,11 @@ Route::get('api/sets/playlist/{id?}', array(
 Route::resource('/cruds', 'CrudsController', [
     'except' => ['edit', 'show', 'store'],
 ]);
+Route::get('api/clicks/{id?}', array(
+    'as' => 'id',
+    'uses' => 'ApiController@click',
+));
+
 
 /*
 Route::group([

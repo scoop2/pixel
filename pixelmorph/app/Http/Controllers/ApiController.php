@@ -16,6 +16,12 @@ class ApiController extends Controller
         return response()->json($desc);
     }
 
+    public function click($id = 0)
+    {
+        DB::table('sets')->where('id', $id)->increment('clicks');
+        return response()->json(true);
+    }
+
     public function filter($filter = 0)
     {
         $response = [];
@@ -70,9 +76,10 @@ class ApiController extends Controller
             if (empty($newset[0]->playlist)) {
                 $newset[0]->playlist = false;
             }
+
             $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$respSet->setid]);
             foreach ($tags as $tag) {
-                $labels = DB::table('tags')->where('id', $tag->id)->first();
+                $labels = DB::table('tags')->where('id', $tag->tag)->first();
                 array_push($chart, $tag->rate);
                 array_push($label, $labels->title);
             }
