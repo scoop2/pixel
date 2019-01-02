@@ -19,11 +19,11 @@ class HomeController extends Controller
         } else {
             $items->username = 'werter Gast';
         }
-        $promo = DB::table('sets')->where([['promo', '=', '1'], ['active', '=', '1']])->orderBy('released', 'asc')->first();
+        $promo = DB::table('sets')->where([['promo', '=', '1'], ['active', '=', '1']])->orderBy('released', 'desc')->first();
         if (empty($promo)) {
             $promo = DB::table('sets')->where('active', '=', '1')->orderBy('released', 'desc')->get();
-            $promo = $promo[0];
         }
+        $promo = $promo[0];
         if (!empty($promo)) {
             $tags = DB::table('tags_sets')->where('setid', $promo->id)->orderBy('rate')->get();
             $chart = [];
@@ -39,7 +39,7 @@ class HomeController extends Controller
             $promo->released = Helper::convertRelease($promo->released);
         }
 
-        $teaser = DB::table('sets')->where([['promo', '=', '0'], ['active', '=', '1'], ['id', '<>', $promo->id]])->orderBy('clicks', 'asc')->first();
+        $teaser = DB::table('sets')->where([['promo', '=', '0'], ['active', '=', '1'], ['id', '<>', $promo->id]])->orderBy('clicks', 'desc')->first();
         if (!empty($teaser)) {
             $tags = DB::table('tags_sets')->where('setid', $teaser->id)->orderBy('rate')->get();
             $chart = [];
