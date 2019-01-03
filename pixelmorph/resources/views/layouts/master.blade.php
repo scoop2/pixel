@@ -44,8 +44,9 @@ include (public_path() . '/images/icons.svg');
     </div>
     @yield('nav')
 </div>
+<!--
 <div class="mwrap">
-        <div class="content">
+    <div class="content">
         <noscript>
         <div class="noScriptAlert">
             <svg class="icon40 icon-red floatLeft marginDefault"><use xlink:href="#icon-alert"></use></svg>
@@ -57,6 +58,10 @@ include (public_path() . '/images/icons.svg');
         </noscript>
         @yield('content')
     </div>
+-->
+@section('navmobile')
+    @component('components.navmobile', ['active' => '1', 'user' => 'icch'])
+@endcomponent
 </div>
 </body>
 </html>
