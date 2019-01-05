@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class SkillsController extends Controller
 {
 
-    public function index(Request $request)
+    public function index(Request $request, $responsive = 'desk')
     {
         if (!Auth::check()) {
             $user = false;
@@ -37,7 +37,7 @@ class SkillsController extends Controller
                 if ($skill->icon != '') {
                     $cats[$i]['items'][$x]['icon'] = '<i class="' . $skill->icon . ' fa-3x"></i>';
                 } else if ($skill->image != '') {
-                    $cats[$i]['items'][$x]['icon'] = '<img src="'.url('/').'/images/logos/' . $skill->image . '"></img>';
+                    $cats[$i]['items'][$x]['icon'] = '<img src="' . url('/') . '/images/logos/' . $skill->image . '"></img>';
                 } else {
                     $cats[$i]['items'][$x]['icon'] = '';
                 }
@@ -46,11 +46,21 @@ class SkillsController extends Controller
             $i++;
         }
 
-        return view('skills', [
-            'skillcats' => $cats,
-            'desc' => $desc,
-            'user' => $user,
-        ]);
+        if ($responsive == 'desk') {
+            return view('desk.skills', [
+                'responsive' => $responsive,
+                'skillcats' => $cats,
+                'desc' => $desc,
+                'user' => $user,
+            ]);
+        } elseif ($responsive == 'mobile') {
+            return view('mobile.skills', [
+                'responsive' => $responsive,
+                'skillcats' => $cats,
+                'desc' => $desc,
+                'user' => $user,
+            ]);
+        }
     }
 
     public function vita(Request $request)
@@ -70,23 +80,40 @@ class SkillsController extends Controller
             $i++;
         }
 
-        return view('vita', ['items' => $item, 'user' => Auth::user()]);
+        if ($responsive == 'desk') {
+            return view('desk.vita', [
+                'responsive' => $responsive,
+                'skillcats' => $cats,
+                'desc' => $desc,
+                'user' => $user,
+            ]);
+        } elseif ($responsive == 'mobile') {
+            return view('mobile.vita', [
+                'responsive' => $responsive,
+                'skillcats' => $cats,
+                'desc' => $desc,
+                'user' => $user,
+            ]);
+        }
     }
 
     public function person(Request $request)
     {
         $items = Persos::all()->where('id', 1);
-        /*
-        $i = 0;
-        foreach ($vitas as $vita) {
-        $item[$i]['title'] = $vita->title;
-        $item[$i]['start'] = substr($vita->datumstart, 0, 4);
-        $item[$i]['end'] = substr($vita->datumend, 0, 4);
-        $item[$i]['desc'] = $vita->desc;
-        $i++;
+        if ($responsive == 'desk') {
+            return view('desk.person', [
+                'responsive' => $responsive,
+                'skillcats' => $cats,
+                'desc' => $desc,
+                'user' => $user,
+            ]);
+        } elseif ($responsive == 'mobile') {
+            return view('mobile.person', [
+                'responsive' => $responsive,
+                'skillcats' => $cats,
+                'desc' => $desc,
+                'user' => $user,
+            ]);
         }
-         */
-
-        return view('person', ['items' => $items, 'user' => Auth::user()]);
     }
 }

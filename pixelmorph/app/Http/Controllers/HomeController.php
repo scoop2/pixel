@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
 
-    public function index(Request $request)
+    public function index(Request $request, $responsive = 'desk')
     {
         $user = Auth::user();
         $items = DB::table('pages')->where('meta_description', 'home')->first();
@@ -55,19 +55,31 @@ class HomeController extends Controller
             $teaser->released = Helper::convertRelease($teaser->released);
         }
 
-        return view('home', ['items' => $items, 'user' => $user, 'teaser' => $teaser, 'promo' => $promo]);
+        if ($responsive == 'desk') {
+            return view('desk.home', ['responsive' => $responsive, 'items' => $items, 'user' => $user, 'teaser' => $teaser, 'promo' => $promo]);
+        } elseif ($responsive == 'mobile') {
+            return view('mobile.home', ['responsive' => $responsive, 'items' => $items, 'user' => $user, 'teaser' => $teaser, 'promo' => $promo]);
+        }
     }
 
-    public function impressum()
+    public function impressum($responsive = 'desk')
     {
         $user = Auth::user();
-        return view('impressum');
+        if ($responsive == 'desk') {
+            return view('desk.impressum');
+        } elseif ($responsive == 'mobile') {
+            return view('mobile.impressum');
+        }
     }
 
-    public function festival()
+    public function festival($responsive = 'desk')
     {
         $user = Auth::user();
         $desc = DB::table('pages')->where('meta_description', 'festival')->get();
-        return view('festival', ['item' => $desc, 'user' => $user]);
+        if ($responsive == 'desk') {
+            return view('desk.festival', ['responsive' => $responsive, 'item' => $desc, 'user' => $user]);
+        } elseif ($responsive == 'mobile') {
+            return view('mobile.festival', ['responsive' => $responsive, 'item' => $desc, 'user' => $user]);
+        }
     }
 }

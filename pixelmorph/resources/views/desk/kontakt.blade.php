@@ -55,6 +55,6 @@
 @endsection
 
 @section('nav')
-    @component('components.nav', ['active' => '1', 'user' => $user])
+    @component('components.nav', ['responsive' => $responsive, 'active' => '1', 'user' => $user])
     @endcomponent
 @endsection

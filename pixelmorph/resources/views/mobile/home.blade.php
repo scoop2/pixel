@@ -1,29 +1,23 @@
-@extends('layouts.master')
+@extends('layouts.mobile')
 
 @section('content')
-<div class="containerHome homeText">
+<div class="homeText">
     <div class="visionWrap">
         <div class="valign-wrapper">
-            <a class="vision" href="{{ url('/') }}/festival"><button class="btn btnVision">vision of a festival</button></a>
+            <a class="vision" href="{{ url('/') }}/{{ $responsive }}/festival"><button class="btn btnVision">vision of a festival</button></a>
         </div>
     </div>
     <div class="homeTeaserWrap">
-        <div class="homeRow">
-            <div class="homeTeaserTag homeCell">Neu {{ $promo->released }}</div>
-            <div class="homeTeaserTag homeCell">Beliebt</div>
-        </div>
-        <div class="homeRow">
-            <div class="homeCell">{{ $promo->description }}</div>
-            <div class="homeCell">{{ $teaser->description }}</div>
-        </div>
-        <div class="homeRow">
-            <div class="homeTeaserHead homeCell"><a href="{{ url('/') }}/sound/filter/{{ $promo->id }}">{{ $promo->title }}</a></div>
-            <div class="homeTeaserHead homeCell"><a href="{{ url('/') }}/sound/filter/{{ $teaser->id }}">{{ $teaser->title }}</a></div>
-        </div>
-        <div class="homeRow">
-            <div class="chartbox1 homeCell"></div>
-            <div class="chartbox2 homeCell"></div>
-        </div>
+        <div class="homeTeaserTag">Neu {{ $promo->released }}</div>
+        <div class="homeTeaserDesc">{{ $promo->description }}</div>
+        <div class="homeTeaserHead"><a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $promo->id }}">{{ $promo->title }}</a></div>
+        <div class="chartbox1"></div>
+    </div>
+        <div class="homeTeaserWrap">
+        <div class="homeTeaserTag">Beliebt {{ $teaser->released }}</div>
+        <div class="homeTeaserDesc">{{ $teaser->description }}</div>
+        <div class="homeTeaserHead"><a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $teaser->id }}">{{ $teaser->title }}</a></div>
+        <div class="chartbox2"></div>
     </div>
 </div>
 
@@ -78,13 +72,13 @@ $(document).ready(function(){
 @if (!empty($teaser->id))
     renderChart('.chartbox1', '#canvas1', charts[0], labels[0], 'right');
     $('.teaserA').on('click', function(){
-        window.location = "{{ url('/') }}/sound/filter/{{ $teaser->id }}";
+        window.location = "{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $teaser->id }}";
     })
 @endif
 @if (!empty($promo->id))
     renderChart('.chartbox2', '#canvas2', charts[1], labels[1], 'left');
     $('.teaserB').on('click', function(){
-        window.location = "{{ url('/') }}/sound/filter/{{ $promo->id }}";
+        window.location = "{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $promo->id }}";
     })
 @endif
 });
@@ -92,7 +86,7 @@ $(document).ready(function(){
 function spreadIt() {
     var animate = anime({
         targets: '.visionWrap',
-        height: '150px',
+        height: '80px',
         duration: 2000
     });
 }
@@ -115,6 +109,11 @@ function renderChart(chartdiv, canvas, data, labels, position) {
                 borderColor: ChartBorderColor,
                 borderWidth: 1,
             }]
+        },
+        canvas: {
+            style: {
+                width: '2vw'
+            }
         },
         options: {
             scales: {
@@ -151,7 +150,7 @@ function renderChart(chartdiv, canvas, data, labels, position) {
 </script>
 @endsection
 
-@section('nav')
-    @component('components.nav', ['active' => '1', 'user' => $user])
+@section('navmobile')
+    @component('components.navmobile', ['responsive' => $responsive, 'active' => '1', 'user' => $user])
     @endcomponent
 @endsection

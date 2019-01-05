@@ -9,11 +9,48 @@
  * | contains the "web" middleware group. Now create something great!
  * |
  */
-// Route::get('/');
-Route::resource('/', 'HomeController');
-Route::resource('home', 'HomeController');
-Route::get('/impressum', 'HomeController@impressum')->name('impressum');
-Route::get('/festival', 'HomeController@festival')->name('festival');
+
+Route::redirect('/', '/desk/home');
+Route::get('{responsive?}/home', array(
+    'as' => 'responsive',
+    'uses' => 'HomeController@index',
+));
+Route::get('/{responsive?}/impressum', array(
+    'as' => 'responsive',
+    'uses' => 'HomeController@impressum',
+));
+Route::get('/{responsive?}/festival', array(
+    'as' => 'responsive',
+    'uses' => 'HomeController@festival',
+));
+Route::get('/{responsive?}/sound', array(
+    'as' => 'responsive',
+    'uses' => 'SoundController@index',
+));
+Route::get('{responsive?}/sound', array(
+    'as' => 'responsive',
+    'uses' => 'SoundController@index',
+));
+Route::get('{responsive?}/sound/filter/{filter?}', array(
+    'as' => 'filter',
+    'uses' => 'SoundController@index',
+));
+Route::get('{responsive?}/skills', array(
+    'as' => 'responsive',
+    'uses' => 'SkillsController@index',
+));
+Route::get('{responsive?}/skills/vita', array(
+    'as' => 'responsive',
+    'uses' => 'SkillsController@vita',
+))->middleware('auth');
+Route::get('{responsive?}/skills/person', array(
+    'as' => 'responsive',
+    'uses' => 'SkillsController@person',
+))->middleware('auth');
+Route::get('{responsive?}/kontakt', array(
+    'as' => 'responsive',
+    'uses' => 'KontaktController@index',
+));
 
 Route::get('/admin', 'Admin\AdminController@index')->middleware('auth');
 Route::post('/admin', 'Admin\AdminController@update')->middleware('auth');
@@ -45,17 +82,7 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::resource('/sound', 'SoundController');
-Route::get('sound/filter/{filter?}', array(
-    'as' => 'filter',
-    'uses' => 'SoundController@index',
-));
 Route::resource('setsadmin', 'SetsadminController');
-
-Route::get('skills', 'SkillsController@index');
-Route::get('skills/vita', 'SkillsController@vita')->middleware('auth');
-Route::get('skills/person', 'SkillsController@person')->middleware('auth');
-Route::resource('kontakt', 'KontaktController');
 
 Route::get('m3u/url/{url?}', 'M3uController@index');
 Route::get('m3u/batch', 'M3uController@batchM3u')->middleware('auth');
@@ -89,14 +116,4 @@ Route::get('api/clicks/{id?}', array(
     'uses' => 'ApiController@click',
 ));
 
-
-/*
-Route::group([
-'prefix' => 'admin',
-], function () {
-Voyager::routes();
-});
- */
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

@@ -1,4 +1,4 @@
-@extends('layouts.master') @section('content')
+@extends('layouts.mobile')
 @section('content')
 @if ($user === true)
     @component('components.navskills', ['active' => 'skills'])
@@ -6,13 +6,27 @@
 @endif
 <div class="containerContent">
 	{!! $desc->body !!}
-	<ul>
-		@foreach ($skillcats as $cat)
-        @isset ($cat['items'])
-		<li>
-			<div class="skill-cat-head">{{ $cat['title'] }}</div>
-			@foreach ($cat['items'] as $item)
-                <div class="skillItemWrap">
+</div>
+<ul>
+    @php
+        $i = 1;
+    @endphp
+    @foreach ($skillcats as $cat)
+    @isset ($cat['items'])
+    <li>
+        <div class="skill-cat-head">{{ $cat['title'] }}</div>
+        @foreach ($cat['items'] as $item)
+        @php
+        if ($i == 0) {
+            $style = ' skillColored';
+            $i++;
+        } else {
+            $style = '';
+            $i = 0;
+        }
+        @endphp
+        <div class="skillItemWrap{{ $style }}">
+            <div class="skillLeftWrap">
                 <div class="skillItemIcon">{!! $item['icon'] !!}</div>
                 <div class="skillItemCircle">
                     <svg viewBox="0 0 37 37" class="circular-chart">
@@ -21,17 +35,18 @@
                     <text x="18" y="20.35" class="percentage">{!! $item['perc'] !!}%</text>
                     </svg>
                 </div>
-                <div class="skillItemText">
-                    <b>{!! $item['title'] !!}</b><br>
-                    {!! $item['description'] !!}
-                </div>
-                </diV>
-            @endforeach
-		</li>
-        @endisset
+            </div>
+            <div class="skillItemText">
+                <b>{!! $item['title'] !!}</b><br>
+                {!! $item['description'] !!}
+            </div>
+        </diV>
         @endforeach
-	</ul>
-</div>
+    </li>
+    @endisset
+    @endforeach
+</ul>
+
 <script>
 $(document).ready(function(){
     $('.circle').css('animation', 'progress 1s ease-out forwards');
@@ -47,7 +62,7 @@ $(document).ready(function(){
 </script>
 @endsection
 
-@section('nav')
-    @component('components.nav', ['user' => $user])
+@section('navmobile')
+    @component('components.navmobile', ['responsive' => $responsive, 'user' => $user])
     @endcomponent
 @endsection

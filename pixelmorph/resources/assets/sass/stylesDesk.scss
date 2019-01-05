@@ -65,16 +65,16 @@
 
 //@import "components/variables.scss";
 @import "components/normalize";
-@import "components/global";
-@import "components/home";
 @import "components/helpers";
 @import "components/icons";
-@import "components/shapes";
-@import "components/nav";
-@import "components/player";
-@import "components/nouislider";
-@import "components/plyr";
-@import "components/skills";
+@import "components/desk/global";
+@import "components/desk/home";
+@import "components/desk/nav";
+@import "components/desk/player";
+@import "components/desk/skills";
+@import "components/desk/shapes";
+@import "components/vendor/nouislider";
+@import "components/vendor/plyr";
 @import "fonts/voltaire";
 @import "fonts/raleway";
 @import "fonts/fredoka";

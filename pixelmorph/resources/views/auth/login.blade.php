@@ -68,6 +68,6 @@
 </div>
 @endsection
 @section('nav')
-    @component('components.nav', ['user' => false])
+    @component('components.nav', ['responsive' => $responsive, 'user' => false])
     @endcomponent
 @endsection

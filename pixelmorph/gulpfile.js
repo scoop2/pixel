@@ -8,17 +8,9 @@ var pump = require('pump');
 var vinylPaths = require('vinyl-paths');
 var WaveformPlaylist = require('waveform-playlist');
 var browserSync = require('browser-sync').create();
+var cssFileDesk = 'stylesDesk';
+var cssFileMobile = 'stylesMobile';
 
-//var addsrc = require('gulp-add-src');
-
-//var rename = require('gulp-rename');
-//var gutil = require('gulp-util');
-//var header = require('gulp-header');
-//var del = require('del');
-//var replaceTemplate = require("gulp-replace-template");
-//var path = require('path');
-//var tap = require('gulp-tap');
-//var fs = require('fs');
 
 /*
  |--------------------------------------------------------------------------
@@ -35,13 +27,13 @@ var pathPHP = 'resources/views/';
 var pathJSprod = pathRoot + 'js/';
 var pathJSdev = pathDev + 'js/';
 var pathCSS = pathRoot + 'css/';
-
 var pathSASS = pathDev + 'sass/';
 
 
 gulp.task('default', ['sass']);
 gulp.task('prod', ['js', 'sass', 'minifycss']);
 gulp.task('dev', ['sass']);
+gulp.task('sass', ['sassDesk', 'sassMobile']);
 
 
 gulp.task('js', function() {
@@ -67,9 +59,20 @@ gulp.task('js', function() {
 });
 
 
-gulp.task('sass', function() {
+gulp.task('sassDesk', function() {
     console.log('Compiling now sass');
-    return gulp.src('resources/assets/sass/styles.scss')
+    return gulp.src('resources/assets/sass/' + cssFileDesk + '.scss')
+        .pipe(vinylPaths(function(paths) {
+            console.log('Compiling: ', paths);
+            return Promise.resolve();
+        }))
+        .pipe(sass())
+        .pipe(cleancss())
+        .pipe(gulp.dest(pathCSS));
+});
+gulp.task('sassMobile', function() {
+    console.log('Compiling now sass');
+    return gulp.src('resources/assets/sass/' + cssFileMobile + '.scss')
         .pipe(vinylPaths(function(paths) {
             console.log('Compiling: ', paths);
             return Promise.resolve();
@@ -80,7 +83,8 @@ gulp.task('sass', function() {
 });
 
 
-gulp.task('minifycss', ['sass'], function() {
+
+gulp.task('minifycss', ['sass'], function(file) {
     console.log('Minifying css');
     return gulp.src(pathCSS + 'styles.css')
         .pipe(cleancss())
@@ -111,7 +115,7 @@ gulp.task('serve', function() {
     gulp.watch('app/**/*.php', browserSync.reload);
     gulp.watch('app/config/**/*.php', browserSync.reload);
     gulp.watch('app/routes/**/*.php', browserSync.reload);
-    gulp.watch('resources/**/*.scss', ['sass', browserSync.reload]);
+    gulp.watch('resources/**/*.scss', ['sassDesk', 'sassMobile', browserSync.reload]);
     gulp.watch('resources/**/*.js', ['js', browserSync.reload]);
     gulp.watch('resources/**/*.php', browserSync.reload);
 });

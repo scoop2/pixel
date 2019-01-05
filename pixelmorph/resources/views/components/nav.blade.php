@@ -142,15 +142,15 @@
 <div class="menu-wrap">
 	<div class="nav-left-stripe"></div>
 	<nav>
-		<a class="nav-menuItem" id="mHome" href="{{ url('/') }}/home">Home</a>
-		<a class="nav-menuItem" id="mSkills" href="{{ url('/') }}/skills">Skills</a>
-		<a class="nav-menuItem" id="mSets" href="{{ url('/') }}/sound">Musik</a>
-		<a class="nav-menuItem" id="mKontakt" href="{{ url('/') }}/kontakt">Kontakt</a>
+		<a class="nav-menuItem" id="mHome" href="{{ url('/') }}/{{ $responsive }}/home">Home</a>
+		<a class="nav-menuItem" id="mSkills" href="{{ url('/') }}/{{ $responsive }}/skills">Skills</a>
+		<a class="nav-menuItem" id="mSets" href="{{ url('/') }}/{{ $responsive }}/sound">Musik</a>
+		<a class="nav-menuItem" id="mKontakt" href="{{ url('/') }}/{{ $responsive }}/kontakt">Kontakt</a>
 	<div id="menu-hover" class="animation"></div>
 	</nav>
 	<div class="nav-right-stripe">
 @if ($user != false)
-        <a href="{{ url('/') }}/logout"><div class="nav_user_icon"><i class="fas fa-sign-out-alt fa-lg"></i></div></a>
+        <a href="{{ url('/') }}/{{ $responsive }}/logout"><div class="nav_user_icon"><i class="fas fa-sign-out-alt fa-lg"></i></div></a>
 @endif
     </div>
 </div>

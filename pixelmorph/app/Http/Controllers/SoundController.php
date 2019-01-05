@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class SoundController extends Controller
 {
 
-    public function index($filter = '')
+    public function index($responsive = 'desk', $filter = '')
     {
         if (!Auth::check()) {
             $user = false;
@@ -58,11 +58,23 @@ class SoundController extends Controller
             $items[$i]->playlist = $playlist;
         }
 
-        return view('sound')
-            ->with('items', $items)
-            ->with('tags', $taglist)
-            ->with('desc', $desc)
-            ->with('user', $user);
+        if ($responsive == 'desk') {
+            return view('desk.sound', [
+                'responsive' => $responsive,
+                'items' => $items,
+                'tags' => $taglist,
+                'desc' => $desc,
+                'user' => $user,
+            ]);
+        } elseif ($responsive == 'mobile') {
+            return view('mobile.sound', [
+                'responsive' => $responsive,
+                'items' => $items,
+                'tags' => $taglist,
+                'desc' => $desc,
+                'user' => $user,
+            ]);
+        }
     }
 }
 

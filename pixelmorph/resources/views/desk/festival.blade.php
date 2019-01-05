@@ -1,4 +1,4 @@
-@extends('layouts.master') 
+@extends('layouts.master')
 @section('content')
 
 <div class="containerContent festivalContent">
@@ -8,6 +8,10 @@
 
 @endsection
 @section('nav')
-    @component('components.nav', ['user' => $user])
+    @component('components.nav', ['responsive' => $responsive, 'user' => $user])
+    @endcomponent
+@endsection
+@section('navmobile')
+    @component('components.navmobile', ['responsive' => $responsive, 'user' => $user])
     @endcomponent
 @endsection
