@@ -94,14 +94,14 @@
             </div>
         </div>
 	</div>
-	</div>
+</div>
 
 <div class="setsListWrap">
 @foreach ($items as $item)
     <div data-itemid="{{ $item->id }}" class="setsListItem btn waves-effect waves-light">{{ $item->title }}</div>
 @endforeach
 </div>
-</div>
+
 <div id="modalhelp" class="modal">
     <div class="modal-content">
     {!! html_entity_decode($desc->body) !!}

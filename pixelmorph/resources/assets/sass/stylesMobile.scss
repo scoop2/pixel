@@ -64,6 +64,8 @@
  */
 
 //@import "components/variables.scss";
+@import "components/vendor/nouislider";
+@import "components/vendor/plyr";
 @import "components/normalize";
 @import "components/helpers";
 @import "components/icons";
@@ -72,8 +74,6 @@
 @import "components/mobile/nav";
 @import "components/mobile/player";
 @import "components/mobile/skills";
-@import "components/vendor/nouislider";
-@import "components/vendor/plyr";
 @import "fonts/voltaire";
 @import "fonts/raleway";
 @import "fonts/fredoka";

@@ -44,6 +44,7 @@ include (public_path() . '/images/icons.svg');
 function mResize() {
     var width = $(window).width();
     if (width >= 400) {
+        $('.overlay').css({'display': 'block', 'height': '100%'});
         var url = $(location).attr('href').split('/');
         url[3] = 'desk';
         var newurl = url[0] + '//' + url[2];

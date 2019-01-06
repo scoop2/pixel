@@ -21,9 +21,8 @@ class HomeController extends Controller
         }
         $promo = DB::table('sets')->where([['promo', '=', '1'], ['active', '=', '1']])->orderBy('released', 'desc')->first();
         if (empty($promo)) {
-            $promo = DB::table('sets')->where('active', '=', '1')->orderBy('released', 'desc')->get();
+            $promo = DB::table('sets')->where('active', '=', '1')->orderBy('released', 'desc')->first();
         }
-        $promo = $promo[0];
         if (!empty($promo)) {
             $tags = DB::table('tags_sets')->where('setid', $promo->id)->orderBy('rate')->get();
             $chart = [];

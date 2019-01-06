@@ -6,7 +6,6 @@ var rId;
 $(window).resize(function() {
     clearTimeout(rId);
     rId = setTimeout(mResize, 500);
-    //$('.control').html($(window).width() + ' :: ' + $(window).height());
 });
 
 document.addEventListener('DOMContentLoaded', function() {

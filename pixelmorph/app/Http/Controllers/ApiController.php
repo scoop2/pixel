@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
-    public function sets($id = 0)
+    public function sets($responsive = 'desk', $id = 0)
     {
         if ($id == 0) {
             $desc = DB::select('SELECT * FROM sets WHERE active = ? ORDER BY released', [1]);
@@ -16,13 +16,13 @@ class ApiController extends Controller
         return response()->json($desc);
     }
 
-    public function click($id = 0)
+    public function click($responsive = 'desk', $id = 0)
     {
         DB::table('sets')->where('id', $id)->increment('clicks');
         return response()->json(true);
     }
 
-    public function filter($filter = 0)
+    public function filter($responsive = 'desk', $filter = 0)
     {
         $response = [];
         $results = [];

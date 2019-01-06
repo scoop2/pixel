@@ -96,11 +96,11 @@ Route::get('wg/{id?}', array(
 ));
  */
 
-Route::get('api/sets/list/{id?}', array(
+Route::get('{responsive?}/api/sets/list/{id?}', array(
     'as' => 'id',
     'uses' => 'ApiController@sets',
 ));
-Route::get('api/sets/filter/{id?}', array(
+Route::get('{responsive?}/api/sets/filter/{id?}', array(
     'as' => 'id',
     'uses' => 'ApiController@filter',
 ));
@@ -111,7 +111,7 @@ Route::get('api/sets/playlist/{id?}', array(
 Route::resource('/cruds', 'CrudsController', [
     'except' => ['edit', 'show', 'store'],
 ]);
-Route::get('api/clicks/{id?}', array(
+Route::get('{responsive?}/api/clicks/{id?}', array(
     'as' => 'id',
     'uses' => 'ApiController@click',
 ));

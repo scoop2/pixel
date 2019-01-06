@@ -12,38 +12,27 @@
     @endforeach
 	</div>
     <div class="filterNavWrap">
-        <div class="fiterBtnWrap tooltipped" data-position="bottom" data-tooltip="Alle Moods eingestellt? Hier startet die Suche">
-            <i class="fas fa-arrow-circle-right fa-3x icon-blue"></i>
-        </div>
-        <div class="fiterBackBtnWrap tooltipped" data-position="bottom" data-tooltip="Versteck mich wieder">
-            <i class="fas fa-arrow-circle-up fa-3x icon-blue"></i>
-        </div>
-        <div class="fiterResetBtnWrap tooltipped" data-position="bottom" data-tooltip="Alle Moods auf Null zurück stellen">
-            <i class="fas fa-arrow-circle-down fa-3x icon-blue"></i>
-        </div>
+        <div class="fiterResetBtnWrap waves-effect btn">Reset</div>
+        <div class="fiterBtnWrap waves-effect btn">GO</div>
     </div>
 </div>
-
-<div class="center-align">
-    <button class="btn btnSearch"><i class="fas fa-headphones"></i> FINDE MEHR MUSIK <i class="fas fa-headphones"></i></button>
-    <a class="waves-effect btn modal-trigger" href="#modalhelp"><i class="fas fa-question"></i></a>
-</div>
+<div class="filterWrapBg"></div>
 
 <div class="playerWrapOuter">
 	<div id="player" class="playerWrap">
 		<div class="titleWrap">
-			<div id="track" class="playerTitle floatLeft">{{ $items[0]->title }}</div>
-			<div class="playerDate floatRight">
-                <div class="playerInfoWrap">
+			<div id="track" class="playerTitle">{{ $items[0]->title }}</div>
+			<div class="playerDate">
+                <div class="playerInfoWrap floatLeft">
                     <div class="playerDataLength">{{ $items[0]->setlength }}</div>
                     <div class="playerDateSmall">min&nbsp;</div>
                     <div class="playerDataBpm"> {{ $items[0]->bpm }}</div>
                     <div class="playerDateSmall">BPM (&Oslash;)&nbsp;</div>
                     <div class="playerDataReleased">{{ $items[0]->released }}</div>
                 </div>
-				<div class="playerSocialIcons">
+				<div class="playerSocialIcons floatRight">
                     <div class="playlists">
-                        <i id="openPlaylist" class="fas fa-list-ol tooltipped" data-position="bottom" data-tooltip="Playlist"></i>
+                        <i id="openPlaylist" class="fas fa-list-ol"></i>
                         <div class="playlist z-depth-2" id="playlistid">
                             <div class="close"><i id="closePlaylist" class="fas fa-times fa-lg"></i></div>
                             <ul id="playlistUl">
@@ -62,6 +51,20 @@
                 </div>
 			</div>
 		</div>
+        <div class="playerMetaChart">
+            <canvas id="moods"></canvas>
+        </div>
+        <div class="playerMetaLegend">
+        @php
+            $i = 0;
+        @endphp
+        @foreach ($items[0]->label as $chartlabel)
+            <div class="playerMetaLegendItem" id="label{{ $i }}" style="background-color: ">{{ $chartlabel }}</div>
+            @php
+                $i++;
+            @endphp
+        @endforeach
+        </div>
 		<div class="playerWaveWrap">
             <div class="playerPlayerWrap">
                 <audio crossorigin playsinline>
@@ -70,13 +73,16 @@
             </div>
         </div>
 	</div>
-	</div>
 
-<div class="setsListWrap">
-@foreach ($items as $item)
-    <div data-itemid="{{ $item->id }}" class="setsListItem btn waves-effect waves-light">{{ $item->title }}</div>
-@endforeach
+    <div class="setsListWrap">
+        @foreach ($items as $item)
+        <div class="setsListItem waves-effect" data-itemid="{{ $item->id }}" class="setsListItem">{{ $item->title }}</div>
+        @endforeach
+    </div>
 </div>
+<div class="setsBottomNav">
+    <div id="openFilter" class="moreBtn btn"><i class="fas fa-music"></i></div>
+    <a class="waves-effect btn modal-trigger moreBtn" href="#modalhelp"><i class="fas fa-question"></i></a>
 </div>
 <div id="modalhelp" class="modal">
     <div class="modal-content">
@@ -175,8 +181,6 @@ $(document).ready(function() {
         $('.playlists').css('display', 'none');
     }
     var elems, instances;
-    elems = document.querySelectorAll('.tooltipped');
-    instances = M.Tooltip.init(elems,{'enterDelay':'1000'});
     elems = document.querySelectorAll('#modalhelp');
     instances = M.Modal.init(elems, {'startingTop':'0', 'endingTop':'1%'});
 });
@@ -199,27 +203,29 @@ $('.fiterBtnWrap').on('click', function() {
     getJSON(sliderValues);
     var animate = anime({
         targets: '.filterWrap',
-        top: -122,
-        duration: 700,
-        elasticity: 600
+        right: '-60%',
+        duration: 700
+    });
+    $('.filterWrapBg').css('display', 'none');
+});
+
+$('.filterWrapBg').on('click', function() {
+    $('.filterWrapBg').css('display', 'none');
+    var animate = anime({
+        targets: '.filterWrap',
+        right: '-60%',
+        duration: 400,
+        easing: 'easeInOutQuart'
     });
 });
 
-$('.fiterBackBtnWrap').on('click', function() {
+$('#openFilter').on('click', function(){
+    $('.filterWrapBg').css('display', 'block');
     var animate = anime({
         targets: '.filterWrap',
-        top: -122,
-        duration: 700,
-        elasticity: 600
-    });
-});
-
-$('.btnSearch').on('click', function(){
-    var animate = anime({
-        targets: '.filterWrap',
-        top: 14,
-        duration: 700,
-        elasticity: 600
+        right: "0%",
+        duration: 400,
+        easing: 'easeInOutQuad'
     });
 });
 
@@ -237,7 +243,8 @@ $('#openPlaylist').on('click', function() {
         targets: '.playlist',
         width: '100%',
         height: '100%',
-        duration: 1800,
+        duration: 600,
+        easing: 'easeInOutQuart',
         complete: function() {
             div.css('overflow', 'auto');
         }
@@ -251,7 +258,8 @@ $('#closePlaylist').on('click', function() {
         targets: '.playlist',
         width: '0%',
         height: '0%',
-        duration: 1200,
+        duration: 600,
+        easing: 'easeInOutQuart',
         complete: function() {
             div.css('display', 'none');
         }
@@ -269,8 +277,8 @@ tagBox.each(function (index, el) {
 	noUiSlider.create(slider[count], {
 		start: 0,
 		connect: [true, false],
-		orientation: 'vertical',
-		direction: 'rtl',
+		orientation: 'horizontal',
+		direction: 'ltr',
 		step: 1,
 		tooltips: [false],
 		range: {
@@ -289,7 +297,7 @@ function redoPlayer(id) {
             {
                 src: '{{ url('/') }}/enjoy/'+ sets[id].filename,
                 type: 'audio/' + sets[id].filetype
-            }]
+            }],
     }
     player.autoplay = true;
     $('#playerCover').attr('src', '{{ url('/') }}/images/covers/' + sets[id].cover)
@@ -327,7 +335,7 @@ function doFilter(values) {
         }
     }
 	if (typeof values === 'undefined' || values.length === 0) {
-    	html = '<div class="noFound"><i class="icon-red floatLeft alertNoFound fas fa-frown fa-5x"></i><b>Sorry, nix gefunden :(</b><br>Versuch es noch mal. Je mehr Moods Du hinzufügst umso sicherer wird etwas gefunden. Wenn trotzdem nichts gesuchtes kommt <a href="{{ url('/') }}/kontakt">fordere</a> mich doch heraus ein Set mit diesen Moods zu schaffen.</div>'
+    	html = '<div class="noFound"><i class="icon-red floatLeft alertNoFound fas fa-frown fa-5x"></i><b>Sorry, nix gefunden :(</b><br>Versuch es noch mal. Je mehr Moods Du hinzufügst umso sicherer wird etwas gefunden. Wenn trotzdem nichts gesuchtes kommt <a href="{{ url('/') }}/{{ $responsive }}/kontakt">fordere</a> mich doch heraus ein Set mit diesen Moods zu schaffen.</div>'
 	} else {
         for (i=0; i<values.length; i++) {
             html += '<div data-itemid="' + values[i][0].id + '" class="setsListItem btn waves-effect waves-light">' + values[i][0].title + '</div>';
@@ -338,11 +346,14 @@ function doFilter(values) {
 }
 
 function getJSON(values) {
-	var url = 'http:{{ url('/') }}/api/sets/filter/';
+	var url = '{{ url('/') }}/{{ $responsive }}/api/sets/filter/';
+
 	for (var i=0; i<values.length; i++) {
 		url += values[i].tagid + ':' + values[i].tagvalue;
 		if (values.length - 1 > i) url += '-';
 	}
+    console.log(url)
+
     $.ajax({
         type: 'GET',
         url: url,
@@ -352,9 +363,10 @@ function getJSON(values) {
         cache: true,
         async: true,
         success: function (data) {
-			doFilter(data);
+            doFilter(data);
         },
         error: function (errorThrown) {
+        //    alert(JSON.stringify(errorThrown))
         	console.warn('Ajax Request failed!', errorThrown, url);
         },
         complete: function () {
@@ -364,9 +376,7 @@ function getJSON(values) {
 }
 
 function registerClick(id) {
-    console.log('clioc')
-	var url = 'http:{{ url('/') }}/api/clicks/' + id;
-    console.log(url)
+	var url = '{{ url('/') }}/{{ $responsive }}/api/clicks/' + id;
     $.ajax({
         type: 'GET',
         url: url,
@@ -396,10 +406,10 @@ function renderChart(data, labels) {
             datasets: [{
                 label: '# of Votes',
                 data: data,
-                responsive: true,
+               // responsive: true,
                 devicePixelRatio: 0.5,
                 maintainAspectRatio: true,
-                aspectRatio: 0.5,
+                aspectRatio: 1,
                 backgroundColor: ChartBackgroundColor,
                 borderColor: ChartBorderColor,
                 borderWidth: 1

@@ -236,60 +236,6 @@ audio {
     flex-direction: row;
 }
 
-.playerBtnWrap {
-    display: flex;
-    flex-direction: column;
-}
-
-.playerBtn {
-    cursor: pointer;
-    width: 3.6vw;
-    height: 3.6vw;
-    border-radius: 0.5vw;
-    background-color: $sempa2;
-}
-
-.playerWaveformWrap {
-    width: 100%;
-    height: 3.6vw;
-}
-
-.playerWaveform {
-    height: 3.6vw;
-    width: 0%;
-    background-color: $color9;
-    border-radius: 6px;
-}
-
-.playerCurTime {
-    width: 100%;
-    min-height: 1.2vw;
-    text-align: center;
-}
-
-.playerSVG {
-    // position: relative;
-    fill: $sempa4;
-    transition: 2s;
-    width: 4.5vw;
-    height: 4.5vw;
-    margin-top: -0.4vw;
-    margin-right: -0.4vw;
-}
-
-.playerBtnColorA {
-    background-color: $sempa5;
-}
-
-.playerBtnColorB {
-    background-color: $sempa4;
-}
-
-.tagWrapper {
-    display: flex;
-    flex-direction: row;
-}
-
 .playlists {
     margin-left: 1vw;
     cursor: pointer;
@@ -314,27 +260,4 @@ audio {
 .playlistitem {
     font-size: 1vw;
     padding: 0.1vw;
-}
-
-.tag {
-    height: 1.6vw;
-    font-size: .7vw;
-    opacity: .85;
-    padding: .2vw;
-}
-
-.timelineWrap {
-    font-size: 1vw;
-    content: ' ';
-}
-
-.ldgMsg {
-    padding-top: 1vw;
-    padding-left: 2vw;
-    color: $sempa5;
-    overflow: hidden;
-}
-
-.lenseIcon {
-    fill: $color1;
 }

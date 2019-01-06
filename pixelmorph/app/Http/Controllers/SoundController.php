@@ -34,7 +34,7 @@ class SoundController extends Controller
             $and = '';
         }
 
-        $items = DB::select('SELECT * FROM sets WHERE active = ? ' . $and . ' ORDER BY released LIMIT 5', [1]);
+        $items = DB::select('SELECT * FROM sets WHERE active = ? ' . $and . ' ORDER BY released LIMIT 10', [1]);
         $taglist = DB::select('SELECT * FROM tags ORDER BY title');
         $chart = [];
         $label = [];

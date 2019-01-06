@@ -3,8 +3,9 @@ audio {
 }
 
 .noFound {
-    margin-top: 1vw;
-    font-size: 1.2vw;
+    margin-top: 2vw;
+    font-size: 4vw;
+    text-align: left;
 }
 
 .alertNoFound {
@@ -28,12 +29,11 @@ audio {
     flex-direction: row;
     width: 100%;
     border-bottom: 2px solid $sempa4;
-    padding: 0.4vw;
     margin-bottom: 0.4vw;
 }
 
 .playerPlayerWrap {
-    width: 95%;
+    width: 100%;
 }
 
 .playerMetaWrap {
@@ -46,6 +46,10 @@ audio {
     margin-left: -3vw;
 }
 
+.plyr__volume {
+    display: none !important;
+}
+
 .playerMetaLegend {
     display: flex;
     flex-wrap: wrap;
@@ -53,9 +57,10 @@ audio {
 }
 
 .playerMetaLegendItem {
-    margin: 0.2vw;
-    padding: 0.4vw;
+    margin: 1vw;
+    padding: 1vw;
     border-radius: 11%;
+    font-size: 4vw;
 }
 
 .playerMetaDesc {
@@ -63,37 +68,61 @@ audio {
     margin-left: -3vw;
 }
 
-.setsListWrap {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+.modal {
+    width: 95%;
 }
 
-.setsListWrap:hover {
-    cursor: pointer;
+.modal-content {
+    font-size: 5vw;
+    padding: 3vw !important;
+}
+
+.setsListWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 20vw;
 }
 
 .setsListItem {
-    margin: 0.4vw;
-    font-size: 1.1vw;
-    color: $color12;
+    width: 90%;
+    border-radius: 2px;
+    font-size: 4vw;
+    text-align: center;
+    padding: 1vw;
+    margin: 1vw;
+    color: $color2;
+    background-color: $color4;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .filterWrap {
-    position: absolute;
-    top: -12vw;
-    z-index: 100;
+    position: fixed;
+    top: 0;
+    right: -60%;
+    z-index: 1001;
     display: flex;
-    flex-direction: row;
-    width: 100%;
+    flex-direction: column;
+    width: 60%;
+    height: 100%;
     background-color: $color14;
+}
+
+.filterWrapBg {
+    display: none;
+    position: fixed;
+    top: 0;
     left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 243, 176, .5);
 }
 
 .filterSwitchWrap {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 95%;
     padding-bottom: 1vw;
     padding-top: 0.4vw;
@@ -101,9 +130,11 @@ audio {
 
 .filterNavWrap {
     display: flex;
-    flex-direction: column;
-    width: 5%;
-    padding-top: .3vw;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    padding-top: 3vw;
+    font-size: 4vw;
     color: $color4;
 }
 
@@ -136,31 +167,28 @@ audio {
 }
 
 .tagBox {
-    margin-left: auto;
-    margin-right: auto;
-    height: 10vw;
+    //  margin-left: auto;
+    //margin-right: auto;
+    //height: 10vw;
 }
 
 .tagBoxWrap {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 8vw;
-    margin-left: auto;
-    margin-right: auto;
+    //position: relative;
+    // display: flex;
+    //flex-direction: column;
+    width: 92%;
+    padding: 2vw;
+    //  height: 10vw;
+    //  margin-left: auto;
+    //  margin-right: auto;
     color: $fontcolor;
 }
 
 .tagTitle {
-    position: absolute;
-    bottom: 2vw;
-    left: -0.6vw;
-    transform: rotate(-90deg);
     width: 100%;
-    font-size: 0.8vw;
-    text-align: left;
-    height: 2vw;
+    font-size: 3vw;
+    text-align: right;
+    //height: 2vw;
 }
 
 .playerSocialIcons {
@@ -192,29 +220,31 @@ audio {
 
 .titleWrap {
     width: 100%;
-    border-top: 2px solid $color1;
     background-color: $color2;
-    overflow: hidden;
     opacity: 1;
 }
 
 .playerTitle {
-    font-size: 2vw;
+    font-size: 8vw;
     font-family: Bold;
+    text-align: center;
+    line-height: 1.1;
     color: $color1;
-    overflow: hidden;
-    max-height: 2.5vw;
+    padding-bottom: 5vw;
+    overflow-wrap: break-word;
+    width: 100%;
 }
 
 .playerDate {
+    width: 100%;
     font-family: Bold;
-    font-size: 1.2vw;
+    font-size: 8vw;
     color: $color1;
 }
 
 .playerDateSmall {
     font-family: Bold;
-    font-size: 0.9vw;
+    font-size: 2.2vw;
     color: $color1;
 }
 
@@ -234,60 +264,7 @@ audio {
 .playerInfoWrap {
     display: flex;
     flex-direction: row;
-}
-
-.playerBtnWrap {
-    display: flex;
-    flex-direction: column;
-}
-
-.playerBtn {
-    cursor: pointer;
-    width: 3.6vw;
-    height: 3.6vw;
-    border-radius: 0.5vw;
-    background-color: $sempa2;
-}
-
-.playerWaveformWrap {
-    width: 100%;
-    height: 3.6vw;
-}
-
-.playerWaveform {
-    height: 3.6vw;
-    width: 0%;
-    background-color: $color9;
-    border-radius: 6px;
-}
-
-.playerCurTime {
-    width: 100%;
-    min-height: 1.2vw;
-    text-align: center;
-}
-
-.playerSVG {
-    // position: relative;
-    fill: $sempa4;
-    transition: 2s;
-    width: 4.5vw;
-    height: 4.5vw;
-    margin-top: -0.4vw;
-    margin-right: -0.4vw;
-}
-
-.playerBtnColorA {
-    background-color: $sempa5;
-}
-
-.playerBtnColorB {
-    background-color: $sempa4;
-}
-
-.tagWrapper {
-    display: flex;
-    flex-direction: row;
+    font-size: 6vw;
 }
 
 .playlists {
@@ -309,6 +286,7 @@ audio {
     overflow: hidden;
     background-color: $color2;
     cursor: default;
+    font-size: 4vw;
 }
 
 .playlistitem {
@@ -316,25 +294,18 @@ audio {
     padding: 0.1vw;
 }
 
-.tag {
-    height: 1.6vw;
-    font-size: .7vw;
-    opacity: .85;
-    padding: .2vw;
+.setsBottomNav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    height: 18vw;
+    background-color: $color2;
 }
 
-.timelineWrap {
-    font-size: 1vw;
-    content: ' ';
-}
-
-.ldgMsg {
-    padding-top: 1vw;
-    padding-left: 2vw;
-    color: $sempa5;
-    overflow: hidden;
-}
-
-.lenseIcon {
-    fill: $color1;
+.moreBtn {
+    margin: 5vw 3vw 3vw 2vw;
 }
