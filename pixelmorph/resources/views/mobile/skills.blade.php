@@ -25,7 +25,7 @@
             $i = 0;
         }
         @endphp
-        <div class="skillItemWrap{{ $style }}">
+        <div id="skillItem{{ $item['id'] }}" class="skillItemWrap{{ $style }}">
             <div class="skillLeftWrap">
                 <div class="skillItemIcon">{!! $item['icon'] !!}</div>
                 <div class="skillItemCircle">
@@ -50,15 +50,24 @@
 <script>
 $(document).ready(function(){
     $('.circle').css('animation', 'progress 1s ease-out forwards');
+});
 
-    $(".skillItemText").mouseenter(function(e) {
-        e.stopPropagation();
-        var el = $(this).prev();
-        var html = $(this).prev().html();
+$(window).scroll(function(){
+@foreach ($skillcats as $cat)
+@isset ($cat['items'])
+    @foreach ($cat['items'] as $item)
+    if ($('#skillItem{{ $item['id'] }}').visible()) {
+        var elem = $('#skillItem{{ $item['id'] }}');
+        var el = elem.prev();
+        var html = elem.prev().html();
         el.html('');
         el.html(html);
-    });
+    }
+    @endforeach
+@endisset
+@endforeach
 });
+
 </script>
 @endsection
 

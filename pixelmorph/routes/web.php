@@ -51,6 +51,10 @@ Route::get('{responsive?}/kontakt', array(
     'as' => 'responsive',
     'uses' => 'KontaktController@index',
 ));
+Route::post('{responsive?}/kontakt', array(
+    'as' => 'responsive',
+    'uses' => 'KontaktController@send',
+));
 
 Route::get('/admin', 'Admin\AdminController@index')->middleware('auth');
 Route::post('/admin', 'Admin\AdminController@update')->middleware('auth');
@@ -82,19 +86,10 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::resource('setsadmin', 'SetsadminController');
-
 Route::get('m3u/url/{url?}', 'M3uController@index');
 Route::get('m3u/batch', 'M3uController@batchM3u')->middleware('auth');
 
 Route::resource('test', 'TestController');
-
-/*
-Route::get('wg/{id?}', array(
-'as' => 'id',
-'uses' => 'WgController@index'
-));
- */
 
 Route::get('{responsive?}/api/sets/list/{id?}', array(
     'as' => 'id',
@@ -104,13 +99,10 @@ Route::get('{responsive?}/api/sets/filter/{id?}', array(
     'as' => 'id',
     'uses' => 'ApiController@filter',
 ));
-Route::get('api/sets/playlist/{id?}', array(
+Route::get('{responsive?}/api/sets/playlist/{id?}', array(
     'as' => 'id',
     'uses' => 'ApiController@playlist',
 ));
-Route::resource('/cruds', 'CrudsController', [
-    'except' => ['edit', 'show', 'store'],
-]);
 Route::get('{responsive?}/api/clicks/{id?}', array(
     'as' => 'id',
     'uses' => 'ApiController@click',

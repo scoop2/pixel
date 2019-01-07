@@ -2,6 +2,14 @@
 @section('content')
 <div class="containerContent">
 	<h1>Kontakt</h1>
+    @if ($message != false)
+    <div class="card">
+        <div class="card-content">
+            <h3>Vielen Dank</h3>
+            <p>Die Nachricht wurde versendet.</p>
+        </div>
+    </div>
+    @endif
 
     <form method="post" action="">
     <div class="row">

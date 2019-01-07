@@ -3,7 +3,16 @@
 <div class="containerContent">
 	<h1>Kontakt</h1>
 
-    <form method="post" action="">
+    @if ($message != false)
+    <div class="card">
+        <div class="card-content">
+            <h3>Vielen Dank</h3>
+            <p>Die Nachricht wurde versendet.</p>
+        </div>
+    </div>
+    @endif
+
+    <form method="post" action="{{ url('/')}}/{{ $responsive }}/kontakt">
     <div class="row">
         <div class="input-field col s6">
             <input id="username" name="user" type="text">
@@ -44,6 +53,7 @@
             <button class="btn floatRight">Abschicken</button>
         </div>
     </div>
+    {{ csrf_field() }}
     <form/>
 </div>
     <script>

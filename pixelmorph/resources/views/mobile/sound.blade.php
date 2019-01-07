@@ -73,7 +73,6 @@
             </div>
         </div>
 	</div>
-
     <div class="setsListWrap">
         @foreach ($items as $item)
         <div class="setsListItem waves-effect" data-itemid="{{ $item->id }}" class="setsListItem">{{ $item->title }}</div>
@@ -229,7 +228,6 @@ $('#openFilter').on('click', function(){
     });
 });
 
-
 $('.fiterResetBtnWrap').on('click', function() {
     tagBox.each(function (index, el) {
         el.noUiSlider.set(0);
@@ -366,7 +364,6 @@ function getJSON(values) {
             doFilter(data);
         },
         error: function (errorThrown) {
-        //    alert(JSON.stringify(errorThrown))
         	console.warn('Ajax Request failed!', errorThrown, url);
         },
         complete: function () {
@@ -406,7 +403,7 @@ function renderChart(data, labels) {
             datasets: [{
                 label: '# of Votes',
                 data: data,
-               // responsive: true,
+                responsive: true,
                 devicePixelRatio: 0.5,
                 maintainAspectRatio: true,
                 aspectRatio: 1,

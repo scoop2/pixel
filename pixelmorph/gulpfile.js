@@ -39,6 +39,7 @@ gulp.task('sass', ['sassDesk', 'sassMobile']);
 gulp.task('js', function() {
     gulp.src([
             'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/jquery-visible/jquery.visible.min.js',
             'resources/assets/js/materialize.min.js',
             'node_modules/nouislider/distribute/nouislider.min.js',
             'node_modules/animejs/anime.min.js',
