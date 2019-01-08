@@ -3,3 +3,7 @@
 	<div class="contentCentered realBigText">404</div>
 </div>
 @endsection
+@section('nav')
+    @component('components.nav', ['responsive' => 'desk', 'user' => 'Gast'])
+    @endcomponent
+@endsection

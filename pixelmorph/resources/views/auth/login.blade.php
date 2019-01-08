@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.login')
 
 @section('content')
 <div class="container">
@@ -38,7 +38,7 @@
                                 @endif
                             </div>
                         </div>
-
+<!--
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
@@ -48,16 +48,17 @@
                                 </div>
                             </div>
                         </div>
-
+-->
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     Login
                                 </button>
-
+<!--
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Forgot Your Password?
                                 </a>
+-->
                             </div>
                         </div>
                     </form>
@@ -66,8 +67,4 @@
         </div>
     </div>
 </div>
-@endsection
-@section('nav')
-    @component('components.nav', ['responsive' => $responsive, 'user' => false])
-    @endcomponent
 @endsection

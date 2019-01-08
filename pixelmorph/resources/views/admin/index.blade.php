@@ -35,26 +35,15 @@
 
 </pre>
 <script>
-
-
-/*
-$('.btnSubmit').on('click', function(e){
-console.log(e)
-$("form").submit(function(){
-        alert("Submitted");
-    });
-});
-*/
-
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.collapsible');
     var instances = M.Collapsible.init(elems);
-  });
+});
 </script>
 
 </div>
 @endsection
 @section('nav')
-    @component('components.nav', ['user' => $user])
+    @component('components.nav', ['user' => $user, 'responsive' => 'desk'])
     @endcomponent
 @endsection

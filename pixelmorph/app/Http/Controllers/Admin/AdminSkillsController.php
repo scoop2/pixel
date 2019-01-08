@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\Gate;
 
 class AdminSkillsController extends Controller
 {
-    function private () {
-        if (Gate::allows('admin-only', auth()->user())) {
-            return view('private');
-        }
-        return 'You are not admin!!!!';
-    }
 
     public function index(Request $request)
     {
@@ -37,7 +31,12 @@ class AdminSkillsController extends Controller
         ]);
         $skills = DB::table('skills')->get();
         $cats = DB::table('skillscats')->get();
-        return view('admin.skills', ['skills' => $skills, 'cats' => $cats, 'user' => $user]);
+
+        if ($user->superuser == 1) {
+            return view('admin.skills', ['skills' => $skills, 'cats' => $cats, 'user' => $user]);
+        } else {
+            return view('error.404');
+        }
     }
 
 }

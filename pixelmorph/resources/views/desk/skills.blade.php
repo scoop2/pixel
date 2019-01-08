@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 @if ($user === true)
-    @component('components.navskills', ['active' => 'skills'])
+    @component('components.navskills', ['responsive' => $responsive, 'active' => 'skills'])
     @endcomponent
 @endif
 

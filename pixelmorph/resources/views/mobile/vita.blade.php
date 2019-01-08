@@ -1,4 +1,5 @@
-@extends('layouts.master') @section('content')
+@extends('layouts.mobile')
+@section('content')
 @component('components.navskills', ['responsive' => $responsive, 'active' => 'vita'])
 @endcomponent
 
@@ -19,7 +20,7 @@
 </div>
 
 @endsection
-@section('nav')
-    @component('components.nav', ['responsive' => $responsive, 'user' => $user])
+@section('navmobile')
+    @component('components.navmobile', ['responsive' => $responsive, 'user' => $user])
     @endcomponent
 @endsection

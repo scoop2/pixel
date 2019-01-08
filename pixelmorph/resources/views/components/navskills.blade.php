@@ -26,8 +26,10 @@
     @endphp
 @endif
 <div class="nav_skills_wrap z-depth-1">
-    <div class="nav_item {{ $skills }}"><a href="{{ url('/') }}/skills">Skills</a></div>
-    <div class="nav_item {{ $vita }}"><a href="{{ url('/') }}/skills/vita">Vita</a></div>
-    <div class="nav_item {{ $person }}"><a href="{{ url('/') }}/skills/person">Personalien</a></div>
+    <div class="nav_item {{ $skills }}"><a href="{{ url('/') }}/{{ $responsive }}/skills">Skills</a></div>
+    <div class="nav_item {{ $vita }}"><a href="{{ url('/') }}/{{ $responsive }}/skills/vita">Vita</a></div>
+    <div class="nav_item {{ $person }}"><a href="{{ url('/') }}/{{ $responsive }}/skills/person">Personalien</a></div>
+    <!--
     <div class="nav_item"><i class="fas fa-sm fa-file-pdf"></i></div>
+    -->
 </div>

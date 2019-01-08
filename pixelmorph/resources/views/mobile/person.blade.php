@@ -1,6 +1,6 @@
 @extends('layouts.mobile')
 @section('content')
-@component('components.navskills', ['active' => 'person'])
+@component('components.navskills', ['responsive' => $responsive, 'active' => 'person'])
 @endcomponent
 
 <div class="containerContent">

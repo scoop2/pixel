@@ -63,12 +63,12 @@ class SkillsController extends Controller
         }
     }
 
-    public function vita(Request $request)
+    public function vita(Request $request, $responsive = 'desk')
     {
         if (Auth::check()) {
-            $logged = true;
+            $user = true;
         } else {
-            $logged = false;
+            $user = false;
         }
         $vitas = Vita::all();
         $i = 0;
@@ -83,35 +83,37 @@ class SkillsController extends Controller
         if ($responsive == 'desk') {
             return view('desk.vita', [
                 'responsive' => $responsive,
-                'skillcats' => $cats,
-                'desc' => $desc,
+                'items' => $item,
                 'user' => $user,
             ]);
         } elseif ($responsive == 'mobile') {
             return view('mobile.vita', [
                 'responsive' => $responsive,
-                'skillcats' => $cats,
-                'desc' => $desc,
+                'items' => $item,
                 'user' => $user,
             ]);
         }
     }
 
-    public function person(Request $request)
+    public function person(Request $request, $responsive = 'desk')
     {
+        if (Auth::check()) {
+            $user = true;
+        } else {
+            $user = false;
+        }
+
         $items = Persos::all()->where('id', 1);
         if ($responsive == 'desk') {
             return view('desk.person', [
                 'responsive' => $responsive,
-                'skillcats' => $cats,
-                'desc' => $desc,
+                'items' => $items,
                 'user' => $user,
             ]);
         } elseif ($responsive == 'mobile') {
             return view('mobile.person', [
                 'responsive' => $responsive,
-                'skillcats' => $cats,
-                'desc' => $desc,
+                'items' => $items,
                 'user' => $user,
             ]);
         }

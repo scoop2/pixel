@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\Gate;
 
 class AdminSoundController extends Controller
 {
-    function private () {
-        if (Gate::allows('admin-only', auth()->user())) {
-            return view('private');
-        }
-        return 'You are not admin!!!!';
-    }
 
     public function index()
     {
@@ -40,7 +34,11 @@ class AdminSoundController extends Controller
             $x++;
         }
 
-        return view('admin.sound', ['sets' => $sets, 'tags' => $tagbag, 'alltags' => $alltags, 'user' => $user]);
+        if ($user->superuser == 1) {
+            return view('admin.sound', ['sets' => $sets, 'tags' => $tagbag, 'alltags' => $alltags, 'user' => $user]);
+        } else {
+            return view('error.404');
+        }
     }
 
     public function update(Request $request)
@@ -113,7 +111,11 @@ class AdminSoundController extends Controller
             $x++;
         }
 
-        return view('admin.sound', ['sets' => $sets, 'tags' => $tagbag, 'alltags' => $alltags, 'user' => $user]);
+        if ($user->superuser == 1) {
+            return view('admin.sound', ['sets' => $sets, 'tags' => $tagbag, 'alltags' => $alltags, 'user' => $user]);
+        } else {
+            return view('error.404');
+        }
     }
 
     public function insert(Request $request)
@@ -172,7 +174,12 @@ class AdminSoundController extends Controller
             $x++;
         }
 
-        return view('admin.sound', ['sets' => $sets, 'tags' => $tagbag, 'alltags' => $alltags, 'user' => $user]);
+        if ($user->superuser == 1) {
+            return view('admin.sound', ['sets' => $sets, 'tags' => $tagbag, 'alltags' => $alltags, 'user' => $user]);
+        } else {
+            return view('error.404');
+        }
+        
     }
 
     public function delete($id = 0) {
@@ -208,8 +215,13 @@ class AdminSoundController extends Controller
             $sets[$x]->tagbag = $tagbag;
             $x++;
         }
-      
-        return view('admin.sound', ['sets' => $sets, 'tags' => $tagbag, 'alltags' => $alltags, 'user' => $user, 'msg' => $msg, 'modalclass' => $modalclass]);
+        
+        if ($user->superuser == 1) {
+            return view('admin.sound', ['sets' => $sets, 'tags' => $tagbag, 'alltags' => $alltags, 'user' => $user, 'msg' => $msg, 'modalclass' => $modalclass]);
+        } else {
+            return view('error.404');
+        }
+
     }
 }
 

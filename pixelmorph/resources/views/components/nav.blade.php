@@ -150,7 +150,7 @@
 	</nav>
 	<div class="nav-right-stripe">
 @if ($user != false)
-        <a href="{{ url('/') }}/{{ $responsive }}/logout"><div class="nav_user_icon"><i class="fas fa-sign-out-alt fa-lg"></i></div></a>
+        <a href="{{ url('/') }}/logout"><div class="nav_user_icon"><i class="fas fa-sign-out-alt fa-lg"></i></div></a>
 @endif
     </div>
 </div>

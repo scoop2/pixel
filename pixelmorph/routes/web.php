@@ -61,7 +61,7 @@ Route::post('/admin', 'Admin\AdminController@update')->middleware('auth');
 Route::get('/admin/skills', 'Admin\AdminSkillsController@index')->middleware('auth');
 Route::post('/admin/skills', 'Admin\AdminSkillsController@update')->middleware('auth');
 Route::get('/admin/sound', 'Admin\AdminSoundController@index')->middleware('auth');
-Route::post('/admin/sound', 'Admin\AdminSoundController@update')->middleware('auth');
+Route::post('admin/sound', 'Admin\AdminSoundController@update')->middleware('auth');
 Route::post('/admin/sound/insert', 'Admin\AdminSoundController@insert')->middleware('auth');
 Route::get('/admin/sound/delete/{id?}', array(
     'as' => 'id',
@@ -72,19 +72,38 @@ Route::get('/admin/sound/delete/{id?}', array(
 //Route::get('login', array('uses' => 'HomeController@showLogin'));
 //Route::post('login', array('uses' => 'HomeController@doLogin'));
 
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('logout', 'Auth\LoginController@logout');
+Route::get('{responsive?}/login', array(
+    'as' => 'id',
+    'uses' => 'Auth\LoginController@showLoginForm',
+))->name('login');
+Route::post('{responsive?}/login', array(
+    'as' => 'id',
+    'uses' => 'Auth\LoginController@login',
+));
+Route::post('{responsive?}/logout', array(
+    'as' => 'id',
+    'uses' => 'Auth\LoginController@logout',
+))->name('logout');
+Route::get('{responsive?}/login', array(
+    'as' => 'id',
+    'uses' => 'Auth\LoginController@logout',
+))->name('login');
 
-// Registration Routes...
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
+Route::get('/login', 'Auth\LoginController@login');
+Route::post('/login', 'Auth\LoginController@login')->name('login');
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('/logout', 'Auth\LoginController@logout');
+
+Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('/register', 'Auth\RegisterController@register');
+
 // Password Reset Routes...
+/*
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+ */
 
 Route::get('m3u/url/{url?}', 'M3uController@index');
 Route::get('m3u/batch', 'M3uController@batchM3u')->middleware('auth');
