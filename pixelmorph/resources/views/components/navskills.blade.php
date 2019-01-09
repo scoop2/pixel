@@ -29,7 +29,5 @@
     <div class="nav_item {{ $skills }}"><a href="{{ url('/') }}/{{ $responsive }}/skills">Skills</a></div>
     <div class="nav_item {{ $vita }}"><a href="{{ url('/') }}/{{ $responsive }}/skills/vita">Vita</a></div>
     <div class="nav_item {{ $person }}"><a href="{{ url('/') }}/{{ $responsive }}/skills/person">Personalien</a></div>
-    <!--
-    <div class="nav_item"><i class="fas fa-sm fa-file-pdf"></i></div>
-    -->
+    <div class="nav_item"><a href="{{ url('/') }}/{{ $responsive }}/skills/pdf" target="_blank"><i class="fas fa-sm fa-file-pdf"></i></a></div>
 </div>

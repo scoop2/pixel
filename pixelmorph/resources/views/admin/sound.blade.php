@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.admin')
 
 @section('content')
 @component('components.navadmin', ['active' => 'sound'])
@@ -179,10 +179,14 @@
                 <label for="filetype">Filetype</label>
             </div>
         </div>
-        <div>
-            <div class="input-field col s6">
+        <div class="row">
+            <div class="input-field col s8">
                 <textarea name="description" class="materialize-textarea" data-length="120">{{ $set->description }}</textarea>
                 <label for="textarea">Beschreibung</label>
+            </div>
+            <div class="input-field col s4">
+                 <input name="cover" value="{{ $set->cover }}" type="text">
+                <label for="textarea">Cover</label>
             </div>
         </div>
         <div class="row tagstore">

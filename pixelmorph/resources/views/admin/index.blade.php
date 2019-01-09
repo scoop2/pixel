@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.admin')
 
 @section('content')
 @component('components.navadmin', ['active' => 'index'])
@@ -44,6 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 @endsection
 @section('nav')
-    @component('components.nav', ['user' => $user, 'responsive' => 'desk'])
+    @component('components.navadminbottom', ['user' => $user, 'responsive' => 'desk'])
     @endcomponent
 @endsection

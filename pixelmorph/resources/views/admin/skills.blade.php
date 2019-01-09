@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.admin')
 
 @section('content')
 @component('components.navadmin', ['active' => 'skills'])
@@ -90,6 +90,6 @@ $("form").submit(function(){
 </div>
 @endsection
 @section('nav')
-    @component('components.nav', ['user' => $user])
+    @component('components.navadminbottom', ['user' => $user])
     @endcomponent
 @endsection

@@ -20,10 +20,10 @@
 <div class="menu-wrap">
 	<div class="nav-left-stripe"></div>
 	<nav>
-		<a class="nav-menuItem" id="mHome" href="{{ url('/') }}/home">Home</a>
-		<a class="nav-menuItem" id="mSkills" href="{{ url('/') }}/skills">Skills</a>
-		<a class="nav-menuItem" id="mSets" href="{{ url('/') }}/sound">Musik</a>
-		<a class="nav-menuItem" id="mKontakt" href="{{ url('/') }}/kontakt">Kontakt</a>
+		<a class="nav-menuItem" id="mHome" href="{{ url('/') }}/desk/home">Home</a>
+		<a class="nav-menuItem" id="mSkills" href="{{ url('/') }}/desk/skills">Skills</a>
+		<a class="nav-menuItem" id="mSets" href="{{ url('/') }}/desk/sound">Musik</a>
+		<a class="nav-menuItem" id="mKontakt" href="{{ url('/') }}/desk/kontakt">Kontakt</a>
 	<div id="menu-hover" class="animation"></div>
 	</nav>
 	<div class="nav-right-stripe">

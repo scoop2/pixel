@@ -16,7 +16,7 @@ class KontaktController extends Controller
         if ($responsive == 'desk') {
             return view('desk.kontakt', ['responsive' => $responsive, 'message' => false, 'user' => $user]);
         } else {
-            return view('mobile.kontakt', ['responsive' => $responsive, 'user' => $user]);
+            return view('mobile.kontakt', ['responsive' => $responsive, 'message' => false, 'user' => $user]);
         }
     }
 

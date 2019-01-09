@@ -1,16 +1,18 @@
 <?php
-/*
- * |--------------------------------------------------------------------------
- * | Web Routes
- * |--------------------------------------------------------------------------
- * |
- * | Here is where you can register web routes for your application. These
- * | routes are loaded by the RouteServiceProvider within a group which
- * | contains the "web" middleware group. Now create something great!
- * |
- */
 
 Route::redirect('/', '/desk/home');
+Route::get('/admin', 'Admin\AdminController@index')->middleware('auth');
+Route::post('/admin', 'Admin\AdminController@update')->middleware('auth');
+Route::get('/admin/skills', 'Admin\AdminSkillsController@index')->middleware('auth');
+Route::post('/admin/skills', 'Admin\AdminSkillsController@update')->middleware('auth');
+Route::get('/admin/sound', 'Admin\AdminSoundController@index')->middleware('auth');
+Route::post('admin/sound', 'Admin\AdminSoundController@update')->middleware('auth');
+Route::post('/admin/sound/insert', 'Admin\AdminSoundController@insert')->middleware('auth');
+Route::get('/admin/sound/delete/{id?}', array(
+    'as' => 'id',
+    'uses' => 'Admin\AdminSoundController@delete',
+));
+
 Route::get('{responsive?}/home', array(
     'as' => 'responsive',
     'uses' => 'HomeController@index',
@@ -56,17 +58,11 @@ Route::post('{responsive?}/kontakt', array(
     'uses' => 'KontaktController@send',
 ));
 
-Route::get('/admin', 'Admin\AdminController@index')->middleware('auth');
-Route::post('/admin', 'Admin\AdminController@update')->middleware('auth');
-Route::get('/admin/skills', 'Admin\AdminSkillsController@index')->middleware('auth');
-Route::post('/admin/skills', 'Admin\AdminSkillsController@update')->middleware('auth');
-Route::get('/admin/sound', 'Admin\AdminSoundController@index')->middleware('auth');
-Route::post('admin/sound', 'Admin\AdminSoundController@update')->middleware('auth');
-Route::post('/admin/sound/insert', 'Admin\AdminSoundController@insert')->middleware('auth');
-Route::get('/admin/sound/delete/{id?}', array(
-    'as' => 'id',
-    'uses' => 'Admin\AdminSoundController@delete',
-));
+Route::get('{responsive?}/skills/vita/{pdf?}', 'SkillsController@vita')->middleware('auth');
+Route::get('{responsive?}/skills/person/{pdf?}', 'SkillsController@person')->middleware('auth');
+Route::get('{responsive?}/skills/pdf', 'SkillsController@completePdf')->middleware('auth');
+
+
 
 #
 //Route::get('login', array('uses' => 'HomeController@showLogin'));

@@ -89,7 +89,7 @@ class SkillsTableSeeder extends Seeder
             7 => array(
                 'active' => 1,
                 'title' => 'Foundation, Bootstrap',
-                'description' => 'Dies bedutend mächtigeren Frameworks verwende ich wenn Design eine untergeordnete Rolle spielt aber kein Werkzeug fehlen sollte. Leider ist das Design in die Jahre gekommen und nicht immer nach meinem Geschmack.',
+                'description' => 'Diese bedutend mächtigeren Frameworks verwende ich wenn Design eine untergeordnete Rolle spielt aber kein Werkzeug fehlen sollte. Leider ist das Design in die Jahre gekommen und nicht immer nach meinem Geschmack.',
                 'skillscats_id' => 3,
                 'perc' => 70,
                 'icon' => '',
