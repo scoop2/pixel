@@ -64,6 +64,7 @@ class AdminSoundController extends Controller
             'bpm' => $request->input('bpm'),
             'filename' => $request->input('filename'),
             'filetype' => $request->input('filetype'),
+            'cover' => $request->input('cover'),
             'description' => $request->input('description'),
         ]);
 
@@ -142,6 +143,7 @@ class AdminSoundController extends Controller
             'bpm' => $request->input('bpm'),
             'filename' => $request->input('filename'),
             'filetype' => $request->input('filetype'),
+            'cover' => $request->input('cover'),
             'description' => $request->input('description')
         ]);
 

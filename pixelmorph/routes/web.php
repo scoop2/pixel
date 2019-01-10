@@ -13,22 +13,26 @@ Route::get('/admin/sound/delete/{id?}', array(
     'uses' => 'Admin\AdminSoundController@delete',
 ));
 
+Route::redirect('/home', '/desk/home');
 Route::get('{responsive?}/home', array(
     'as' => 'responsive',
     'uses' => 'HomeController@index',
 ));
+/*
 Route::get('/{responsive?}/impressum', array(
     'as' => 'responsive',
     'uses' => 'HomeController@impressum',
 ));
+*/
+
+Route::redirect('/festival', '/desk/festival');
 Route::get('/{responsive?}/festival', array(
     'as' => 'responsive',
     'uses' => 'HomeController@festival',
 ));
-Route::get('/{responsive?}/sound', array(
-    'as' => 'responsive',
-    'uses' => 'SoundController@index',
-));
+
+
+Route::redirect('/sound', '/desk/sound');
 Route::get('{responsive?}/sound', array(
     'as' => 'responsive',
     'uses' => 'SoundController@index',
@@ -37,6 +41,8 @@ Route::get('{responsive?}/sound/filter/{filter?}', array(
     'as' => 'filter',
     'uses' => 'SoundController@index',
 ));
+
+Route::redirect('/skills', '/desk/skills');
 Route::get('{responsive?}/skills', array(
     'as' => 'responsive',
     'uses' => 'SkillsController@index',
@@ -49,14 +55,13 @@ Route::get('{responsive?}/skills/person', array(
     'as' => 'responsive',
     'uses' => 'SkillsController@person',
 ))->middleware('auth');
+
+Route::redirect('/kontakt', '/desk/kontakt');
 Route::get('{responsive?}/kontakt', array(
     'as' => 'responsive',
     'uses' => 'KontaktController@index',
 ));
-Route::post('{responsive?}/kontakt', array(
-    'as' => 'responsive',
-    'uses' => 'KontaktController@send',
-));
+
 
 Route::get('{responsive?}/skills/vita/{pdf?}', 'SkillsController@vita')->middleware('auth');
 Route::get('{responsive?}/skills/person/{pdf?}', 'SkillsController@person')->middleware('auth');
@@ -64,10 +69,10 @@ Route::get('{responsive?}/skills/pdf', 'SkillsController@completePdf')->middlewa
 
 
 
-#
-//Route::get('login', array('uses' => 'HomeController@showLogin'));
-//Route::post('login', array('uses' => 'HomeController@doLogin'));
-
+Route::get('/login', 'Auth\LoginController@login');
+Route::post('/login', 'Auth\LoginController@login')->name('login');
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('{responsive?}/login', array(
     'as' => 'id',
     'uses' => 'Auth\LoginController@showLoginForm',
@@ -85,10 +90,7 @@ Route::get('{responsive?}/login', array(
     'uses' => 'Auth\LoginController@logout',
 ))->name('login');
 
-Route::get('/login', 'Auth\LoginController@login');
-Route::post('/login', 'Auth\LoginController@login')->name('login');
-Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('/logout', 'Auth\LoginController@logout');
+
 
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('/register', 'Auth\RegisterController@register');

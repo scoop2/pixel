@@ -71,10 +71,14 @@
                 <label for="filetype">Filetype</label>
             </div>
         </div>
-        <div>
-            <div class="input-field col s6">
+        <div class="row">
+            <div class="input-field col s8">
                 <textarea name="description" class="materialize-textarea" data-length="120"></textarea>
                 <label for="textarea">Beschreibung</label>
+            </div>
+            <div class="input-field col s4">
+                 <input name="cover" type="text">
+                <label for="textarea">Cover</label>
             </div>
         </div>
         <div class="row tagstore">

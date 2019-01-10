@@ -372,7 +372,7 @@ function doFilter(values) {
 }
 
 function getJSON(values) {
-	var url = 'http:{{ url('/') }}/api/sets/filter/';
+	var url = '{{ url('/') }}/{{ $responsive }}/api/sets/filter/';
 	for (var i=0; i<values.length; i++) {
 		url += values[i].tagid + ':' + values[i].tagvalue;
 		if (values.length - 1 > i) url += '-';
@@ -398,9 +398,7 @@ function getJSON(values) {
 }
 
 function registerClick(id) {
-    console.log('clioc')
-	var url = 'http:{{ url('/') }}/api/clicks/' + id;
-    console.log(url)
+	var url = '{{ url('/') }}/{{ $responsive }}/api/clicks/' + id;
     $.ajax({
         type: 'GET',
         url: url,
