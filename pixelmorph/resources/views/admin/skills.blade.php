@@ -37,7 +37,7 @@
                 @foreach ($cats as $cat)
                     @if ($skill->skillscats_id == $cat->id)
                         @php
-                            $selected = ' disabled selected';
+                            $selected = ' selected';
                         @endphp
                     @else
                         @php

@@ -16,12 +16,7 @@ class SkillsController extends Controller
 
     public function index(Request $request, $responsive = 'desk')
     {
-        if (!Auth::check()) {
-            $user = false;
-        } else {
-            $user = true;
-        }
-
+        $user = Auth::user();
         $desc = Pages::where('status', '1')->where('title', 'Skills')->first();
         $skillcats = Skillscats::all()->where('active', 1);
         $i = 0;
@@ -66,11 +61,7 @@ class SkillsController extends Controller
 
     public function vita(Request $request, $responsive = 'desk', $pdf = false)
     {
-        if (Auth::check()) {
-            $user = true;
-        } else {
-            $user = false;
-        }
+        $user = Auth::user();
         $vitas = Vita::all();
         $i = 0;
         foreach ($vitas as $vita) {
@@ -101,12 +92,7 @@ class SkillsController extends Controller
 
     public function person(Request $request, $responsive = 'desk', $pdf = false)
     {
-        if (Auth::check()) {
-            $user = true;
-        } else {
-            $user = false;
-        }
-
+        $user = Auth::user();
         $items = Persos::all()->where('id', 1);
 
         if ($pdf != false) {

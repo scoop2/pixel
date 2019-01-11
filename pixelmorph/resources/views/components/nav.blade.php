@@ -152,6 +152,11 @@
 @if ($user != false)
         <a href="{{ url('/') }}/logout"><div class="nav_user_icon"><i class="fas fa-sign-out-alt fa-lg"></i></div></a>
 @endif
+@if (isset($user->superuser))
+@if ($user->superuser == 1)
+        <a href="{{ url('/') }}/admin"><div class="nav_user_icon"><i class="fas fa-edit fa-lg"></i></div></a>
+@endif
+@endif
     </div>
 </div>
 

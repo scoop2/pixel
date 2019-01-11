@@ -76,13 +76,13 @@ var labels = [
 
 $(document).ready(function(){
 @if (!empty($teaser->id))
-    renderChart('.chartbox1', '#canvas1', charts[0], labels[0], 'right');
+    renderChart('.chartbox1', '#canvas1', charts[1], labels[1], 'right');
     $('.teaserA').on('click', function(){
         window.location = "{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $teaser->id }}";
     })
 @endif
 @if (!empty($promo->id))
-    renderChart('.chartbox2', '#canvas2', charts[1], labels[1], 'left');
+    renderChart('.chartbox2', '#canvas2', charts[0], labels[0], 'left');
     $('.teaserB').on('click', function(){
         window.location = "{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $promo->id }}";
     })

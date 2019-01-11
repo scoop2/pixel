@@ -11,11 +11,7 @@ class SoundController extends Controller
 
     public function index($responsive = 'desk', $filter = '')
     {
-        if (!Auth::check()) {
-            $user = false;
-        } else {
-            $user = true;
-        }
+        $user = Auth::user();
         $desc = Pages::where('status', '1')->where('title', 'Sets')->first();
 
         $i = 1;

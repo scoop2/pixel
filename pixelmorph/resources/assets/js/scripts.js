@@ -1,11 +1,8 @@
-$(document).ready(function() {
-    mResize();
-})
-
 var rId;
 $(window).resize(function() {
-    clearTimeout(rId);
-    rId = setTimeout(mResize, 500);
+    /// clearTimeout(rId);
+    // rId = setTimeout(mResize, 500);
+    mResize();
 });
 
 document.addEventListener('DOMContentLoaded', function() {

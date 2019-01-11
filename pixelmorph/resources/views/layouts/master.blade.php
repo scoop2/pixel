@@ -56,6 +56,8 @@ function mResize() {
             newurl = newurl + '/' + url[i];
         }
         window.location = newurl;
+    } else {
+        window.location = '{{ url('/') }}';
     }
 }
 </script>

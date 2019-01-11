@@ -53,7 +53,12 @@ class HomeController extends Controller
             $teaser->chart = $chart;
             $teaser->released = Helper::convertRelease($teaser->released);
         }
-
+        /*
+        echo "<pre>";
+        echo var_dump($teaser);
+        echo "</pre>";
+        exit;
+         */
         if ($responsive == 'desk') {
             return view('desk.home', ['responsive' => $responsive, 'items' => $items, 'user' => $user, 'teaser' => $teaser, 'promo' => $promo]);
         } elseif ($responsive == 'mobile') {

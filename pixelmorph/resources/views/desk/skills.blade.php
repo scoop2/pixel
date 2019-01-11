@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-@if ($user === true)
+@if ($user)
     @component('components.navskills', ['responsive' => $responsive, 'active' => 'skills'])
     @endcomponent
 @endif
