@@ -134,6 +134,15 @@ body {
     .nav-headlineTypo {
         font-size: 2.9vw !important;
     }
+    .homeCell {
+        max-width: 500px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .homeCell {
+        max-width: 350px;
+    }
 }
 
 @media only screen and (max-width: 800px) {
@@ -161,6 +170,9 @@ body {
     }
     .nav-headlineTypo {
         font-size: 3.9vw !important;
+    }
+    .homeCell {
+        max-width: 200px;
     }
 }
 

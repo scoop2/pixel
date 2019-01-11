@@ -6,6 +6,7 @@ body {
 body a {
     color: black;
 }
+
 .page-break {
     page-break-after: always;
 }
@@ -42,16 +43,25 @@ body a {
 @endforeach
 <div class="page-break"></div>
 
+
 <h1>Skills</h1>
 @foreach ($skillcats as $cat)
-@isset ($cat['items'])
-<h2>{{ $cat['title'] }}</h2>
-    @foreach ($cat['items'] as $item)
-    <b>{!! $item['title'] !!}<b><br>
-        <p>
-            {!! $item['description'] !!}    </p>
-    @endforeach
 
+@isset ($cat['items'])
+    @if ($cat['title']  == 'Backend Frameworks')
+        <div class="page-break"></div>
+    @endif
+    	<h2>{{ $cat['title'] }}</h2>
+    @foreach ($cat['items'] as $item)
+
+    @if ($item['title']  == 'Ember')
+        <div class="page-break"></div>
+    @endif
+    <b>{!! $item['title'] !!}<b><br>
+    <p>
+        {!! $item['description'] !!}
+    </p>
+    @endforeach
 @endisset
 @endforeach
 

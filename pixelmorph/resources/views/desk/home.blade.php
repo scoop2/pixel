@@ -21,8 +21,16 @@
             <div class="homeTeaserHead homeCell"><a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $teaser->id }}">{{ $teaser->title }}</a></div>
         </div>
         <div class="homeRow">
-            <div class="chartbox1 homeCell"></div>
-            <div class="chartbox2 homeCell"></div>
+            <div class="homeCell">
+                <div class="homeChartWrap">
+                    <div class="chartbox1"></div>
+                </div>
+            </div>
+            <div class="homeCell">
+                <div class="homeChartWrap">
+                    <div class="chartbox2 homeCell"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -107,9 +115,9 @@ function renderChart(chartdiv, canvas, data, labels, position) {
             labels: labels,
             datasets: [{
                 data: data,
-                responsive: true,
+                responsive: false,
                 devicePixelRatio: 0.5,
-                maintainAspectRatio: true,
+                maintainAspectRatio: false,
                 aspectRatio: 0.5,
                 backgroundColor: ChartBackgroundColor,
                 borderColor: ChartBorderColor,
