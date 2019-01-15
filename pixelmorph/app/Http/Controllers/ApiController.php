@@ -29,12 +29,13 @@ class ApiController extends Controller
         $found = [];
         $respSets = [];
         $response = [];
+        $maxSets = 8;
+        $count = 0;
 
         $req = preg_match('^[0-9]{1,2}([,.][0-9]{1,2})?$^', $filter);
 
         if ($req == 1) {
             $tags = explode("-", $filter);
-
             foreach ($tags as $tag) {
                 $tag = explode(":", $tag);
                 $tag[0] = intval($tag[0]);
@@ -44,12 +45,10 @@ class ApiController extends Controller
                     $tmp = new tagBags();
                     $tmp->tag = $tag[0];
                     $tmp->userRate = $tag[1];
-
                     $tmp->sets = $sets;
                     array_push($results, $tmp);
                 }
             }
-
             usort($results, function ($first, $second) {
                 return $first->userRate < $second->userRate;
             });
@@ -77,7 +76,7 @@ class ApiController extends Controller
                 $newset[0]->playlist = false;
             }
 
-            $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$respSet->setid]);
+            $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate DESC', [$respSet->setid]);
             foreach ($tags as $tag) {
                 $labels = DB::table('tags')->where('id', $tag->tag)->first();
                 array_push($chart, $tag->rate);
@@ -86,6 +85,11 @@ class ApiController extends Controller
             $newset[0]->chartdata = $chart;
             $newset[0]->chartlabel = $label;
             array_push($response, $newset);
+            $count++;
+            if ($count >= $maxSets) {
+                break;
+            }
+
         }
 
         foreach ($response as $tmp) {

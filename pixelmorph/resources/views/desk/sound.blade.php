@@ -12,7 +12,7 @@
     @endforeach
 	</div>
     <div class="filterNavWrap">
-        <div class="fiterBtnWrap tooltipped" data-position="bottom" data-tooltip="Alle Moods eingestellt? Hier startet die Suche">
+        <div class="fiterBtnWrap tooltipped goBtn" data-position="bottom" data-tooltip="Alle Moods eingestellt? Hier startet die Suche">
             <i class="fas fa-arrow-circle-right fa-3x icon-blue"></i>
         </div>
         <div class="fiterBackBtnWrap tooltipped" data-position="bottom" data-tooltip="Versteck mich wieder">
@@ -210,7 +210,7 @@ $(document).ready(function() {
     }
     var elems, instances;
     elems = document.querySelectorAll('.tooltipped');
-    instances = M.Tooltip.init(elems,{'enterDelay':'1000'});
+    instances = M.Tooltip.init(elems,{'enterDelay':'700'});
     elems = document.querySelectorAll('#modalhelp');
     instances = M.Modal.init(elems, {'startingTop':'0', 'endingTop':'1%'});
 });
@@ -233,7 +233,7 @@ $('.fiterBtnWrap').on('click', function() {
     getJSON(sliderValues);
     var animate = anime({
         targets: '.filterWrap',
-        top: -122,
+        top: -210,
         duration: 700,
         elasticity: 600
     });
@@ -242,7 +242,7 @@ $('.fiterBtnWrap').on('click', function() {
 $('.fiterBackBtnWrap').on('click', function() {
     var animate = anime({
         targets: '.filterWrap',
-        top: -122,
+        top: -210,
         duration: 700,
         elasticity: 600
     });
@@ -271,7 +271,8 @@ $('#openPlaylist').on('click', function() {
         targets: '.playlist',
         width: '100%',
         height: '100%',
-        duration: 1800,
+        duration: 500,
+        easing: 'easeInOutQuart',
         complete: function() {
             div.css('overflow', 'auto');
         }
@@ -285,7 +286,8 @@ $('#closePlaylist').on('click', function() {
         targets: '.playlist',
         width: '0%',
         height: '0%',
-        duration: 1200,
+        easing: 'easeInOutQuart',
+        duration: 500,
         complete: function() {
             div.css('display', 'none');
         }
@@ -325,7 +327,7 @@ function redoPlayer(id) {
                 type: 'audio/' + sets[id].filetype
             }]
     }
-    player.autoplay = true;
+    player.autoplay = false;
     $('#playerCover').attr('src', '{{ url('/') }}/images/covers/' + sets[id].cover)
     $('.playerTitle').html(sets[id].title);
     $('.playerDataLength').html(sets[id].setlength);
@@ -377,6 +379,7 @@ function getJSON(values) {
 		url += values[i].tagid + ':' + values[i].tagvalue;
 		if (values.length - 1 > i) url += '-';
 	}
+    console.log(url)
     $.ajax({
         type: 'GET',
         url: url,
@@ -426,7 +429,6 @@ function renderChart(data, labels) {
         data: {
             labels: labels,
             datasets: [{
-                label: '# of Votes',
                 data: data,
                 responsive: true,
                 devicePixelRatio: 0.5,

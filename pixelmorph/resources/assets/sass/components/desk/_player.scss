@@ -42,6 +42,10 @@ audio {
     flex-direction: row;
 }
 
+.goBtn {
+    color: $coloragree;
+}
+
 .playerMetaChart {
     margin-left: -3vw;
 }
@@ -87,6 +91,7 @@ audio {
     display: flex;
     flex-direction: row;
     width: 100%;
+    min-height: 12vw;
     background-color: $color14;
     left: 0;
 }
@@ -194,7 +199,6 @@ audio {
     width: 100%;
     border-top: 2px solid $color1;
     background-color: $color2;
-    overflow: hidden;
     opacity: 1;
 }
 
@@ -202,7 +206,6 @@ audio {
     font-size: 2vw;
     font-family: Bold;
     color: $color1;
-    overflow: hidden;
     max-height: 2.5vw;
 }
 

@@ -7,6 +7,7 @@
             <a class="vision" href="{{ url('/') }}/{{ $responsive }}/festival"><button class="btn btnVision">vision of a festival</button></a>
         </div>
     </div>
+    <div style="max-width: 95%">
     <div class="homeTeaserWrap">
         <div class="homeRow">
             <div class="homeTeaserTag homeCell">Neu {{ $promo->released }}</div>
@@ -32,6 +33,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 

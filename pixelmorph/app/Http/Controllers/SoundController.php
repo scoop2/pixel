@@ -30,14 +30,15 @@ class SoundController extends Controller
             $and = '';
         }
 
-        $items = DB::select('SELECT * FROM sets WHERE active = ? ' . $and . ' ORDER BY released LIMIT 10', [1]);
+        $items = DB::select('SELECT * FROM sets WHERE active = ? ' . $and . ' ORDER BY released LIMIT 6', [1]);
         $taglist = DB::select('SELECT * FROM tags ORDER BY title');
-        $chart = [];
-        $label = [];
-        $playlists = [];
-        $playlist = "";
+
 
         foreach ($items as $i => $item) {
+            $chart = [];
+            $label = [];
+            $playlists = [];
+            $playlist = "";
             $items[$i]->released = Helper::convertRelease($items[$i]->released);
             $playlist = DB::select('SELECT * FROM playlists WHERE set_id = ? ORDER BY position', [$items[$i]->id]);
             if (empty($playlist)) {

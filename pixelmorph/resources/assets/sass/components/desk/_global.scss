@@ -229,6 +229,13 @@ hr {
     background-color: $color12 !important;
 }
 
+.noUi-vertical .noUi-handle {
+    width: 15px;
+    height: 15px;
+    left: -7px !important;
+    top: -5px !important;
+}
+
 .noUi-target.noUi-vertical .noUi-tooltip {
     position: absolute;
     height: 30px;

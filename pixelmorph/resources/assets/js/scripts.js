@@ -9,7 +9,3 @@ document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.sidenav');
     var instances = M.Sidenav.init(elems, ['isOpen', true]);
 });
-
-$(document).ready(function() {
-    console.log($(window).width())
-});

@@ -75,6 +75,6 @@ class M3uController extends Controller
                 }
             }
         }
-
+        return (date("H:i:s") . ' batch successful!');
     }
 }
