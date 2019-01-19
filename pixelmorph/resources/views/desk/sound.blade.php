@@ -12,17 +12,18 @@
     @endforeach
 	</div>
     <div class="filterNavWrap">
-        <div class="fiterBtnWrap tooltipped goBtn" data-position="bottom" data-tooltip="Alle Moods eingestellt? Hier startet die Suche">
+        <div class="filterBtnWrap tooltipped goBtn" data-position="bottom" data-tooltip="Alle Moods eingestellt? Hier startet die Suche">
             <i class="fas fa-arrow-circle-right fa-3x icon-blue"></i>
         </div>
-        <div class="fiterBackBtnWrap tooltipped" data-position="bottom" data-tooltip="Versteck mich wieder">
+        <div class="filterBackBtnWrap tooltipped" data-position="bottom" data-tooltip="Versteck mich wieder">
             <i class="fas fa-arrow-circle-up fa-3x icon-blue"></i>
         </div>
-        <div class="fiterResetBtnWrap tooltipped" data-position="bottom" data-tooltip="Alle Moods auf Null zurück stellen">
+        <div class="filterResetBtnWrap tooltipped" data-position="bottom" data-tooltip="Alle Moods auf Null zurück stellen">
             <i class="fas fa-arrow-circle-down fa-3x icon-blue"></i>
         </div>
     </div>
 </div>
+<div class="filterBack"></div>
 
 <div class="center-align">
     <button class="btn btnSearch"><i class="fas fa-headphones"></i> FINDE MEHR MUSIK <i class="fas fa-headphones"></i></button>
@@ -223,7 +224,7 @@ player.on('ready', event => {
     $('.overlay').css('display', 'none');
 });
 
-$('.fiterBtnWrap').on('click', function() {
+$('.filterBtnWrap').on('click', function() {
     $('.overlay').css('display', 'block');
     var sliderValues = [];
      tagBox.each(function (index, el) {
@@ -231,22 +232,27 @@ $('.fiterBtnWrap').on('click', function() {
         sliderValues.push(tag);
     });
     getJSON(sliderValues);
-    var animate = anime({
-        targets: '.filterWrap',
-        top: -210,
-        duration: 700,
-        elasticity: 600
-    });
+    hideFilter();
 });
 
-$('.fiterBackBtnWrap').on('click', function() {
+$('.filterBackBtnWrap').on('click', function() {
+    hideFilter();
+});
+
+$('.filterBack').on('click', function() {
+    hideFilter();
+});
+
+function hideFilter() {
     var animate = anime({
         targets: '.filterWrap',
         top: -210,
         duration: 700,
         elasticity: 600
     });
-});
+    $('.filterBack').css('display', 'none');
+}
+
 
 $('.btnSearch').on('click', function(){
     var animate = anime({
@@ -255,10 +261,11 @@ $('.btnSearch').on('click', function(){
         duration: 700,
         elasticity: 600
     });
+    $('.filterBack').css('display', 'block');
 });
 
 
-$('.fiterResetBtnWrap').on('click', function() {
+$('.filterResetBtnWrap').on('click', function() {
     tagBox.each(function (index, el) {
         el.noUiSlider.set(0);
     });
@@ -335,7 +342,7 @@ function redoPlayer(id) {
     $('.playerDataReleased').html(sets[id].released);
     $('.description').html(sets[id].description);
     if (sets[id].playlist != false) {
-            var html = '';
+        var html = '';
         for (var i=0; i<sets[id].playlist.length; i++) {
             html += '<li><b>' + sets[id].playlist[i].title + '</b> - ' + sets[id].playlist[i].artist + '</li>';
         }
@@ -375,6 +382,7 @@ function doFilter(values) {
 
 function getJSON(values) {
 	var url = '{{ url('/') }}/{{ $responsive }}/api/sets/filter/';
+    console.log(url)
 	for (var i=0; i<values.length; i++) {
 		url += values[i].tagid + ':' + values[i].tagvalue;
 		if (values.length - 1 > i) url += '-';

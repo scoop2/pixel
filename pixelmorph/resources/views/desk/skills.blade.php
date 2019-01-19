@@ -6,7 +6,14 @@
 @endif
 
 <div class="containerContent">
-	{!! $desc->body !!}
+	<p>{!! $desc->body !!}</p>
+    {{--
+    @if ($user)
+    <p>
+    Der Quellcode dieser Seite läßt sich hier einsehen:<br><a href="https://github.com/scoop2/pixel" target="_blank">https://github.com/scoop2/pixel</a>
+    </p>
+    @endif
+    --}}
 	<ul>
 		@foreach ($skillcats as $cat)
         @isset ($cat['items'])

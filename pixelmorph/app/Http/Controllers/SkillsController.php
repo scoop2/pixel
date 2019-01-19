@@ -8,6 +8,7 @@ use App\Skillscats;
 use App\Vita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PDF;
 
 // use App\models\Cats;
@@ -62,7 +63,7 @@ class SkillsController extends Controller
     public function vita(Request $request, $responsive = 'desk', $pdf = false)
     {
         $user = Auth::user();
-        $vitas = Vita::all();
+        $vitas = DB::table('vitas')->orderBy('datumstart', 'asc')->get();
         $i = 0;
         foreach ($vitas as $vita) {
             $item[$i]['title'] = $vita->title;
@@ -98,7 +99,7 @@ class SkillsController extends Controller
         if ($pdf != false) {
             $pdf = PDF::loadView('pdf.person', ['person' => $items]);
             return $pdf->stream('document.pdf');
-        }elseif ($responsive == 'desk') {
+        } elseif ($responsive == 'desk') {
             return view('desk.person', [
                 'responsive' => $responsive,
                 'items' => $items,
@@ -118,7 +119,7 @@ class SkillsController extends Controller
 
         $person = Persos::all()->where('id', 1);
 
-        $vitas = Vita::all();
+        $vitas = DB::table('vitas')->orderBy('datumstart', 'asc')->get();
         $i = 0;
         foreach ($vitas as $val) {
             $vita[$i]['title'] = $val->title;
