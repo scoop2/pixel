@@ -29,7 +29,7 @@
             </div>
             <div class="homeCell">
                 <div class="homeChartWrap">
-                    <div class="chartbox2 homeCell"></div>
+                    <div class="chartbox2"></div>
                 </div>
             </div>
         </div>

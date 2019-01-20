@@ -161,6 +161,16 @@ const player = new Plyr('audio', {
 window.player = player;
 
 $(document).ready(function() {
+        renderChart([
+        @foreach ($items[0]->chart as $chart)
+            {{ $chart }},
+        @endforeach
+    ],
+    [
+        @foreach ($items[0]->label as $chartlabel)
+            '{{ $chartlabel }}',
+        @endforeach
+    ]);
     @php
         $i = 0;
     @endphp

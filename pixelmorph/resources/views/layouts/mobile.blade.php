@@ -43,7 +43,7 @@ include (public_path() . '/images/icons.svg');
 <script>
 function mResize() {
     var width = $(window).width();
-    if (width >= 600) {
+    if (width >= 500) {
         $('.overlay').css({'display': 'block', 'height': '100%'});
         var url = $(location).attr('href').split('/');
         url[3] = 'desk';
