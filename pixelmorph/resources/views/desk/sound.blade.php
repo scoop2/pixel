@@ -247,8 +247,8 @@ function hideFilter() {
     var animate = anime({
         targets: '.filterWrap',
         top: -210,
-        duration: 700,
-        elasticity: 600
+        duration: 500,
+        easing: 'easeInOutQuart',
     });
     $('.filterBack').css('display', 'none');
 }

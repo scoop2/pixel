@@ -13,7 +13,7 @@ class AdminSoundController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $sets = DB::table('sets')->get();
+        $sets = DB::table('sets')->orderBy('released', 'desc')->get();
         $alltags = DB::table('tags')->get();
         $x = 0;
 

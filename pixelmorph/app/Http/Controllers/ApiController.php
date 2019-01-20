@@ -25,10 +25,9 @@ class ApiController extends Controller
     public function filter($responsive = 'desk', $filter = 0)
     {
         $response = [];
-        $maxSets = 12;
+        $maxSets = 8;
         $count = 0;
         $collection = [];
-        $found = false;
         $req = preg_match('^[0-9]{1,2}([,.][0-9]{1,2})?$^', $filter);
 
         if ($req == 1) {
@@ -43,8 +42,6 @@ class ApiController extends Controller
                         $found = array_search($set->setid, array_column($collection, 'setid'));
                         if ($found == false) {
                             $tmp['setid'] = $set->setid;
-                            $tmp['title'] = DB::table('sets')->where('id', $set->setid)->first()->title;
-                            $tmp['rate'] = $set->rate;
                             $tmp['rateuser'] = $tag[1] * $set->rate;
                             array_push($collection, $tmp);
                         } else {

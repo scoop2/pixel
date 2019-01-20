@@ -7,13 +7,11 @@
 
 <div class="containerContent">
 	<p>{!! $desc->body !!}</p>
-    {{--
     @if ($user)
     <p>
     Der Quellcode dieser Seite läßt sich hier einsehen:<br><a href="https://github.com/scoop2/pixel" target="_blank">https://github.com/scoop2/pixel</a>
     </p>
     @endif
-    --}}
 	<ul>
 		@foreach ($skillcats as $cat)
         @isset ($cat['items'])
@@ -43,7 +41,6 @@
 <script>
 $(document).ready(function(){
     $('.circle').css('animation', 'progress 1s ease-out forwards');
-
     $(".skillItemText").mouseenter(function(e) {
         e.stopPropagation();
         var el = $(this).prev();
