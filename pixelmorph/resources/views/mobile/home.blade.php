@@ -8,16 +8,22 @@
         </div>
     </div>
     <div class="homeTeaserWrap">
-        <div class="homeTeaserTag">Neu {{ $promo->released }}</div>
-        <div class="homeTeaserDesc">{{ $promo->description }}</div>
-        <div class="homeTeaserHead"><a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $promo->id }}">{{ $promo->title }}</a></div>
+        <div class="homeTeaserTag"><svg class="icon40 icon-red floatLeft marginDefault"><use xlink:href="#icon-new"></use></svg>&nbsp;&nbsp;Neu - {{ $newest->released }}</div>
+        <div class="homeTeaserDesc">{{ $newest->description }}</div>
+        <div class="homeTeaserHead"><a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $newest->id }}"><div class="btn waves">{{ $newest->title }}</div></a></div>
         <div class="chartbox1"></div>
     </div>
-        <div class="homeTeaserWrap">
-        <div class="homeTeaserTag">Beliebt {{ $teaser->released }}</div>
-        <div class="homeTeaserDesc">{{ $teaser->description }}</div>
-        <div class="homeTeaserHead"><a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $teaser->id }}">{{ $teaser->title }}</a></div>
+    <div class="homeTeaserWrap">
+        <div class="homeTeaserTag"><svg class="icon40 icon-red floatLeft marginDefault"><use xlink:href="#icon-promo"></use></svg>&nbsp;&nbsp;Vorgeschalgen - {{ $promo->released }}</div>
+        <div class="homeTeaserDesc">{{ $promo->description }}</div>
+        <div class="homeTeaserHead"><a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $promo->id }}"><div class="btn waves">{{ $promo->title }}</div></a></div>
         <div class="chartbox2"></div>
+    </div>
+    <div class="homeTeaserWrap">
+        <div class="homeTeaserTag"><svg class="icon40 icon-red floatLeft marginDefault"><use xlink:href="#icon-fav"></use></svg>&nbsp;&nbsp;Beliebt - {{ $teaser->released }}</div>
+        <div class="homeTeaserDesc">{{ $teaser->description }}</div>
+        <div class="homeTeaserHead"><a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $teaser->id }}"><div class="btn waves">{{ $teaser->title }}</div></a></div>
+        <div class="chartbox3"></div>
     </div>
 </div>
 
@@ -45,41 +51,48 @@ var ChartBorderColor = [
 
 var charts = [
 [
-    @foreach ($teaser->chart as $chart)
-        {{ $chart }},
-    @endforeach
+@foreach ($newest->chart as $chart)
+    {{ $chart }},
+@endforeach
 ],
 [
-    @foreach ($promo->chart as $chart)
-        {{ $chart }},
-    @endforeach
+@foreach ($promo->chart as $chart)
+    {{ $chart }},
+@endforeach
 ],
+[
+@foreach ($teaser->chart as $chart)
+    {{ $chart }},
+@endforeach
+]
 ];
 var labels = [
-    [
-    @foreach ($teaser->label as $label)
-        '{{ $label }}',
-    @endforeach
-    ],
-    [
-    @foreach ($promo->label as $label)
-        '{{ $label }}',
-    @endforeach
-    ],
+[
+@foreach ($newest->label as $label)
+    '{{ $label }}',
+@endforeach
+],
+[
+@foreach ($promo->label as $label)
+    '{{ $label }}',
+@endforeach
+],
+[
+@foreach ($teaser->label as $label)
+    '{{ $label }}',
+@endforeach
+]
 ];
 
 $(document).ready(function(){
-@if (!empty($teaser->id))
+@if (!empty($newest->id))
     renderChart('.chartbox1', '#canvas1', charts[0], labels[0], 'right');
-    $('.teaserA').on('click', function(){
-        window.location = "{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $teaser->id }}";
-    })
 @endif
 @if (!empty($promo->id))
     renderChart('.chartbox2', '#canvas2', charts[1], labels[1], 'left');
-    $('.teaserB').on('click', function(){
-        window.location = "{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $promo->id }}";
-    })
+@endif
+@if (!empty($teaser->id))
+    renderChart('.chartbox3', '#canvas3', charts[2], labels[2], 'left');
 @endif
 });
 

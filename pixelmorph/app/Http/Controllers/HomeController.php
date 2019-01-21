@@ -20,14 +20,11 @@ class HomeController extends Controller
             $items->username = 'werter Gast';
         }
         $promo = DB::table('sets')->where([['promo', '=', '1'], ['active', '=', '1']])->orderBy('released', 'desc')->first();
-        if (empty($promo)) {
-            $promo = DB::table('sets')->where('active', '=', '1')->orderBy('released', 'desc')->first();
-        }
         if (!empty($promo)) {
             $tags = DB::table('tags_sets')->where('setid', $promo->id)->orderBy('rate')->get();
             $chart = [];
             $label = [];
-            $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$promo->id]);
+            $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate DESC', [$promo->id]);
             foreach ($tags as $tag) {
                 $labels = DB::table('tags')->where('id', $tag->tag)->first();
                 array_push($chart, $tag->rate);
@@ -43,7 +40,7 @@ class HomeController extends Controller
             $tags = DB::table('tags_sets')->where('setid', $teaser->id)->orderBy('rate')->get();
             $chart = [];
             $label = [];
-            $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate', [$teaser->id]);
+            $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate DESC', [$teaser->id]);
             foreach ($tags as $tag) {
                 $labels = DB::table('tags')->where('id', $tag->tag)->first();
                 array_push($chart, $tag->rate);
@@ -53,16 +50,27 @@ class HomeController extends Controller
             $teaser->chart = $chart;
             $teaser->released = Helper::convertRelease($teaser->released);
         }
-        /*
-        echo "<pre>";
-        echo var_dump($teaser);
-        echo "</pre>";
-        exit;
-         */
+
+        $newest = DB::table('sets')->where([['promo', '=', '0'], ['active', '=', '1']])->orderBy('released', 'desc')->first();
+        if (!empty($newest)) {
+            $tags = DB::table('tags_sets')->where('setid', $newest->id)->orderBy('rate')->get();
+            $chart = [];
+            $label = [];
+            $tags = DB::select('SELECT * FROM tags_sets WHERE setid = ? ORDER BY rate DESC', [$newest->id]);
+            foreach ($tags as $tag) {
+                $labels = DB::table('tags')->where('id', $tag->tag)->first();
+                array_push($chart, $tag->rate);
+                array_push($label, $labels->title);
+            }
+            $newest->label = $label;
+            $newest->chart = $chart;
+            $newest->released = Helper::convertRelease($newest->released);
+        }
+
         if ($responsive == 'desk') {
-            return view('desk.home', ['responsive' => $responsive, 'items' => $items, 'user' => $user, 'teaser' => $teaser, 'promo' => $promo]);
+            return view('desk.home', ['responsive' => $responsive, 'items' => $items, 'user' => $user, 'teaser' => $teaser, 'promo' => $promo, 'newest' => $newest]);
         } elseif ($responsive == 'mobile') {
-            return view('mobile.home', ['responsive' => $responsive, 'items' => $items, 'user' => $user, 'teaser' => $teaser, 'promo' => $promo]);
+            return view('mobile.home', ['responsive' => $responsive, 'items' => $items, 'user' => $user, 'teaser' => $teaser, 'promo' => $promo, 'newest' => $newest]);
         }
     }
 

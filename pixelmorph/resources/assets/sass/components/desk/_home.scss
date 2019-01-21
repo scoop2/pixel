@@ -22,35 +22,37 @@
 }
 
 .homeTeaserWrap {
-    display: table;
-    width: 100%;
+    display: flex;
+    flex-direction: row;
+    width: 95%;
     padding: 1vw;
     margin: 1vw;
 }
-
-.homeRow {
-    display: table-row;
-}
-
-.homeCell {
-    display: table-cell;
-    width: 50%;
-    padding: 0 2vw 0 2vw;
-    text-align: center;
-}
-
-.homeChartWrap {
-    display: block;
-}
-
 .homeTeaserTag {
-    padding-top: .6vw;
+    width: 10%;
     font-family: "Headline";
     font-size: 1.8vw;
     text-align: center;
     font-weight: bolder;
     color: $color1;
-    min-height: 6vw;
+    min-height: 4vw;
+    text-transform: uppercase;
+}
+.homeTeaserDesc {
+    width: 35%;
+    text-align: center;
+}
+.homeTeaserDesc a {
+    font-size: 1.4vw;
+    color: $color8 !important;
+}
+.homeTeaserChart {
+    padding-left: 1vw;
+    width: 50%;
+}
+.homeTeaserUrl {
+    color: $color1;
+    min-height: 3.5vw;
     text-transform: uppercase;
 }
 

@@ -14,7 +14,7 @@ class AdminSoundController extends Controller
     {
         $user = Auth::user();
         $sets = DB::table('sets')->orderBy('released', 'desc')->get();
-        $alltags = DB::table('tags')->get();
+        $alltags = DB::table('tags')->orderBy('title', 'asc')->get();
         $x = 0;
 
         foreach ($sets as $set) {
@@ -91,8 +91,8 @@ class AdminSoundController extends Controller
         }
 
         /* TODO: redundant see index, needs to be fixed */
-        $sets = DB::table('sets')->get();
-        $alltags = DB::table('tags')->get();
+        $sets = DB::table('sets')->orderBy('released', 'desc')->get();
+        $alltags = DB::table('tags')->orderBy('title', 'asc')->get();
         $x = 0;
 
         foreach ($sets as $set) {

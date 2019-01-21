@@ -7,33 +7,55 @@
             <a class="vision" href="{{ url('/') }}/{{ $responsive }}/festival"><button class="btn btnVision">vision of a festival</button></a>
         </div>
     </div>
-    <div style="max-width: 95%">
     <div class="homeTeaserWrap">
-        <div class="homeRow">
-            <div class="homeTeaserTag homeCell">Neu {{ $promo->released }}</div>
-            <div class="homeTeaserTag homeCell">Beliebt</div>
+        <div class="homeTeaserTag">
+            <svg class="icon40 icon-red floatLeft marginDefault"><use xlink:href="#icon-new"></use></svg>
+            {{ $newest->released }}
         </div>
-        <div class="homeRow">
-            <div class="homeCell">{{ $promo->description }}</div>
-            <div class="homeCell">{{ $teaser->description }}</div>
-        </div>
-        <div class="homeRow">
-            <div class="homeTeaserHead homeCell"><a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $promo->id }}">{{ $promo->title }}</a></div>
-            <div class="homeTeaserHead homeCell"><a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $teaser->id }}">{{ $teaser->title }}</a></div>
-        </div>
-        <div class="homeRow">
-            <div class="homeCell">
-                <div class="homeChartWrap">
-                    <div class="chartbox1"></div>
-                </div>
+        <div class="homeTeaserDesc">
+            <span class="homeTeaserTag">NEU</span>
+            <div class="homeTeaserUrl">
+                <a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $newest->id }}"><button class="btn waves">{{ $newest->title }}</button></a>
             </div>
-            <div class="homeCell">
-                <div class="homeChartWrap">
-                    <div class="chartbox2"></div>
-                </div>
-            </div>
+            {{ $newest->description }}
+        </div>
+        <div class="homeTeaserChart">
+            <div class="chartbox1"></div>
         </div>
     </div>
+
+    <div class="homeTeaserWrap">
+        <div class="homeTeaserTag">
+            <svg class="icon40 icon-red floatLeft marginDefault"><use xlink:href="#icon-promo"></use></svg>
+            {{ $promo->released }}
+        </div>
+        <div class="homeTeaserDesc">
+            <span class="homeTeaserTag">VORGESTELLT</span>
+            <div class="homeTeaserUrl">
+                <a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $promo->id }}"><button class="btn waves">{{ $promo->title }}</button></a>
+            </div>
+            {{ $promo->description }}
+        </div>
+        <div class="homeTeaserChart">
+            <div class="chartbox2"></div>
+        </div>
+    </div>
+
+    <div class="homeTeaserWrap">
+        <div class="homeTeaserTag">
+            <svg class="icon40 icon-red floatLeft marginDefault"><use xlink:href="#icon-fav"></use></svg>
+            {{ $teaser->released }}
+        </div>
+        <div class="homeTeaserDesc">
+            <span class="homeTeaserTag">BELIEBT</span>
+            <div class="homeTeaserUrl">
+                <a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $teaser->id }}"><button class="btn waves">{{ $teaser->title }}</button></a>
+            </div>
+            {{ $teaser->description }}
+        </div>
+        <div class="homeTeaserChart">
+            <div class="chartbox3"></div>
+        </div>
     </div>
 </div>
 
@@ -70,6 +92,11 @@ var charts = [
         {{ $chart }},
     @endforeach
 ],
+[
+    @foreach ($newest->chart as $chart)
+        {{ $chart }},
+    @endforeach
+],
 ];
 var labels = [
     [
@@ -82,20 +109,22 @@ var labels = [
         '{{ $label }}',
     @endforeach
     ],
+    [
+    @foreach ($newest->label as $label)
+        '{{ $label }}',
+    @endforeach
+    ],
 ];
 
 $(document).ready(function(){
 @if (!empty($teaser->id))
-    renderChart('.chartbox1', '#canvas1', charts[1], labels[1], 'right');
-    $('.teaserA').on('click', function(){
-        window.location = "{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $teaser->id }}";
-    })
+    renderChart('.chartbox1', '#canvas1', charts[2], labels[2], 'right');
 @endif
 @if (!empty($promo->id))
-    renderChart('.chartbox2', '#canvas2', charts[0], labels[0], 'left');
-    $('.teaserB').on('click', function(){
-        window.location = "{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $promo->id }}";
-    })
+    renderChart('.chartbox2', '#canvas2', charts[1], labels[1], 'left');
+@endif
+@if (!empty($newest->id))
+    renderChart('.chartbox3', '#canvas3', charts[0], labels[0], 'left');
 @endif
 });
 
@@ -112,12 +141,12 @@ function renderChart(chartdiv, canvas, data, labels, position) {
     $(chartdiv).append('<canvas id="' + canvas + '"></canvas>');
     ctx = document.getElementById(canvas).getContext('2d');
     myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'doughnut',
         data: {
             labels: labels,
             datasets: [{
                 data: data,
-                responsive: false,
+                responsive: true,
                 devicePixelRatio: 0.5,
                 maintainAspectRatio: false,
                 aspectRatio: 0.5,
@@ -127,19 +156,10 @@ function renderChart(chartdiv, canvas, data, labels, position) {
             }]
         },
         options: {
-            scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }
-                ]
-            },
             legend: {
-                display: false,
-                fullWidth: false,
-                position: position
+                display: true,
+                fullWidth: true,
+                position: 'left'
             },
             title: {
                 display: false
@@ -148,7 +168,7 @@ function renderChart(chartdiv, canvas, data, labels, position) {
                 padding: 0
             },
             tooltips: {
-                enabled: false,
+                enabled: true,
                 intersects: false
             },
             animation: {
