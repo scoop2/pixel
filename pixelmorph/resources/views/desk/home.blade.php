@@ -9,7 +9,7 @@
     </div>
     <div class="homeTeaserWrap">
         <div class="homeTeaserTag">
-            <svg class="icon40 icon-red floatLeft marginDefault"><use xlink:href="#icon-new"></use></svg>
+            <svg class="icon40 icon-red homeIcon marginDefault"><use xlink:href="#icon-new"></use></svg>
             {{ $newest->released }}
         </div>
         <div class="homeTeaserDesc">
@@ -23,10 +23,10 @@
             <div class="chartbox1"></div>
         </div>
     </div>
-
+    <div class="homeDivide"></div>
     <div class="homeTeaserWrap">
         <div class="homeTeaserTag">
-            <svg class="icon40 icon-red floatLeft marginDefault"><use xlink:href="#icon-promo"></use></svg>
+            <svg class="icon40 icon-red homeIcon marginDefault"><use xlink:href="#icon-promo"></use></svg>
             {{ $promo->released }}
         </div>
         <div class="homeTeaserDesc">
@@ -40,10 +40,10 @@
             <div class="chartbox2"></div>
         </div>
     </div>
-
+    <div class="homeDivide"></div>
     <div class="homeTeaserWrap">
         <div class="homeTeaserTag">
-            <svg class="icon40 icon-red floatLeft marginDefault"><use xlink:href="#icon-fav"></use></svg>
+            <svg class="icon40 icon-red homeIcon marginDefault"><use xlink:href="#icon-fav"></use></svg>
             {{ $teaser->released }}
         </div>
         <div class="homeTeaserDesc">

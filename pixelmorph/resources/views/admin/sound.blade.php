@@ -20,7 +20,7 @@
 
 <ul class="collapsible">
     <li>
-     <div class="collapsible-header">Create New Set</div>
+    <div class="collapsible-header">Create New Set</div>
     <div class="collapsible-body">
     <form action="{{ url('/admin/sound/insert') }}" method="POST" class="col s12">
         <div class="row">
@@ -254,7 +254,7 @@
     </div>
     </li>
 @endforeach
-  </ul>
+</ul>
 <script>
 
 
@@ -266,11 +266,9 @@ $('#addTag').on('click', function(e){
     '</select>';
 });
 
-
 $('.btnDelete').on('click', function(e){
     window.location.replace("{{ url('/admin/sound/delete/') }}" + '/' + $(this).data('deleteid'));
 });
-
 
 document.addEventListener('DOMContentLoaded', function() {
     var elems, instances;

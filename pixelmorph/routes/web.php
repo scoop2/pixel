@@ -124,5 +124,9 @@ Route::get('{responsive?}/api/clicks/{id?}', array(
     'as' => 'id',
     'uses' => 'ApiController@click',
 ));
+Route::get('{responsive?}/api/dl/{id?}', array(
+    'as' => 'id',
+    'uses' => 'ApiController@dl',
+));
 
 Auth::routes();

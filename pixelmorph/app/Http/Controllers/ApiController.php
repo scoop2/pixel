@@ -22,6 +22,12 @@ class ApiController extends Controller
         return response()->json(true);
     }
 
+    public function dl($responsive = 'desk', $id = 0)
+    {
+        DB::table('sets')->where('id', $id)->increment('dls');
+        return response()->json(true);
+    }
+
     public function filter($responsive = 'desk', $filter = 0)
     {
         $response = [];

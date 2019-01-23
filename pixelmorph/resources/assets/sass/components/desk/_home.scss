@@ -29,7 +29,7 @@
     margin: 1vw;
 }
 .homeTeaserTag {
-    width: 10%;
+    width: 15%;
     font-family: "Headline";
     font-size: 1.8vw;
     text-align: center;
@@ -39,23 +39,34 @@
     text-transform: uppercase;
 }
 .homeTeaserDesc {
-    width: 35%;
+    width: 45%;
     text-align: center;
 }
 .homeTeaserDesc a {
+    width: 40%;
     font-size: 1.4vw;
     color: $color8 !important;
 }
 .homeTeaserChart {
     padding-left: 1vw;
-    width: 50%;
+    width: 35%;
 }
 .homeTeaserUrl {
     color: $color1;
     min-height: 3.5vw;
     text-transform: uppercase;
 }
-
+.homeDivide {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid $color1;
+    opacity: .4;
+}
+.homeIcon {
+    margin-left: auto;
+    margin-right: auto;
+}
 .homeTeaserHead a {
     color: $color8 !important;
 }
