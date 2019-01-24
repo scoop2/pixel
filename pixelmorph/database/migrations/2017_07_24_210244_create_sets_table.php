@@ -27,6 +27,7 @@ class CreateSetsTable extends Migration
             $table->char('cover')->nullable();
             $table->text('description')->nullable();
             $table->integer('clicks')->default(0);
+            $table->integer('plays')->default(0);
             $table->integer('dls')->default(0);
             $table->timestamps();
         });

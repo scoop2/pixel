@@ -45,9 +45,14 @@ include (public_path() . '/images/icons.svg');
 </div>
 
 <script>
+$(document).ready(function() {
+    if ($(window).width() < 500) {
+        mResize();
+    }
+});
+
 function mResize() {
-    var width = $(window).width();
-    if (width < 500) {
+    if ($(window).width() < 500) {
         $('.overlay').css({'display': 'block', 'height': '100%'});
         var url = $(location).attr('href').split('/');
         url[3] = 'mobile';

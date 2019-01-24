@@ -13,6 +13,7 @@ class SoundController extends Controller
     {
         $user = Auth::user();
         $desc = Pages::where('status', '1')->where('title', 'Sets')->first();
+        DB::table('sets')->where('id', $filter)->increment('clicks');
 
         $i = 1;
         if ($filter != '') {

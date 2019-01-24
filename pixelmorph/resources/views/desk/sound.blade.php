@@ -226,6 +226,10 @@ player.on('ready', event => {
     $('.overlay').css('display', 'none');
 });
 
+player.on('play', event => {
+    registerPlay($('#dl').data('dl'));
+});
+
 $('.filterBtnWrap').on('click', function() {
     $('.overlay').css('display', 'block');
     var sliderValues = [];
@@ -330,6 +334,53 @@ tagBox.each(function (index, el) {
 	count++;
 });
 
+
+function ajaxRequest(url, filter) {
+    $.ajax({
+        type: 'GET',
+        url: url,
+        crossDomain: true,
+        dataType: 'json',
+        timeout: 10000,
+        cache: true,
+        async: true,
+        success: function(data) {
+            if (filter === true) {
+                $('.overlay').css('display', 'none');
+                doFilter(data);
+            }
+        },
+        error: function(errorThrown) {
+            console.warn('Ajax Request failed!', errorThrown, url);
+        },
+        complete: function() {}
+    });
+}
+
+function getJSON(values) {
+    var url = '{{ url('/') }}/{{ $responsive }}/api/sets/filter/';
+    for (var i = 0; i < values.length; i++) {
+        url += values[i].tagid + ':' + values[i].tagvalue;
+        if (values.length - 1 > i) url += '-';
+    }
+    ajaxRequest(url, true);
+}
+
+function registerClick(id) {
+    var url = '{{ url('/') }}/{{ $responsive }}/api/clicks/' + id;
+    ajaxRequest(url, false);
+}
+
+function registerDl(id) {
+    var url = '{{ url('/') }}/{{ $responsive }}/api/dl/' + id;
+    ajaxRequest(url, false);
+}
+
+function registerPlay(id) {
+    var url = '{{ url('/') }}/{{ $responsive }}/api/play/' + id;
+    ajaxRequest(url, false);
+}
+
 function redoPlayer(id) {
     registerClick(id);
     player.source = {
@@ -381,8 +432,8 @@ function doFilter(values) {
             firstId = values[i][0].id;
         }
     }
-	if (typeof values === 'undefined' || values.length === 0) {
-    	html = '<div class="noFound"><i class="icon-red floatLeft alertNoFound fas fa-frown fa-5x"></i><b>Sorry, nix gefunden :(</b><br>Versuch es noch mal. Je mehr Moods Du hinzufügst umso sicherer wird etwas gefunden. Wenn trotzdem nichts gesuchtes kommt <a href="{{ url('/') }}/kontakt">fordere</a> mich doch heraus ein Set mit diesen Moods zu schaffen.</div>'
+	if (typeof values === 'undefined' || values.length === 0 || values === true) {
+    	html = '<div class="noFound"><i class="icon-red floatLeft alertNoFound fas fa-frown fa-5x"></i><b>Sorry, nix gefunden :(</b><br>Versuch es noch mal. Je mehr Moods Du hinzufügst umso sicherer wird etwas gefunden. Wenn trotzdem nichts gesuchtes kommt <a href="{{ url('/') }}/{{ $responsive }}/kontakt">fordere</a> mich doch heraus ein Set mit diesen Moods zu schaffen.</div>'
 	} else {
         for (i=0; i<values.length; i++) {
             html += '<div data-itemid="' + values[i][0].id + '" class="setsListItem btn waves-effect waves-light">' + values[i][0].title + '</div>';
@@ -390,48 +441,6 @@ function doFilter(values) {
         redoPlayer(firstId);
 	}
 	$('.setsListWrap').html(html);
-}
-
-function getJSON(values) {
-	var url = '{{ url('/') }}/{{ $responsive }}/api/sets/filter/';
-	for (var i=0; i<values.length; i++) {
-		url += values[i].tagid + ':' + values[i].tagvalue;
-		if (values.length - 1 > i) url += '-';
-	}
-    ajaxRequest(url, true);
-}
-
-function registerClick(id) {
-	var url = '{{ url('/') }}/{{ $responsive }}/api/clicks/' + id;
-    ajaxRequest(url, false);
-}
-
-function registerDl(id) {
-	var url = '{{ url('/') }}/{{ $responsive }}/api/dl/' + id;
-    console.log(url)
-    ajaxRequest(url, false);
-}
-
-function ajaxRequest(url, filter) {
-    $.ajax({
-        type: 'GET',
-        url: url,
-        crossDomain: true,
-        dataType: 'json',
-        timeout: 10000,
-        cache: true,
-        async: true,
-        success: function (data) {
-            if (filter === true) {
-                doFilter(data);
-            }
-        },
-        error: function (errorThrown) {
-        	console.warn('Ajax Request failed!', errorThrown, url);
-        },
-        complete: function () {
-        }
-    });
 }
 
 function renderChart(data, labels) {

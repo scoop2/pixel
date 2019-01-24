@@ -238,7 +238,7 @@ audio {
 .playerDate {
     width: 100%;
     font-family: Bold;
-    font-size: 8vw;
+    font-size: 7vw;
     color: $color1;
 }
 
@@ -246,6 +246,10 @@ audio {
     font-family: Bold;
     font-size: 2.2vw;
     color: $color1;
+}
+
+#openPlaylist {
+    padding-left: 1vw;
 }
 
 .playerTimeText {
@@ -268,6 +272,7 @@ audio {
 }
 
 .playlists {
+    color: $color11;
     margin-left: 1vw;
     cursor: pointer;
 }

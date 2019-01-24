@@ -44,10 +44,12 @@
                             </ul>
                         </div>
                     </div>
-                    <a href="{{ url('/') }}/enjoy/{{ $items[0]->filename }}" download><i class="fas fa-download tooltipped" data-position="right" data-tooltip="Download"></i></a>
-					<a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-facebook-square fa-fw playerSocialIconsPadding"></i></a>
-					<a href="https://twitter.com/home?status=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-twitter-square fa-fw playerSocialIconsPadding"></i></a>
-					<a href="https://plus.google.com/share?url=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-google-plus-square fa-fw playerSocialIconsPadding"></i></a>
+                    <div class="playerLinks">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-facebook-square fa-fw playerSocialIconsPadding"></i></a>
+                        <a href="https://twitter.com/home?status=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-twitter-square fa-fw playerSocialIconsPadding"></i></a>
+                        <a href="https://plus.google.com/share?url=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-google-plus-square fa-fw playerSocialIconsPadding"></i></a>
+                        <a href="{{ url('/') }}/enjoy/{{ $items[0]->filename }}" id="dl" data-dl="{{ $items[0]->id }}" download><i class="fas fa-download tooltipped" data-position="right" data-tooltip="Download"></i></a>
+                    </div>
                 </div>
 			</div>
 		</div>
@@ -195,11 +197,15 @@ $(document).ready(function() {
 });
 
 $('.setsListWrap').on('click', '.setsListItem', function () {
-    redoPlayer( $(this).data('itemid'));
+    redoPlayer($(this).data('itemid'));
 });
 
 player.on('ready', event => {
     $('.overlay').css('display', 'none');
+});
+
+player.on('play', event => {
+    registerPlay($('#dl').data('dl'));
 });
 
 $('.fiterBtnWrap').on('click', function() {
@@ -297,6 +303,53 @@ tagBox.each(function (index, el) {
 	count++;
 });
 
+
+function ajaxRequest(url, filter) {
+    $.ajax({
+        type: 'GET',
+        url: url,
+        crossDomain: true,
+        dataType: 'json',
+        timeout: 10000,
+        cache: true,
+        async: true,
+        success: function(data) {
+            if (filter === true) {
+                $('.overlay').css('display', 'none');
+                doFilter(data);
+            }
+        },
+        error: function(errorThrown) {
+            console.warn('Ajax Request failed!', errorThrown, url);
+        },
+        complete: function() {}
+    });
+}
+
+function getJSON(values) {
+    var url = '{{ url('/') }}/{{ $responsive }}/api/sets/filter/';
+    for (var i = 0; i < values.length; i++) {
+        url += values[i].tagid + ':' + values[i].tagvalue;
+        if (values.length - 1 > i) url += '-';
+    }
+    ajaxRequest(url, true);
+}
+
+function registerClick(id) {
+    var url = '{{ url('/') }}/{{ $responsive }}/api/clicks/' + id;
+    ajaxRequest(url, false);
+}
+
+function registerDl(id) {
+    var url = '{{ url('/') }}/{{ $responsive }}/api/dl/' + id;
+    ajaxRequest(url, false);
+}
+
+function registerPlay(id) {
+    var url = '{{ url('/') }}/{{ $responsive }}/api/play/' + id;
+    ajaxRequest(url, false);
+}
+
 function redoPlayer(id) {
     registerClick(id);
     player.source = {
@@ -308,7 +361,13 @@ function redoPlayer(id) {
             }],
     }
     player.autoplay = true;
-    $('#playerCover').attr('src', '{{ url('/') }}/images/covers/' + sets[id].cover)
+    $('#playerCover').attr('src', '{{ url('/') }}/images/covers/' + sets[id].cover);
+    var htmlLinks = '';
+ 	htmlLinks += '<a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sound/filter/' + id + '" target="_blank"><i class="fab fa-facebook-square fa-fw playerSocialIconsPadding"></i></a>';
+	htmlLinks += '<a href="https://twitter.com/home?status=https://pixelmorph.de/sound/filter/' + id + '" target="_blank"><i class="fab fa-twitter-square fa-fw playerSocialIconsPadding"></i></a>';
+	htmlLinks += '<a href="https://plus.google.com/share?url=https://pixelmorph.de/sound/filter/' + id + '" target="_blank"><i class="fab fa-google-plus-square fa-fw playerSocialIconsPadding"></i></a>';
+    htmlLinks += '<a href="{{ url('/') }}/enjoy/' + sets[id].filename + '" id="dl" data-dl="' + id + '" download><i class="fas fa-download tooltipped" data-position="right" data-tooltip="Download"></i></a>';
+    $('.playerLinks').html(htmlLinks);
     $('.playerTitle').html(sets[id].title);
     $('.playerDataLength').html(sets[id].setlength);
     $('.playerDataBpm').html(sets[id].bpm);
@@ -351,55 +410,6 @@ function doFilter(values) {
         redoPlayer(firstId);
 	}
 	$('.setsListWrap').html(html);
-}
-
-function getJSON(values) {
-	var url = '{{ url('/') }}/{{ $responsive }}/api/sets/filter/';
-
-	for (var i=0; i<values.length; i++) {
-		url += values[i].tagid + ':' + values[i].tagvalue;
-		if (values.length - 1 > i) url += '-';
-	}
-    console.log(url)
-
-    $.ajax({
-        type: 'GET',
-        url: url,
-        crossDomain: true,
-        dataType: 'json',
-        timeout: 10000,
-        cache: true,
-        async: true,
-        success: function (data) {
-            doFilter(data);
-        },
-        error: function (errorThrown) {
-        	console.warn('Ajax Request failed!', errorThrown, url);
-        },
-        complete: function () {
-            $('.overlay').css('display','none');
-        }
-    });
-}
-
-function registerClick(id) {
-	var url = '{{ url('/') }}/{{ $responsive }}/api/clicks/' + id;
-    $.ajax({
-        type: 'GET',
-        url: url,
-        crossDomain: true,
-        dataType: 'json',
-        timeout: 10000,
-        cache: true,
-        async: true,
-        success: function (data) {
-        },
-        error: function (errorThrown) {
-        	console.warn('Ajax Request failed!', errorThrown, url);
-        },
-        complete: function () {
-        }
-    });
 }
 
 function renderChart(data, labels) {

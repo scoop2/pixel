@@ -28,6 +28,12 @@ class ApiController extends Controller
         return response()->json(true);
     }
 
+    public function play($responsive = 'desk', $id = 0)
+    {
+        DB::table('sets')->where('id', $id)->increment('plays');
+        return response()->json(true);
+    }
+
     public function filter($responsive = 'desk', $filter = 0)
     {
         $response = [];
@@ -91,6 +97,7 @@ class ApiController extends Controller
             $tmp[0]->released = Helper::convertRelease($tmp[0]->released);
         }
 
+        if ($count == 0) $response = true;
         return response()->json($response);
     }
 }
