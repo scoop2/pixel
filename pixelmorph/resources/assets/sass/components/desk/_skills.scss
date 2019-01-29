@@ -1,3 +1,25 @@
+.skillLegendWrap {
+    display: flex;
+}
+
+.skillLegendItemWrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 30%;
+}
+
+.skillLegendCircle {
+    width: 33%;
+}
+
+.skillLegendText {
+    width: 80%;
+    padding: 0.2vw;
+    font-size: .8vw;
+    text-align: left;
+}
+
 .skillItemWrap {
     display: flex;
     justify-content: flex-start;

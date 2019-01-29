@@ -139,7 +139,8 @@ class SkillsController extends Controller
             $x = 0;
             foreach ($skills as $skill) {
                 $cats[$i]['items'][$x]['id'] = $skill->id;
-                $cats[$i]['items'][$x]['title'] = $skill->title;
+                $tmp = explode(', ', $skill->title);
+                $cats[$i]['items'][$x]['title'] = $tmp[0];
                 $cats[$i]['items'][$x]['description'] = $skill->description;
                 $cats[$i]['items'][$x]['perc'] = $skill->perc;
                 if ($skill->icon != '') {
@@ -153,9 +154,9 @@ class SkillsController extends Controller
             }
             $i++;
         }
+        $date = 
 
-        $pdf = PDF::loadView('pdf.complete', ['person' => $person, 'vita' => $vita, 'skillcats' => $cats]);
-        return $pdf->stream('document.pdf');
-
+        $pdf = PDF::loadView('pdf.styled', ['person' => $person, 'vita' => $vita, 'skillcats' => $cats, 'date' => date('d.n. Y')]);
+        return $pdf->stream('dirk_hedtke.pdf');
     }
 }

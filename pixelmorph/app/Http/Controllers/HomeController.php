@@ -12,6 +12,11 @@ class HomeController extends Controller
     public function index(Request $request, $responsive = 'desk')
     {
         $user = Auth::user();
+   //     echo "<pre>";
+   //     echo var_dump($user);
+   //  echo "</pre>";
+        //   exit;
+
         $items = DB::table('pages')->where('meta_description', 'home')->first();
         if (Auth::check()) {
             $items->username = $user['name'];
@@ -66,8 +71,6 @@ class HomeController extends Controller
             $teaser->chart = $chart;
             $teaser->released = Helper::convertRelease($teaser->released);
         }
-
-
 
         if ($responsive == 'desk') {
             return view('desk.home', ['responsive' => $responsive, 'items' => $items, 'user' => $user, 'teaser' => $teaser, 'promo' => $promo, 'newest' => $newest]);

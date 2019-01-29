@@ -7,15 +7,15 @@
 <div class="containerContent">
 
 @if (isset($msg))
-      <div class="row">
+<div class="row">
     <div class="col s12">
-      <div class="card {{ $modalclass }}">
-        <div class="card-content white-text">
-          <p>{!! $msg !!}</p>
+        <div class="card {{ $modalclass }}">
+            <div class="card-content white-text">
+                <p>{!! $msg !!}</p>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 @endif
 
 <ul class="collapsible">

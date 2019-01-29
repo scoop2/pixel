@@ -8,6 +8,8 @@
 /pixelmorph/.editorconfig
 /pixelmorph/sets.sql
 /pixelmorph/pixelmorph.sql
+/pixelmorph/database/dump/
+/pixelmorph/storage/
 /.idea
 /.vscode
 /.vagrant
