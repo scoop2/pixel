@@ -11,13 +11,15 @@
     </tr>
     <tr>
         <td class="icon"><i class="fas fa-phone fa-2x"></i></td>
-        <td class="person" colspan="2">{!! $items[0]->tele !!}</td>
+        <td class="person">{!! $items[0]->tele !!}</td>
+        <td rowspan="2" style="text-align: center;">
+            <img src="{{ url('/') }}/images/portrait_sempa.png">
+        </td>
     </tr>
     <tr>
         <td class="icon"><i class="far fa-envelope fa-2x"></i></td>
-        <td class="person" colspan="2"><a href="mailto:{!! $items[0]->email !!}">{!! $items[0]->email !!}</a></td>
+        <td class="person"><a href="mailto:{!! $items[0]->email !!}">{!! $items[0]->email !!}</a></td>
     </tr>
-    <tr><td colspan="3" class="divide"></td></tr>
     <tr>
         <td class="icon"><i class="fas fa-car fa-2x"></i></td>
         <td class="person" colspan="2">{!! $items[0]->driver !!}</td>

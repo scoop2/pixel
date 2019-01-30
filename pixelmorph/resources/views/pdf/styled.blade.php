@@ -100,7 +100,7 @@ body a {
     top: 101;
     left: 180;
     z-index: 1;
-    width: 550px;
+    width: 556px;
     height: 3900px;
     font-family: 'source';
 }
@@ -124,7 +124,7 @@ body a {
     top: 10;
     left: 210;
     z-index: 1;
-    width: 500px;
+    width: 510px;
     height: 500px;
     text-align: right;
 }
@@ -195,6 +195,7 @@ body a {
     margin-left: auto;
     margin-right: auto;
     opacity: .8;
+    text-align: center;
 }
 .percWrap:after {
     content: '';
@@ -204,12 +205,11 @@ body a {
     margin: 2px;
     background-color: #999999;
     opacity: .3;
+    text-align: center;
 }
 .percText {
     height: 10px;
-    padding-left: 10px;
     font-size: 10px;
-    margin-top: -3px;
 }
 .skillWrap {
     margin: 0;
@@ -241,10 +241,23 @@ body a {
     padding-left: 240px;
     height: 50px;
 }
-.divider {
+.dividerWrap {
     width: 100%;
     height: 2px;
+}
+.wdivider {
+    width: 221px;
+    height: 2px;
+    background-color: #ffff;
+}
+.divider {
+    width: 815px;
+    height: 2px;
     background-color: #1a2b3f;
+}
+.descSpace {
+    padding-left: 4px;
+    padding-right: 6px;
 }
 </style>
 
@@ -314,20 +327,28 @@ body a {
         <div class="skillHead">{{ $cat['title'] }}</div>
     </div>
     <div style="clear: both"></div>
-@foreach ($cat['items'] as $item)
-    <div class="skillWrap">
-        <div class="skillBox">
-            {!! $item['title'] !!}
-            <div class="percWrap">
-                <div class="percValue" style="width: {!! $item['perc'] !!}%;"></div>
+    @foreach ($cat['items'] as $item)
+        @php
+            if ($item['title'] == 'Quasar' || $item['title'] == 'Docker' || $item['title'] == 'Yii2' || $item['title'] == 'Malen & Zeichnen') {
+                $divider = '';
+            } else {
+                $divider = '<div class="dividerWrap"><div class="wdivider"><div class="divider"></div></div>';
+            }
+        @endphp
+        <div class="skillWrap">
+            <div class="skillBox">
+                {!! $item['title'] !!}
+                <div class="percWrap">
+                    <div class="percValue" style="width: {!! $item['perc'] !!}%;"></div>
+                </div>
+                <div class="stripeSubHead percText">{!! $item['perc'] !!}%</div>
             </div>
-            <div class="stripeSubHead percText">{!! $item['perc'] !!}%</div>
+            <div class="desc">
+                <div class="descSpace">{!! $item['description'] !!}</div>
+            </div>
         </div>
-        <div class="desc">{!! $item['description'] !!}</div>
-    </div>
-    <div style="clear: both"></div>
-    <div class="divider"></div>
-@endforeach
+        <div style="clear: both"></div>
+        {!! $divider !!}
+    @endforeach
 @endisset
 @endforeach
-
