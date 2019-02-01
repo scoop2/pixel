@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
             0 => array(
                 'name' => 'Admin',
                 'email' => 'info@pixelmorph.de',
-                'password' => bcrypt('zu23s1go'),
+                'password' => bcrypt('password'),
                 'superuser' => '1',
                 'remember_token' => str_random(60),
                 'created_at' => '2017-09-09 03:51:05',
@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
             1 => array(
                 'name' => 'Besucher',
                 'email' => 'besucher@pixelmorph.de',
-                'password' => bcrypt('we3lcom3'),
+                'password' => bcrypt('password'),
                 'superuser' => '0',
                 'remember_token' => str_random(60),
                 'created_at' => '2017-09-09 03:51:05',
@@ -35,7 +35,7 @@ class UsersTableSeeder extends Seeder
             2 => array(
                 'name' => 'Gast',
                 'email' => 'gast@pixelmorph.de',
-                'password' => bcrypt('com3in'),
+                'password' => bcrypt('password'),
                 'superuser' => '0',
                 'remember_token' => str_random(60),
                 'created_at' => '2017-09-09 03:51:05',
