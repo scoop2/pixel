@@ -37,7 +37,6 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Mail\\SendMailable' => $baseDir . '/app/Mail/SendMailable.php',
     'App\\Pages' => $baseDir . '/app/Pages.php',
-    'App\\Permission' => $baseDir . '/app/Permission.php',
     'App\\Persos' => $baseDir . '/app/Persos.php',
     'App\\Playlists' => $baseDir . '/app/Playlists.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',

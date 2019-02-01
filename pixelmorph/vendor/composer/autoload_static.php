@@ -386,7 +386,6 @@ class ComposerStaticInit771e218f203ef8c685de73f530827b6e
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Mail\\SendMailable' => __DIR__ . '/../..' . '/app/Mail/SendMailable.php',
         'App\\Pages' => __DIR__ . '/../..' . '/app/Pages.php',
-        'App\\Permission' => __DIR__ . '/../..' . '/app/Permission.php',
         'App\\Persos' => __DIR__ . '/../..' . '/app/Persos.php',
         'App\\Playlists' => __DIR__ . '/../..' . '/app/Playlists.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
