@@ -1,17 +1,21 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
-use App\Blog;
+use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
 
-    public function index(Request $request)
+    public function __construct()
     {
-        return view('blog', compact('items'));
+        $this->middleware('auth');
+    }
+
+    public function index(Request $request, $responsive = 'desk')
+    {
+        $test = $request->user()->authorizeRoles(['blogger']);
+        return view('blog', ['responsive' => $responsive, 'test' => $test]);
     }
 
     public function create(Request $request)

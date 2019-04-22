@@ -18,20 +18,54 @@ class ApiController extends Controller
 
     public function click($responsive = 'desk', $id = 0)
     {
-        DB::table('sets')->where('id', $id)->increment('clicks');
+        if ($this->checkSet($id) === true) {
+            $today = date('Y-m-d');
+            $date = DB::table('sets_stats')->where([['statdate', '=', $today], ['setid', '=', $id]])->get();
+            if ($date->isEmpty()) {
+                DB::table('sets_stats')->insert(['statdate' => $today, 'setid' => $id, 'clicks' => 1]);
+            } else {
+                DB::table('sets_stats')->where([['statdate', '=', $today], ['setid', '=', $id]])->increment('clicks');
+            }
+        }
         return response()->json(true);
     }
 
     public function dl($responsive = 'desk', $id = 0)
     {
-        DB::table('sets')->where('id', $id)->increment('dls');
+        if ($this->checkSet($id) === true) {
+            $today = date('Y-m-d');
+            $date = DB::table('sets_stats')->where([['statdate', '=', $today], ['setid', '=', $id]])->get();
+            if ($date->isEmpty()) {
+                DB::table('sets_stats')->insert(['statdate' => $today, 'setid' => $id, 'dls' => 1]);
+            } else {
+                DB::table('sets_stats')->where([['statdate', '=', $today], ['setid', '=', $id]])->increment('dls');
+            }
+        }
         return response()->json(true);
     }
 
     public function play($responsive = 'desk', $id = 0)
     {
-        DB::table('sets')->where('id', $id)->increment('plays');
-        return response()->json(true);
+        if ($this->checkSet($id) === true) {
+            $today = date('Y-m-d');
+            $date = DB::table('sets_stats')->where([['statdate', '=', $today], ['setid', '=', $id]])->get();
+            if ($date->isEmpty()) {
+                DB::table('sets_stats')->insert(['statdate' => $today, 'setid' => $id, 'plays' => 1]);
+            } else {
+                DB::table('sets_stats')->where([['statdate', '=', $today], ['setid', '=', $id]])->increment('plays');
+            }
+            return response()->json(true);
+        }
+    }
+
+    public function checkSet($id)
+    {
+        $set = DB::table('sets')->where('id', $id)->get();
+        if ($set->isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public function filter($responsive = 'desk', $filter = 0)
@@ -64,7 +98,10 @@ class ApiController extends Controller
             }
         }
         usort($collection, function ($a, $b) {
-            if ($a['rateuser'] == $b['rateuser']) return 0;
+            if ($a['rateuser'] == $b['rateuser']) {
+                return 0;
+            }
+
             return $a['rateuser'] < $b['rateuser'] ? 1 : -1;
         });
 
@@ -97,7 +134,10 @@ class ApiController extends Controller
             $tmp[0]->released = Helper::convertRelease($tmp[0]->released);
         }
 
-        if ($count == 0) $response = true;
+        if ($count == 0) {
+            $response = true;
+        }
+
         return response()->json($response);
     }
 }
@@ -106,7 +146,6 @@ class tagBags
 {
     public function tagBags()
     {
-
         $this->tag = 0;
         $this->title = '';
         $this->userRate = 0;

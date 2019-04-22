@@ -150,6 +150,8 @@ strong {
 }
 
 h1 {
+    font-size: 6vw;
+    font-weight: bolder;
     margin: 0;
 }
 
@@ -171,6 +173,10 @@ hr {
 
 .modal-footer {
     background-color: $color12 !important;
+}
+
+.progress {
+    background-color: $color2 !important;
 }
 
 .noUi-target.noUi-vertical .noUi-tooltip {

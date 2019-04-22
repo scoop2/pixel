@@ -31,9 +31,7 @@
     </li>
 @endforeach
   </ul>
-  <pre>
 
-</pre>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.collapsible');

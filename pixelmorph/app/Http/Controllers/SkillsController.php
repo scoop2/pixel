@@ -63,7 +63,7 @@ class SkillsController extends Controller
     public function vita(Request $request, $responsive = 'desk', $pdf = false)
     {
         $user = Auth::user();
-        $vitas = DB::table('vitas')->orderBy('datumstart', 'asc')->get();
+        $vitas = DB::table('vitas')->orderBy('datumstart', 'desc')->get();
         $i = 0;
         foreach ($vitas as $vita) {
             $item[$i]['title'] = $vita->title;
@@ -119,7 +119,7 @@ class SkillsController extends Controller
 
         $person = Persos::all()->where('id', 1);
 
-        $vitas = DB::table('vitas')->orderBy('datumstart', 'asc')->get();
+        $vitas = DB::table('vitas')->orderBy('datumstart', 'desc')->get();
         $i = 0;
         foreach ($vitas as $val) {
             $vita[$i]['title'] = $val->title;
@@ -154,9 +154,8 @@ class SkillsController extends Controller
             }
             $i++;
         }
-        $date = 
 
-        $pdf = PDF::loadView('pdf.styled', ['person' => $person, 'vita' => $vita, 'skillcats' => $cats, 'date' => date('d.n. Y')]);
+        $pdf = PDF::loadView('pdf.styled', ['person' => $person, 'vita' => $vita, 'skillcats' => $cats, 'date' => date('j.n. Y')]);
         return $pdf->stream('dirk_hedtke.pdf');
     }
 }

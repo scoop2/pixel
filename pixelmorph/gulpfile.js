@@ -6,7 +6,6 @@ var uglify = require('gulp-uglify');
 var cleancss = require('gulp-clean-css');
 var pump = require('pump');
 var vinylPaths = require('vinyl-paths');
-var WaveformPlaylist = require('waveform-playlist');
 var browserSync = require('browser-sync').create();
 var cssFileDesk = 'stylesDesk';
 var cssFileMobile = 'stylesMobile';

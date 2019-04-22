@@ -15,7 +15,7 @@
         <div class="homeTeaserDesc">
             <span class="homeTeaserTag">NEU</span>
             <div class="homeTeaserUrl">
-                <a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $newest->id }}"><button class="btn waves">{{ $newest->title }}</button></a>
+                <a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $newest->id }}"><button data-id="{{ $newest->id }}" class="click btn waves">{{ $newest->title }}</button></a>
             </div>
             {{ $newest->description }}
         </div>
@@ -32,7 +32,7 @@
         <div class="homeTeaserDesc">
             <span class="homeTeaserTag">VORGESTELLT</span>
             <div class="homeTeaserUrl">
-                <a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $promo->id }}"><button class="btn waves">{{ $promo->title }}</button></a>
+                <a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $promo->id }}"><button data-id="{{ $promo->id }}" class="click btn waves">{{ $promo->title }}</button></a>
             </div>
             {{ $promo->description }}
         </div>
@@ -49,7 +49,7 @@
         <div class="homeTeaserDesc">
             <span class="homeTeaserTag">BELIEBT</span>
             <div class="homeTeaserUrl">
-                <a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $teaser->id }}"><button class="btn waves">{{ $teaser->title }}</button></a>
+                <a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $teaser->id }}"><button data-id="{{ $teaser->id }}" class="click btn waves">{{ $teaser->title }}</button></a>
             </div>
             {{ $teaser->description }}
         </div>
@@ -158,8 +158,12 @@ function renderChart(chartdiv, canvas, data, labels, position) {
         options: {
             legend: {
                 display: true,
-                fullWidth: true,
-                position: 'left'
+                fullWidth: false,
+                position: 'left',
+                labels: {
+                    fontSize: 11,
+                    boxWidth: 12
+                }
             },
             title: {
                 display: false
@@ -178,6 +182,7 @@ function renderChart(chartdiv, canvas, data, labels, position) {
         }
     });
 }
+
 </script>
 @endsection
 

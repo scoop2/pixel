@@ -27,8 +27,10 @@ class SoundController extends Controller
                 $i++;
             }
             $and .= ')';
+            $subtitle = true;
         } else {
             $and = '';
+            $subtitle = false;
         }
 
         $items = DB::select('SELECT * FROM sets WHERE active = ? ' . $and . ' ORDER BY released DESC LIMIT 6', [1]);
@@ -62,6 +64,7 @@ class SoundController extends Controller
                 'tags' => $taglist,
                 'desc' => $desc,
                 'user' => $user,
+                'subtitle' => $subtitle
             ]);
         } elseif ($responsive == 'mobile') {
             return view('mobile.sound', [
@@ -70,6 +73,7 @@ class SoundController extends Controller
                 'tags' => $taglist,
                 'desc' => $desc,
                 'user' => $user,
+                'subtitle' => $subtitle
             ]);
         }
     }

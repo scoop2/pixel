@@ -5,13 +5,14 @@ Route::get('/admin', 'Admin\AdminController@index')->middleware('auth');
 Route::post('/admin', 'Admin\AdminController@update')->middleware('auth');
 Route::get('/admin/skills', 'Admin\AdminSkillsController@index')->middleware('auth');
 Route::post('/admin/skills', 'Admin\AdminSkillsController@update')->middleware('auth');
+Route::get('/admin/wg', 'Admin\AdminWgController@index')->middleware('auth');
+Route::post('admin/wg', 'Admin\AdminWgController@update')->middleware('auth');
+Route::post('admin/wg/insert', 'Admin\AdminWgController@insert')->middleware('auth');
+Route::get('/admin/wg/delete/{id?}', 'Admin\AdminWgController@delete')->middleware('auth');
 Route::get('/admin/sound', 'Admin\AdminSoundController@index')->middleware('auth');
 Route::post('admin/sound', 'Admin\AdminSoundController@update')->middleware('auth');
 Route::post('/admin/sound/insert', 'Admin\AdminSoundController@insert')->middleware('auth');
-Route::get('/admin/sound/delete/{id?}', array(
-    'as' => 'id',
-    'uses' => 'Admin\AdminSoundController@delete',
-));
+Route::get('/admin/sound/delete/{id?}', 'Admin\AdminSoundController@delete')->middleware('auth');
 
 Route::redirect('/home', '/desk/home');
 Route::get('{responsive?}/home', array(
@@ -20,17 +21,16 @@ Route::get('{responsive?}/home', array(
 ));
 /*
 Route::get('/{responsive?}/impressum', array(
-    'as' => 'responsive',
-    'uses' => 'HomeController@impressum',
+'as' => 'responsive',
+'uses' => 'HomeController@impressum',
 ));
-*/
+ */
 
 Route::redirect('/festival', '/desk/festival');
 Route::get('/{responsive?}/festival', array(
     'as' => 'responsive',
     'uses' => 'HomeController@festival',
 ));
-
 
 Route::redirect('/sound', '/desk/sound');
 Route::get('{responsive?}/sound', array(
@@ -62,12 +62,9 @@ Route::get('{responsive?}/kontakt', array(
     'uses' => 'KontaktController@index',
 ));
 
-
 Route::get('{responsive?}/skills/vita/{pdf?}', 'SkillsController@vita')->middleware('auth');
 Route::get('{responsive?}/skills/person/{pdf?}', 'SkillsController@person')->middleware('auth');
 Route::get('{responsive?}/skills/pdf', 'SkillsController@completePdf')->middleware('auth');
-
-
 
 Route::get('/login', 'Auth\LoginController@login');
 Route::post('/login', 'Auth\LoginController@login')->name('login');
@@ -90,10 +87,10 @@ Route::get('{responsive?}/login', array(
     'uses' => 'Auth\LoginController@logout',
 ))->name('login');
 
-
-
+/*
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('/register', 'Auth\RegisterController@register');
+ */
 
 // Password Reset Routes...
 /*
@@ -102,6 +99,12 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
  */
+
+Route::get('/blog', 'BlogController@index');
+
+Route::get('{responsive?}/blog/{id?}', 'BlogController@index');
+Route::redirect('/wg', '/desk/wg');
+Route::get('{responsive?}/wg/{url?}', 'WgController@index');
 
 Route::get('m3u/url/{url?}', 'M3uController@index');
 Route::get('m3u/batch', 'M3uController@batchM3u')->middleware('auth');

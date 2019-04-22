@@ -6,8 +6,17 @@
 <meta name="robots" content="noindex">
 <meta name="description" content="Pixelmorph"/>
 <meta name="keywords" content="Pixelmorph"/>
+<link rel="apple-touch-icon" sizes="180x180" href="{{ url('/') }}/images/favicon/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="{{ url('/') }}/images/favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="{{ url('/') }}/images/favicon/favicon-16x16.png">
+<link rel="manifest" href="{{ url('/') }}/images/favicon/site.webmanifest">
+<link rel="mask-icon" href="{{ url('/') }}/images/favicon/safari-pinned-tab.svg" color="#a676b4">
+<link rel="shortcut icon" href="{{ url('/') }}/images/favicon/favicon.ico">
+<meta name="msapplication-TileColor" content="#9f00a7">
+<meta name="msapplication-config" content="/images/favicon/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+
 <link rel="stylesheet" href="{{ url('/') }}/css/stylesDesk.css">
 <title>Pixelmorph</title>
 </head>
@@ -46,14 +55,15 @@ include (public_path() . '/images/icons.svg');
 
 <script>
 $(document).ready(function() {
-    if ($(window).width() < 500) {
+    if ($(window).width() < 400) {
         mResize();
     }
 });
 
 function mResize() {
-    if ($(window).width() < 500) {
+    if ($(window).width() < 400) {
         $('.overlay').css({'display': 'block', 'height': '100%'});
+        $('.wrap').html('');
         var url = $(location).attr('href').split('/');
         url[3] = 'mobile';
         var newurl = url[0] + '//' + url[2];

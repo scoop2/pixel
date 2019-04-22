@@ -229,7 +229,7 @@
         @endforeach
         <div class="input-field col s3">
             <select name="newtag">
-                <option value"newtag" selected>new</option>
+                <option value="newtag" selected>new</option>
                 @foreach ($alltags as $settag)
                 <option value="{{ $settag->id }}">{{ $settag->title }}</option>
                 @endforeach
@@ -245,7 +245,7 @@
         <div class="row">
             <div class="col s12">
                 <input type="submit" value="Abschicken" class="btnSubmit btn">
-                <button data-deleteid="{{ $set->id }}" class="btnDelete btn modal-trigger right">Löschen</button>
+                <a href="{{ url('/admin/sound/delete/'.$set->id) }}"><div class="btnDelete btn modal-trigger right">Löschen</div></a>
             </div>
         </div>
         <input type="hidden" name="id" value="{{ $set->id }}">
@@ -257,7 +257,7 @@
 </ul>
 <script>
 
-
+/*
 $('#addTag').on('click', function(e){
     var html = '<select>' +
     @foreach ($alltags[0] as $settag)
@@ -265,7 +265,7 @@ $('#addTag').on('click', function(e){
     @endforeach
     '</select>';
 });
-
+*/
 $('.btnDelete').on('click', function(e){
     window.location.replace("{{ url('/admin/sound/delete/') }}" + '/' + $(this).data('deleteid'));
 });
@@ -277,7 +277,6 @@ document.addEventListener('DOMContentLoaded', function() {
     elems = document.querySelectorAll('select');
     instances = M.FormSelect.init(elems);
 });
-
 
 </script>
 

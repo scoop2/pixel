@@ -99,6 +99,12 @@
 	</div>
 </div>
 
+<div class="more">
+@if ($subtitle == false)
+    Neuzugänge
+@endif
+</div>
+
 <div class="setsListWrap">
 @foreach ($items as $item)
     <div data-itemid="{{ $item->id }}" class="setsListItem btn waves-effect waves-light">{{ $item->title }}</div>
@@ -183,6 +189,7 @@ const player = new Plyr('audio', {
 window.player = player;
 
 $(document).ready(function() {
+    registerClick({{ $items[0]->id }});
     renderChart([
         @foreach ($items[0]->chart as $chart)
             {{ $chart }},
@@ -404,6 +411,7 @@ function redoPlayer(id) {
     $('.playerDataBpm').html(sets[id].bpm);
     $('.playerDataReleased').html(sets[id].released);
     $('.description').html(sets[id].description);
+    $('.more').html('Weitere Ergebnisse')
     if (sets[id].playlist != false) {
         var html = '';
         for (var i=0; i<sets[id].playlist.length; i++) {
@@ -454,9 +462,9 @@ function renderChart(data, labels) {
             datasets: [{
                 data: data,
                 responsive: true,
-                devicePixelRatio: 0.5,
+                devicePixelRatio: 1,
                 maintainAspectRatio: true,
-                aspectRatio: 0.5,
+                aspectRatio: 1,
                 backgroundColor: ChartBackgroundColor,
                 borderColor: ChartBorderColor,
                 borderWidth: 1
