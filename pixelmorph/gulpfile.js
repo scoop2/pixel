@@ -41,7 +41,7 @@ gulp.task('js', function() {
             'node_modules/jquery-visible/jquery.visible.min.js',
             'resources/assets/js/materialize.min.js',
             'node_modules/nouislider/distribute/nouislider.min.js',
-            'node_modules/animejs/anime.min.js',
+            'node_modules/animejs/lib/anime.min.js',
             'node_modules/plyr/dist/plyr.min.js',
             'node_modules/chart.js/dist/Chart.bundle.min.js',
             'resources/assets/js/scripts.js'
