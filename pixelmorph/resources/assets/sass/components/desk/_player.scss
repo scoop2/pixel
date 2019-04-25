@@ -73,6 +73,11 @@ audio {
     margin-left: -3vw;
 }
 
+#playerCover {
+    opacity: 0;
+    border-radius: 100%;
+}
+
 .setsListWrap {
     display: flex;
     flex-direction: row;

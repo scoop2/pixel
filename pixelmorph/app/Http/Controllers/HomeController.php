@@ -51,7 +51,24 @@ class HomeController extends Controller
             $promo->released = Helper::convertRelease($promo->released);
         }
 
-        $teaser = DB::table('sets')->where([['promo', '=', '0'], ['active', '=', '1'], ['id', '<>', $newest->id]])->orderBy('clicks', 'desc')->first();
+        $tmp = -1;
+        do {
+            $favdate = date('Y-m-d', strtotime($tmp . ' week'));
+            $fav = DB::table('sets_stats')->where('statdate', '>', $favdate)->orderBy('plays', 'desc')->get();
+
+            foreach ($fav as $item) {
+                $teaser = DB::table('sets')->where([['id', '=', $item->setid], ['promo', '=', '0'], ['active', '=', '1']])->first();
+                if (!empty($teaser)) {
+                    break;
+                }
+            }
+            $tmp = $tmp - 1;
+        } while (empty($fav));
+
+        if (empty($teaser)) {
+            $teaser = DB::table('sets')->where([['promo', '=', '0'], ['active', '=', '1'], ['id', '<>', $newest->id]])->first();
+        }
+
         if (!empty($teaser)) {
             $tags = DB::table('tags_sets')->where('setid', $teaser->id)->orderBy('rate')->get();
             $chart = [];

@@ -122,7 +122,7 @@
 
 <script>
 var tagBox = $('.tagBox');
-var slider = [], sliderValues = [];
+var slider = [], sliderValues = [], played = false;
 var ChartBackgroundColor = [
     'rgba(198, 122, 85, 1)',
     'rgba(228, 143, 84, 1)',
@@ -218,6 +218,15 @@ $(document).ready(function() {
     if ($.trim($('#playlistUl').html()) === '') {
         $('.playlists').css('display', 'none');
     }
+
+    var animate = anime({
+        targets: '#playerCover',
+        borderRadius: ['100%', '0%'],
+        opacity: [0, 1],
+        duration: 1100,
+        easing: 'easeOutQuad',
+    });
+
     var elems, instances;
     elems = document.querySelectorAll('.tooltipped');
     instances = M.Tooltip.init(elems,{'enterDelay':'700'});
@@ -234,7 +243,10 @@ player.on('ready', event => {
 });
 
 player.on('play', event => {
-    registerPlay($('#dl').data('dl'));
+    if (played === false) {
+        played = true;
+        registerPlay($('#dl').data('dl'));
+    }
 });
 
 $('.filterBtnWrap').on('click', function() {
@@ -429,6 +441,13 @@ function redoPlayer(id) {
         html = '<div class="playerMetaLegendItem" style="background-color: ' + ChartBackgroundColor[i] + '">' + sets[id].chartlabel[i] + '</div>';
         $(div).append(html);
     }
+    var animate = anime({
+        targets: '#playerCover',
+        borderRadius: ['100%', '0%'],
+        opacity: [0, 1],
+        duration: 1100,
+        easing: 'easeOutQuad',
+    });
 }
 
 function doFilter(values) {
