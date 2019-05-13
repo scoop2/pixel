@@ -31,6 +31,7 @@ include (public_path() . '/images/icons.svg');
       <div class="indeterminate"></div>
   </div>
 </div>
+<div class="fader"></div>
 <div class="wrap">
     <div class="wrapInner">
         <div class="left"></div>
@@ -58,6 +59,18 @@ $(document).ready(function() {
     if ($(window).width() < 400) {
         mResize();
     }
+    $('.overlay').css('display', 'none');
+});
+
+$('.nav-menuItem').click(function() {
+    $('.fader').css('display', 'block');
+    $('.overlay').css('display', 'block');
+    var animate = anime({
+        targets: '.fader',
+        opacity: [0, 1],
+        duration: 400,
+        easing: 'easeOutQuad',
+    });
 });
 
 function mResize() {

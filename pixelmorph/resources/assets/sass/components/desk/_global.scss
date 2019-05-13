@@ -18,7 +18,19 @@ body {
     left: 0;
     z-index: 9000;
     width: 100%;
-    background-color: $color2;
+    background-color: $color4;
+}
+
+.fader {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 97;
+    width: 100%;
+    height: 100%;
+    background-color: $color4;
+    opacity: 0;
 }
 
 .wrap {
@@ -236,7 +248,11 @@ hr {
 }
 
 .progress {
-    background-color: $color2 !important;
+    background-color: lighten($color2, 90%) !important;
+}
+
+.indeterminate {
+    background-color: $color3 !important;
 }
 
 .noUi-vertical .noUi-handle {
