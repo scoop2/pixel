@@ -475,8 +475,11 @@ function doFilter(values) {
 	if (typeof values === 'undefined' || values.length === 0 || values === true) {
     	html = '<div class="noFound"><i class="icon-red floatLeft alertNoFound fas fa-frown fa-5x"></i><b>Sorry, nix gefunden :(</b><br>Versuch es noch mal. Je mehr Moods Du hinzufügst umso sicherer wird etwas gefunden. Wenn trotzdem nichts gesuchtes kommt <a href="{{ url('/') }}/{{ $responsive }}/kontakt">fordere</a> mich doch heraus ein Set mit diesen Moods zu schaffen.</div>'
 	} else {
-        for (i=1; i<values.length; i++) {
-            html += '<div data-itemid="' + values[i][0].id + '" class="setsListItem btn waves-effect waves-light">' + values[i][0].title + '</div>';
+        var title = $('.playerTitle').html();
+        for (i=0; i<values.length; i++) {
+            if (title != values[i][0].title) {
+                html += '<div data-itemid="' + values[i][0].id + '" class="setsListItem btn waves-effect waves-light">' + values[i][0].title + '</div>';
+            }
         }
         redoPlayer(firstId);
 	}

@@ -62,14 +62,18 @@ $(document).ready(function() {
     $('.overlay').css('display', 'none');
 });
 
-$('.nav-menuItem').click(function() {
+$('.flink').click(function() {
+    var url = $(this).data('url');
     $('.fader').css('display', 'block');
-    $('.overlay').css('display', 'block');
+    $('.overlay').css({'display': 'block', 'background-color': 'transparent'});
     var animate = anime({
         targets: '.fader',
         opacity: [0, 1],
-        duration: 400,
+        duration: 500,
         easing: 'easeOutQuad',
+        complete: function() {
+            window.location.replace(url);
+        }
     });
 });
 

@@ -142,10 +142,10 @@
 <div class="menu-wrap">
 	<div class="nav-left-stripe"></div>
 	<nav>
-		<a class="nav-menuItem" id="mHome" href="{{ url('/') }}/{{ $responsive }}/home">Home</a>
-		<a class="nav-menuItem" id="mSkills" href="{{ url('/') }}/{{ $responsive }}/skills">Skills</a>
-		<a class="nav-menuItem" id="mSets" href="{{ url('/') }}/{{ $responsive }}/sound">Musik</a>
-		<a class="nav-menuItem" id="mKontakt" href="{{ url('/') }}/{{ $responsive }}/kontakt">Kontakt</a>
+		<div class="nav-menuItem flink" id="mHome" data-url="{{ url('/') }}/{{ $responsive }}/home">Home</div>
+		<div class="nav-menuItem flink" id="mSkills" data-url="{{ url('/') }}/{{ $responsive }}/skills">Skills</div>
+		<div class="nav-menuItem flink" id="mSets" data-url="{{ url('/') }}/{{ $responsive }}/sound">Musik</div>
+		<div class="nav-menuItem flink" id="mKontakt" data-url="{{ url('/') }}/{{ $responsive }}/kontakt">Kontakt</div>
 	<div id="menu-hover" class="animation"></div>
 	</nav>
 	<div class="nav-right-stripe">

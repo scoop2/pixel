@@ -15,7 +15,7 @@
         <div class="homeTeaserDesc">
             <span class="homeTeaserTag">NEU</span>
             <div class="homeTeaserUrl">
-                <a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $newest->id }}"><button data-id="{{ $newest->id }}" class="click btn waves">{{ $newest->title }}</button></a>
+                <div class="flink" data-url="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $newest->id }}"><button data-id="{{ $newest->id }}" class="click btn waves">{{ $newest->title }}</button></div>
             </div>
             {{ $newest->description }}
         </div>
@@ -32,7 +32,7 @@
         <div class="homeTeaserDesc">
             <span class="homeTeaserTag">VORGESTELLT</span>
             <div class="homeTeaserUrl">
-                <a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $promo->id }}"><button data-id="{{ $promo->id }}" class="click btn waves">{{ $promo->title }}</button></a>
+                <div class="flink" data-url="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $promo->id }}"><button data-id="{{ $promo->id }}" class="click btn waves">{{ $promo->title }}</button></div>
             </div>
             {{ $promo->description }}
         </div>
@@ -49,7 +49,7 @@
         <div class="homeTeaserDesc">
             <span class="homeTeaserTag">BELIEBT</span>
             <div class="homeTeaserUrl">
-                <a href="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $teaser->id }}"><button data-id="{{ $teaser->id }}" class="click btn waves">{{ $teaser->title }}</button></a>
+                <div class="flink" data-url="{{ url('/') }}/{{ $responsive }}/sound/filter/{{ $teaser->id }}"><button data-id="{{ $teaser->id }}" class="click btn waves">{{ $teaser->title }}</button></div>
             </div>
             {{ $teaser->description }}
         </div>
