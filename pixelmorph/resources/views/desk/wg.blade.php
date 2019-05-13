@@ -6,7 +6,9 @@
     <p>
         <img class="floatRight" src="{{ url('/') }}/images/portrait_sempa.png">
         <h2>Ein Hallo an die WG</h2>
-        {!! $content[0]->content !!}
+        @php
+            echo nl2br($content[0]->content);
+        @endphp
     </p>
 </div>
 

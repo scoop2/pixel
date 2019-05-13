@@ -45,16 +45,7 @@
 				<div class="playerSocialIcons">
                     <div class="playlists">
                         <i id="openPlaylist" class="fas fa-list-ol tooltipped" data-position="bottom" data-tooltip="Playlist"></i>
-                        <div class="playlist z-depth-2" id="playlistid">
-                            <div class="close"><i id="closePlaylist" class="fas fa-times fa-lg"></i></div>
-                            <ul id="playlistUl">
-                            @if($items[0]->playlist != false)
-                                @foreach ($items[0]->playlist as $playlist)
-                                    <li><b>{{ $playlist->title }}</b> - {{ $playlist->artist }}</li>
-                                @endforeach
-                            @endif
-                            </ul>
-                        </div>
+
                     </div>
                     <div class="playerLinks">
                         <a href="https://www.facebook.com/sharer/sharer.php?u=https://pixelmorph.de/sound/filter/{{ $items[0]->id }}" target="_blank"><i class="fab fa-facebook-square fa-fw playerSocialIconsPadding"></i></a>
@@ -72,6 +63,25 @@
                 </audio>
             </div>
 		</div>
+        <div class="playlist z-depth-2" id="playlistid">
+            <div class="close" onclick="copyText()"><i class="copyPlaylist tooltipped fas fa-copy fa-2x" data-position="left" data-tooltip="Playlist kopieren"></i></div>
+            <div class="close"><i id="closePlaylist" class="fas fa-times fa-2x"></i></div>
+            <ul id="playlistUl">
+            @if($items[0]->playlist != false)
+                @foreach ($items[0]->playlist as $playlist)
+                    <li><b>{{ $playlist->title }}</b> - {{ $playlist->artist }}</li>
+                @endforeach
+            @endif
+            </ul>
+<textarea id="playlistToCopy">
+@if($items[0]->playlist != false)
+@foreach ($items[0]->playlist as $playlist)
+{{ $playlist->title }} - {{ $playlist->artist }}
+@endforeach
+@endif
+</textarea>
+<div class="playlistCopyHint">Playliste wurde in das Clipboard kopiert.</div>
+        </div>
         <div class="playerMetaWrap">
             <div class="playerMetaCover imageRoundedBorder">
                 <img id="playerCover" src="{{ url('/') }}/images/covers/{{ $items[0]->cover }}">
@@ -106,9 +116,11 @@
 </div>
 
 <div class="setsListWrap">
-@foreach ($items as $item)
-    <div data-itemid="{{ $item->id }}" class="setsListItem btn waves-effect waves-light">{{ $item->title }}</div>
-@endforeach
+@if (count($items) > 1)
+    @foreach ($items as $item)
+        <div data-itemid="{{ $item->id }}" class="setsListItem btn waves-effect waves-light">{{ $item->title }}</div>
+    @endforeach
+@endif
 </div>
 
 <div id="modalhelp" class="modal">
@@ -305,9 +317,8 @@ $('#openPlaylist').on('click', function() {
     div.css('display', 'block');
     var animate = anime({
         targets: '.playlist',
-        width: '100%',
-        height: '100%',
-        duration: 500,
+        height: '120%',
+        duration: 300,
         easing: 'easeInOutQuart',
         complete: function() {
             div.css('overflow', 'auto');
@@ -320,10 +331,9 @@ $('#closePlaylist').on('click', function() {
     div.css('overflow', 'hidden');
     var animate = anime({
         targets: '.playlist',
-        width: '0%',
         height: '0%',
         easing: 'easeInOutQuart',
-        duration: 500,
+        duration: 300,
         complete: function() {
             div.css('display', 'none');
         }
@@ -423,13 +433,16 @@ function redoPlayer(id) {
     $('.playerDataBpm').html(sets[id].bpm);
     $('.playerDataReleased').html(sets[id].released);
     $('.description').html(sets[id].description);
-    $('.more').html('Weitere Ergebnisse')
+    $('.more').html('Weitere Ergebnisse');
     if (sets[id].playlist != false) {
-        var html = '';
+        var html = ''
+        var htmlHidden = '';
         for (var i=0; i<sets[id].playlist.length; i++) {
             html += '<li><b>' + sets[id].playlist[i].title + '</b> - ' + sets[id].playlist[i].artist + '</li>';
+            htmlHidden += sets[id].playlist[i].title + ' - ' + sets[id].playlist[i].artist + '\n';
         }
         $('#playlistUl').html(html);
+        $('#playlistToCopy').html(htmlHidden);
         $('.playlists').css('display', 'block');
     } else {
         $('.playlists').css('display', 'none');
@@ -462,7 +475,7 @@ function doFilter(values) {
 	if (typeof values === 'undefined' || values.length === 0 || values === true) {
     	html = '<div class="noFound"><i class="icon-red floatLeft alertNoFound fas fa-frown fa-5x"></i><b>Sorry, nix gefunden :(</b><br>Versuch es noch mal. Je mehr Moods Du hinzufügst umso sicherer wird etwas gefunden. Wenn trotzdem nichts gesuchtes kommt <a href="{{ url('/') }}/{{ $responsive }}/kontakt">fordere</a> mich doch heraus ein Set mit diesen Moods zu schaffen.</div>'
 	} else {
-        for (i=0; i<values.length; i++) {
+        for (i=1; i<values.length; i++) {
             html += '<div data-itemid="' + values[i][0].id + '" class="setsListItem btn waves-effect waves-light">' + values[i][0].title + '</div>';
         }
         redoPlayer(firstId);
@@ -507,6 +520,25 @@ function renderChart(data, labels) {
         }
     });
 }
+
+function copyText() {
+    $('#playlistToCopy').focus();
+    $('#playlistToCopy').select();
+    document.execCommand('copy');
+    $('.playlistCopyHint').css('display', 'block');
+        var div = $('.playlist');
+    div.css('overflow', 'hidden');
+    var animate = anime({
+        targets: '.playlist',
+        height: '0%',
+        easing: 'easeInOutQuart',
+        duration: 300,
+        complete: function() {
+            div.css('display', 'none');
+        }
+    });
+}
+
 </script>
 @endsection
 
@@ -514,3 +546,4 @@ function renderChart(data, labels) {
     @component('components.nav', ['responsive' => $responsive, 'active' => '1', 'user' => $user])
     @endcomponent
 @endsection
+

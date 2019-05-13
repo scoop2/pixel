@@ -71,7 +71,7 @@ class ApiController extends Controller
     public function filter($responsive = 'desk', $filter = 0)
     {
         $response = [];
-        $maxSets = 8;
+        $maxSets = 10;
         $count = 0;
         $collection = [];
         $req = preg_match('^[0-9]{1,2}([,.][0-9]{1,2})?$^', $filter);

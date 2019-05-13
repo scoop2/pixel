@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 
 class AdminSoundController extends Controller
 {
@@ -68,25 +67,25 @@ class AdminSoundController extends Controller
             'description' => $request->input('description'),
         ]);
 
-        if (($request->input('settag'))){
+        if ($request->input('settag')) {
             $i = 0;
             DB::table('tags_sets')->where('setid', $request->input('id'))->delete();
             foreach ($request->input('settag') as $tag) {
-                if ($tag != 'delete') {
+                if ($tag != 'delete' && $tag != 'newtag') {
                     DB::table('tags_sets')->insert([
                         'setid' => $request->input('id'),
                         'tag' => $tag,
-                        'rate' => $request->input('rate')[$i]
+                        'rate' => $request->input('rate')[$i],
                     ]);
                     $i++;
                 }
             }
         }
-        if ($request->input('newtag') != 'new') {
+        if ($request->input('newtag') != 'newtag') {
             DB::table('tags_sets')->insert([
                 'setid' => $request->input('id'),
                 'tag' => $request->input('newtag'),
-                'rate' => $request->input('newrate')
+                'rate' => $request->input('newrate'),
             ]);
         }
 
@@ -132,10 +131,9 @@ class AdminSoundController extends Controller
         } else {
             $active = 0;
         }
-    
+
         $id = DB::table('sets')->insertGetId([
             'title' => $request->input('title'),
-            'setorder' => '1',
             'promo' => $promo,
             'active' => $active,
             'released' => $request->input('released'),
@@ -144,15 +142,17 @@ class AdminSoundController extends Controller
             'filename' => $request->input('filename'),
             'filetype' => $request->input('filetype'),
             'cover' => $request->input('cover'),
-            'description' => $request->input('description')
+            'description' => $request->input('description'),
         ]);
 
-        DB::table('tags_sets')->insert([
-            'setid' => $id,
-            'tag' => $request->input('newtag'),
-            'rate' => $request->input('newrate')
+        if ($request->input('newtag') != 'new') {
+            DB::table('tags_sets')->insert([
+                'setid' => $id,
+                'tag' => $request->input('newtag'),
+                'rate' => $request->input('newrate'),
             ]
-        );
+            );
+        }
 
         /* TODO: redundant see index, needs to be fixed */
         $sets = DB::table('sets')->get();
@@ -181,16 +181,17 @@ class AdminSoundController extends Controller
         } else {
             return view('error.404');
         }
-        
+
     }
 
-    public function delete($id = 0) {
+    public function delete($id = 0)
+    {
         $user = Auth::user();
         $x = 0;
 
         $delObj = DB::table('sets')->where('id', $id)->first();
         if (!empty($delObj)) {
-            $msg = 'The Set <b>'.$delObj->title.'</b> has been deleted!';
+            $msg = 'The Set <b>' . $delObj->title . '</b> has been deleted!';
             $modalclass = 'btnAgree';
             DB::table('sets')->where('id', $id)->delete();
         } else {
@@ -217,7 +218,7 @@ class AdminSoundController extends Controller
             $sets[$x]->tagbag = $tagbag;
             $x++;
         }
-        
+
         if ($user->superuser == 1) {
             return view('admin.sound', ['sets' => $sets, 'tags' => $tagbag, 'alltags' => $alltags, 'user' => $user, 'msg' => $msg, 'modalclass' => $modalclass]);
         } else {

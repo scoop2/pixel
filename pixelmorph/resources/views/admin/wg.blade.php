@@ -228,7 +228,10 @@
 
     var vorlagen = {
     @foreach ($itemstext as $item)
-        "{{ $item->id}}": "{{ $item->content }}",
+        @php
+            $tmp = json_encode($item->content);
+        @endphp
+        "{{ $item->id}}": "{{ $tmp }}",
     @endforeach
     }
 </script>
